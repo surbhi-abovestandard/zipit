@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ZIPIT — Skin Drop Section</title>
+    <meta
+      name="description"
+      content="Responsive skin drop section inspired by the reference website."
+    />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar" aria-label="Main navigation">
+        <div class="header-inner">
+            <div class="header-logo-menu">
+                <div class="brand" aria-label="ZIPIT brand">
+                  <a href="index.html" aria-label="ZIPIT homepage">
+                      <img src="images/new-zipit-logo.svg" alt="ZIPIT" class="brand-logo" />
+                  </a>
+                </div>
+                <nav class="nav-actions" aria-label="Main navigation links">
+                    <ul class="nav-mian-menu">
+                        <li class="nav-item"><a href="#" class="nav-link">Buy</a></li>
+                        <li class="nav-item"><a href="#" class="nav-link">Sell</a></li>
+                    </ul>
+                </nav>
+            </div>
+
+          <div class="search-box" role="search">
+            <span class="search-icon" aria-hidden="true">
+              <img src="images/search-icon.svg" alt="">
+            </span>
+            <input type="text" placeholder="Search for an items" aria-label="Search items" />
+          </div>
+
+            <div class="header-buttons">
+                <div class="currency-dropdown">
+                    <button class="currency-box" type="button" aria-expanded="false">
+                        <span class="currency-flag">
+                        <img id="currencyFlag" src="images/flag.svg" alt="">
+                        </span>
+                        <span class="currency-text" id="currencyText">$ USD</span>
+                    </button>
+                    <div class="currency-menu" id="currencyMenu"></div>
+                </div>
+                <button type="button" class="signin-btn" aria-label="Sign in via Steam">
+                    <img src="images/steam-icon.svg" alt="Steam" class="steam-icon" />
+                    <span>Sign in via Steam</span>
+                </button>
+          </div>
+        </div>
+      </header>
+
+    </div>
+    <main>
+        <section class="drops-wrap" aria-label="Featured drops section">
+          <div class="drop-row" data-row="combined"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+  </body>
+</html>
