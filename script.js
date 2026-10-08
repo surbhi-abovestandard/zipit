@@ -4,16 +4,15 @@ const dropData = {
     { meta: "Heat treated", name: "Heat treated" },
     { meta: "Gamma Doppler (phase 1)", name: "Gamma Doppler (phase 1)" },
     { meta: "Army sheen", name: "Army sheen" },
-    { meta: "USP-S", name: "Jawbreaker" },
-    { meta: "Zeus x27", name: "Tosai" }
+    { meta: "Safety net", name: "Safety net" },
+    { meta: "Spectre", name: "Spectre" }
   ],
   live: [
-    { meta: "Sticker", name: "Safety First (Holo)" },
-    { meta: "Sticker", name: "Safety First (Holo)" },
-    { meta: "M4A1-S", name: "Starlight" },
-    { meta: "Charm", name: "Die-cast AK" },
-    { meta: "P2000", name: "Imperial Dr" },
-    { meta: "Superconductor", name: "" }
+    { meta: "Titan", name: "Titan" },
+    { meta: "Royal legion", name: "Royal legion" },
+    { meta: "Chromatic aberration", name: "Chromatic aberration" },
+    { meta: "Brass", name: "Brass" },
+    { meta: "Phosphor", name: "Phosphor" },
   ]
 };
 
@@ -32,7 +31,7 @@ function createCard(item, bgIndex, isNew) {
 
   const itemImage = document.createElement('img');
   itemImage.className = 'drop-item-image';
-  itemImage.src = `images/img-${(skinImageIndex++ % 12) + 1}.png`;
+  itemImage.src = `images/img-${(skinImageIndex++ % 11) + 1}.png`;
   itemImage.alt = '';
   itemImage.setAttribute('aria-hidden', 'true');
  

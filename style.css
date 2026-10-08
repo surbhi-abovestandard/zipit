@@ -301,12 +301,23 @@ input {
   position: absolute;
   top: 10px;
   left: 50%;
-  transform: translateX(-50%);
+  transform: translateX(-50%) perspective(700px) rotateY(0deg);
+  transform-style: preserve-3d;
   z-index: 3;
   object-fit: contain;
   filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.55));
   pointer-events: none;
-  transition: transform 0.35s ease;
+  transition: transform 0.65s cubic-bezier(0.2, 0.75, 0.25, 1);
+}
+
+.drop-card:hover .drop-item-image {
+  transform: translateX(-50%) perspective(700px) rotateY(180deg);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .drop-item-image {
+    transition: none;
+  }
 }
 
 
