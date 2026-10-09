@@ -278,3 +278,56 @@ if (searchToggle && searchBox && signinToggle && signinPanel) {
   });
 }
 
+
+// ============================== hero slider ===========================
+const heroSlider = document.querySelector('.hero-slider');
+
+if (heroSlider) {
+  const heroTrack = heroSlider.querySelector('.hero-track');
+  const heroSlides = heroTrack ? Array.from(heroTrack.children) : [];
+  const heroDots = heroSlider.parentElement.querySelector('.hero-dots');
+
+  if (heroTrack && heroDots && heroSlides.length > 1) {
+    let activeSlide = 0;
+    let autoplayTimer;
+
+    const dots = heroSlides.map((slide, index) => {
+      const dot = document.createElement('button');
+      dot.className = 'hero-dot';
+      dot.type = 'button';
+      dot.setAttribute('aria-label', `Show slide ${index + 1}`);
+      dot.addEventListener('click', () => showSlide(index));
+      heroDots.appendChild(dot);
+      return dot;
+    });
+
+    function showSlide(index) {
+      activeSlide = (index + heroSlides.length) % heroSlides.length;
+      heroTrack.style.transform = `translateX(-${activeSlide * 100}%)`;
+
+      heroSlides.forEach((slide, slideIndex) => {
+        const isActive = slideIndex === activeSlide;
+        slide.setAttribute('aria-hidden', String(!isActive));
+        slide.inert = !isActive;
+        dots[slideIndex].setAttribute('aria-current', String(isActive));
+      });
+    }
+
+    function startAutoplay() {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      window.clearInterval(autoplayTimer);
+      autoplayTimer = window.setInterval(() => showSlide(activeSlide + 1), 5000);
+    }
+
+    heroSlider.classList.add('is-enhanced');
+    showSlide(0);
+    startAutoplay();
+    heroSlider.addEventListener('mouseenter', () => window.clearInterval(autoplayTimer));
+    heroSlider.addEventListener('mouseleave', startAutoplay);
+    heroSlider.addEventListener('focusin', () => window.clearInterval(autoplayTimer));
+    heroSlider.addEventListener('focusout', (event) => {
+      if (!heroSlider.contains(event.relatedTarget)) startAutoplay();
+    });
+  }
+}
+

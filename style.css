@@ -837,3 +837,232 @@ input {
     gap: 15px;
   }
 }
+
+
+.hero {
+    position: relative;
+    /* max-width: 1316px; */
+    margin: 0 auto;
+    border-radius: 6px;
+    overflow: hidden;
+    background: #12082e;
+}
+
+.hero-slider {
+  position: relative;
+    overflow: hidden;
+}
+
+.hero-track {
+  display: flex;
+  align-items: stretch;
+  transition: transform 0.6s ease;
+}
+
+.hero-slider:not(.is-enhanced) .slide:not(:first-child) {
+  display: none;
+}
+
+.hero-slider.is-enhanced .slide {
+  flex: 0 0 100%;
+}
+
+/* ---------- Slide ---------- */
+.slide {
+    position: relative;
+    min-height: 480px;
+    display: flex;
+    align-items: center;
+    padding: 0 92px;
+    overflow: hidden;
+    background:
+        url('https://i.ibb.co/YTNSCzJC/hero-bg-image.png') center / cover no-repeat,
+        linear-gradient(100deg, #150a3a 0%, #1d0b52 45%, #240a5e 100%);
+}
+
+/* ---------- Left Smoke Image ---------- */
+.slide-smoke {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 50%;
+    object-fit: cover;
+    object-position: left center;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* ---------- Slide Content ---------- */
+.slide-content {
+    position: relative;
+    z-index: 2;
+    max-width: 520px;
+}
+
+.slide-title {
+    font-size: clamp(36px, 4.6vw, 56px);
+    line-height: 1.18;
+    font-weight: 500;
+    letter-spacing: -0.01em;
+}
+
+.slide-text {
+    margin-top: 26px;
+    font-size: 15px;
+    line-height: 2;
+    color: #a79fc4;
+    max-width: 430px;
+}
+
+/* ---------- Slide Actions ---------- */
+.slide-actions {
+    margin-top: 34px;
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    flex-wrap: wrap;
+}
+
+/* ---------- Chamfered Button ---------- */
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 14px;
+    height: 50px;
+    padding: 0 20px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    background: linear-gradient(180deg, #9b3dff, #6f18ea);
+    clip-path: polygon(
+        10px 0,
+        calc(100% - 10px) 0,
+        100% 10px,
+        100% calc(100% - 10px),
+        calc(100% - 10px) 100%,
+        10px 100%,
+        0 calc(100% - 10px),
+        0 10px
+    );
+    transition: filter 0.2s, transform 0.2s;
+}
+
+.btn:hover {
+    filter: brightness(1.12);
+    transform: translateY(-1px);
+}
+
+.btn:focus-visible,
+.bonus:focus-visible {
+    outline: 2px solid #fff;
+    outline-offset: 3px;
+}
+
+.btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+/* ---------- Bonus Link ---------- */
+.bonus {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+}
+
+.bonus svg {
+    width: 20px;
+    height: 20px;
+}
+
+/* ---------- Right Image ---------- */
+.slide-media {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    width: 56%;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.slide-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center right;
+    display: block;
+}
+
+/* ---------- Carousel Dots ---------- */
+.hero-dots {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 6px;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    z-index: 5;
+}
+
+.hero-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+  background: rgba(255, 255, 255, 0.35);
+    border: 0;
+    padding: 0;
+    transition: background 0.2s;
+  cursor: pointer;
+}
+
+.hero-dot[aria-current="true"] {
+  background: #8a2ff5;
+}
+
+.hero-dot:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 3px;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 991px) {
+    .slide {
+        padding: 48px 28px 64px;
+        min-height: 0;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .slide-media {
+        position: relative;
+        width: 100%;
+        height: 260px;
+        margin-top: 28px;
+    }
+
+    .slide-text {
+        max-width: 100%;
+    }
+}
+
+/* ---------- Reduced Motion ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .btn,
+  .hero-track,
+  .hero-dot {
+        transition: none;
+    }
+}
+
+
+
+/* trade section */
