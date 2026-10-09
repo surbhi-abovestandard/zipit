@@ -1,91 +1,122 @@
-const dropData = {
-  wow: [
-    { meta: "Superconductor", name: "Superconductor" },
-    { meta: "Heat treated", name: "Heat treated" },
-    { meta: "Gamma Doppler (phase 1)", name: "Gamma Doppler (phase 1)" },
-    { meta: "Army sheen", name: "Army sheen" },
-    { meta: "Safety net", name: "Safety net" },
-    { meta: "Spectre", name: "Spectre" }
-  ],
-  live: [
-    { meta: "Titan", name: "Titan" },
-    { meta: "Royal legion", name: "Royal legion" },
-    { meta: "Chromatic aberration", name: "Chromatic aberration" },
-    { meta: "Brass", name: "Brass" },
-    { meta: "Phosphor", name: "Phosphor" },
-  ]
-};
 
-const WOW_COUNT = 3;   // WOW DROP me kitne cards (fixed, bina animation)
- 
-/* card banane ka common function (wow + live dono use karte hain) */
+const dropData = [
+  { meta: "Superconductor", name: "Superconductor" },
+  { meta: "Heat treated", name: "Heat treated" },
+  { meta: "Gamma Doppler (phase 1)", name: "Gamma Doppler (phase 1)" },
+  { meta: "Army sheen", name: "Army sheen" },
+  { meta: "Safety net", name: "Safety net" },
+  { meta: "Spectre", name: "Spectre" },
+  { meta: "Titan", name: "Titan" },
+  { meta: "Royal legion", name: "Royal legion" },
+  { meta: "Chromatic aberration", name: "Chromatic aberration" },
+  { meta: "Brass", name: "Brass" },
+  { meta: "Phosphor", name: "Phosphor" }
+];
+
+const DROP_INTERVAL = 1300;
+const CARDS_PER_DROP = 2;
+const MAX_CARDS = 26;
+
+// ===== CREATE CARD =====
 let skinImageIndex = 0;
 
-function createCard(item, bgIndex, isNew) {
-  const card = document.createElement('article');
-  card.className = 'drop-card' + (isNew ? ' is-new' : '');
- 
-  const visual = document.createElement('div');
-  visual.className = 'visual';
-  visual.style.backgroundImage = "linear-gradient(180deg, rgba(28,19,34,.08), rgba(7,9,20,.2)), url('images/bg-img-" + bgIndex + ".png')";
+function createCard(item, bgIndex, isNew = false) {
+  const card = document.createElement("article");
+  card.className = "drop-card" + (isNew ? " is-new" : "");
 
-  const itemImage = document.createElement('img');
-  itemImage.className = 'drop-item-image';
+  const visual = document.createElement("div");
+  visual.className = "visual";
+
+  visual.style.backgroundImage =
+    `linear-gradient(180deg, rgba(28,19,34,.08), rgba(7,9,20,.2)), url('images/bg-img-${bgIndex}.png')`;
+
+  const itemImage = document.createElement("img");
+  itemImage.className = "drop-item-image";
   itemImage.src = `images/img-${(skinImageIndex++ % 11) + 1}.png`;
-  itemImage.alt = '';
-  itemImage.setAttribute('aria-hidden', 'true');
- 
-  const info = document.createElement('div');
-  info.className = 'card-info';
-  info.innerHTML = `
-    <div class="title">${item.name || 'Featured item'}</div>
-  `;
+  itemImage.alt = "";
+  itemImage.setAttribute("aria-hidden", "true");
+
+  const info = document.createElement("div");
+  info.className = "card-info";
+
+  const title = document.createElement("div");
+  title.className = "title";
+  title.textContent = item.name || "Featured item";
+
+  info.appendChild(title);
   card.append(visual, itemImage, info);
+
   return card;
 }
- 
-document.querySelectorAll('.drop-row').forEach((row) => {
-  const grid = document.createElement('div');
-  grid.className = 'drop-row-grid';
-  [...dropData.wow.slice(0, WOW_COUNT), ...dropData.live].forEach((item, i) => grid.appendChild(createCard(item, i % 5 + 1, false)));
-  row.appendChild(grid);
-});
- 
-/* ===== LIVE DROP: naye cards upar se aate hain, hover par scroll ===== */
-const DROP_INTERVAL = 1300;   // ms - kam karo = tez
-const CARDS_PER_DROP = 2;     // ek baar me kitne cards
-const MAX_CARDS = 26;
- 
-const liveRow  = document.querySelector('.drop-row[data-row="combined"]');
-const liveGrid = liveRow.querySelector('.drop-row-grid');
-const pool = dropData.live.concat([
-  { meta: "AK-47", name: "Redline" }, { meta: "AWP", name: "Asiimov" },
-  { meta: "Desert Eagle", name: "Blaze" }, { meta: "Glock-18", name: "Fade" },
-  { meta: "M4A4", name: "Howl" }, { meta: "★ Butterfly Knife", name: "Doppler" }
-]);
-let hovering = false, n = 0;
- 
-liveRow.addEventListener('mouseenter', () => { hovering = true; });
-liveRow.addEventListener('mouseleave', () => { hovering = false; liveGrid.scrollTo({ left: 0, behavior: 'smooth' }); });
- 
-/* mouse wheel se horizontal scroll (sirf hover me) */
-liveGrid.addEventListener('wheel', e => {
-  if (!hovering) return;
-  e.preventDefault();
-  liveGrid.scrollLeft += e.deltaY + e.deltaX;
-}, { passive: false });
- 
-function addDrops() {
-  if (hovering) return;                       // hover me naye cards band
-  for (let i = 0; i < CARDS_PER_DROP; i++) {
-    const item = pool[Math.floor(Math.random() * pool.length)];
-    const card = createCard(item, (n++ % 5) + 1, true);
-    card.style.animationDelay = (i ? 0 : 0.18) + 's';   // ek ke peeche doosra
-    liveGrid.prepend(card);
+
+// ===== SINGLE GRID =====
+const dropRow = document.querySelector(
+  '.drop-row[data-row="combined"]'
+);
+
+if (dropRow) {
+  const dropGrid = document.createElement("div");
+  dropGrid.className = "drop-row-grid";
+  dropRow.appendChild(dropGrid);
+
+  // Show all 11 items together
+  dropData.forEach((item, index) => {
+    dropGrid.appendChild(
+      createCard(item, (index % 5) + 1, false)
+    );
+  });
+
+  let hovering = false;
+  let duplicateIndex = 0;
+
+  // ===== HOVER =====
+  dropRow.addEventListener("mouseenter", () => {
+    hovering = true;
+  });
+
+  dropRow.addEventListener("mouseleave", () => {
+    hovering = false;
+
+    dropGrid.scrollTo({
+      left: 0,
+      behavior: "smooth"
+    });
+  });
+
+  // ===== HORIZONTAL SCROLL =====
+  dropGrid.addEventListener("wheel", (e) => {
+    if (!hovering) return;
+
+    e.preventDefault();
+    dropGrid.scrollLeft += e.deltaY + e.deltaX;
+  }, { passive: false });
+
+  // ===== DUPLICATE EXISTING ITEMS =====
+  function addDrops() {
+    if (hovering) return;
+
+    for (let i = 0; i < CARDS_PER_DROP; i++) {
+      const item =
+        dropData[duplicateIndex % dropData.length];
+
+      duplicateIndex++;
+
+      const bgIndex = ((duplicateIndex - 1) % 5) + 1;
+
+      const card = createCard(item, bgIndex, true);
+
+      card.style.animationDelay = `${i * 0.18}s`;
+
+      dropGrid.prepend(card);
+    }
+
+    while (dropGrid.children.length > MAX_CARDS) {
+      dropGrid.lastElementChild.remove();
+    }
   }
-  while (liveGrid.children.length > MAX_CARDS) liveGrid.lastElementChild.remove();
+
+  setInterval(addDrops, DROP_INTERVAL);
 }
-setInterval(addDrops, DROP_INTERVAL);
 
 
 // ==============================currancy box=======================
@@ -199,3 +230,51 @@ if (dropdown) {
     });
   }
 }
+
+const searchToggle = document.querySelector(".search-toggle");
+const searchBox = document.querySelector("#headerSearch");
+const signinToggle = document.querySelector(".signin-toggle");
+const signinPanel = document.querySelector("#signinPanel");
+
+function setHeaderPanel(panel, toggle, isOpen) {
+  panel.classList.toggle("is-open", isOpen);
+  toggle.setAttribute("aria-expanded", String(isOpen));
+}
+
+if (searchToggle && searchBox && signinToggle && signinPanel) {
+  searchToggle.addEventListener("click", () => {
+    const isOpen = !searchBox.classList.contains("is-open");
+    setHeaderPanel(searchBox, searchToggle, isOpen);
+    setHeaderPanel(signinPanel, signinToggle, false);
+
+    if (isOpen) {
+      searchBox.querySelector("input")?.focus();
+    }
+  });
+
+  signinToggle.addEventListener("click", () => {
+    const isOpen = !signinPanel.classList.contains("is-open");
+    setHeaderPanel(signinPanel, signinToggle, isOpen);
+    setHeaderPanel(searchBox, searchToggle, false);
+  });
+
+  document.addEventListener("click", (event) => {
+    if (!(event.target instanceof Element)) return;
+
+    if (!searchBox.contains(event.target) && !searchToggle.contains(event.target)) {
+      setHeaderPanel(searchBox, searchToggle, false);
+    }
+
+    if (!signinPanel.contains(event.target) && !signinToggle.contains(event.target)) {
+      setHeaderPanel(signinPanel, signinToggle, false);
+    }
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+
+    setHeaderPanel(searchBox, searchToggle, false);
+    setHeaderPanel(signinPanel, signinToggle, false);
+  });
+}
+

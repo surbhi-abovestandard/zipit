@@ -28,14 +28,6 @@
                     </ul>
                 </nav>
             </div>
-
-          <div class="search-box" role="search">
-            <span class="search-icon" aria-hidden="true">
-              <img src="images/search-icon.svg" alt="">
-            </span>
-            <input type="text" placeholder="Search for an items" aria-label="Search items" />
-          </div>
-
             <div class="header-buttons">
                 <div class="currency-dropdown">
                     <button class="currency-box" type="button" aria-expanded="false">
@@ -46,10 +38,26 @@
                     </button>
                     <div class="currency-menu" id="currencyMenu"></div>
                 </div>
-                <button type="button" class="signin-btn" aria-label="Sign in via Steam">
-                    <img src="images/steam-icon.svg" alt="Steam" class="steam-icon" />
-                    <span>Sign in via Steam</span>
+                <button type="button" class="header-icon-btn search-toggle" aria-label="Open search" aria-expanded="false" aria-controls="headerSearch">
+                    <img src="images/search-icon.svg" alt="" />
                 </button>
+                <div class="signin-control">
+                  <button type="button" class="header-icon-btn signin-toggle" aria-label="Open sign-in options" aria-expanded="false" aria-controls="signinPanel">
+                      <img src="images/steam-icon.svg" alt="" />
+                  </button>
+                  <div class="signin-panel" id="signinPanel">
+                    <button type="button" class="signin-btn" aria-label="Sign in via Steam">
+                        <img src="images/steam-icon.svg" alt="" class="steam-icon" />
+                        <span>Sign in via Steam</span>
+                    </button>
+                  </div>
+                </div>
+          </div>
+          <div class="search-box" id="headerSearch" role="search">
+            <span class="search-icon" aria-hidden="true">
+              <img src="images/search-icon.svg" alt="">
+            </span>
+            <input type="search" placeholder="Search for items" aria-label="Search items" />
           </div>
         </div>
       </header>
@@ -58,6 +66,29 @@
     <main>
         <section class="drops-wrap" aria-label="Featured drops section">
           <div class="drop-row" data-row="combined"></div>
+        </section>
+
+        <section class="trust-strip-section section-spacing-inline" aria-label="Platform services">
+          <div class="container">
+            <div class="trust-strip">
+              <div class="trust-item trust-support">
+                <img src="images/live-support.png" alt="" aria-hidden="true" />
+                <p><span>Live support</span><span>24/7</span></p>
+              </div>
+              <div class="trust-item">
+                <img src="images/secure-trading.png" alt="" aria-hidden="true" />
+                <p><span>Secure</span><span>trading</span></p>
+              </div>
+              <div class="trust-item">
+                <img src="images/user-verification.png" alt="" aria-hidden="true" />
+                <p><span>User</span><span>verification</span></p>
+              </div>
+              <div class="trust-item">
+                <img src="images/discord-server.png" alt="" aria-hidden="true" />
+                <p><span>Discord</span><span>server</span></p>
+              </div>
+            </div>
+          </div>
         </section>
     </main>
 
