@@ -342,75 +342,111 @@ if (heroSlider) {
 }
 
 // Keep the trading guide's highlighted step, timeline and preview in sync with scroll
-const tradeGuide = document.querySelector(".trade-guide");
 
-if (tradeGuide && window.gsap && window.ScrollTrigger) {
+document.addEventListener("DOMContentLoaded", () => {
+  const tradeGuide = document.querySelector(".trade-guide");
+  if (!tradeGuide || !window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
-
   const steps = gsap.utils.toArray(".trade-step", tradeGuide);
   const shots = gsap.utils.toArray(".trade-shot", tradeGuide);
   const progress = tradeGuide.querySelector(".trade-rail-progress");
-
+  if (!steps.length) return;
   let activeStep = -1;
-
   function activateStep(index) {
+    index = Math.max(0, Math.min(index, steps.length - 1));
     if (index === activeStep) return;
     activeStep = index;
-
     steps.forEach((step, i) => {
-      step.classList.toggle("is-active", i === index);
+      const active = i === index;
+      step.classList.toggle("is-active", active);
       step.classList.toggle("is-complete", i < index);
-      step.setAttribute("aria-current", i === index ? "step" : "false");
+      step.setAttribute("aria-current", active ? "step" : "false");
     });
-
     shots.forEach((shot, i) => {
       shot.classList.toggle("is-active", i === index);
     });
-
+  }
+  function updateProgress(value) {
     if (progress) {
-      progress.style.height =
-        `${(index / Math.max(steps.length - 1, 1)) * 100}%`;
+      progress.style.height = `${value * 100}%`;
     }
   }
-
   const mm = gsap.matchMedia();
-  mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
-    ScrollTrigger.create({
-      trigger: tradeGuide,
-      start: "top top",
-      end: () => `+=${window.innerHeight * steps.length}`,
-      pin: true,
-      scrub: 0.5,
-      invalidateOnRefresh: true,
-      onUpdate(self) {
-        const index = Math.min(
-          Math.floor(self.progress * steps.length),
-          steps.length - 1
-        );
-        activateStep(index);
-        if (progress) {
-          progress.style.height = `${self.progress * 100}%`;
+  // DESKTOP: PINNED SCROLL STORY
+  mm.add(
+    "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    () => {
+      tradeGuide.classList.add("is-pinned");
+      const trigger = ScrollTrigger.create({
+        trigger: tradeGuide,
+        start: "top top",
+        end: () => `+=${window.innerHeight * steps.length}`,
+        pin: true,
+        pinSpacing: true,
+        anticipatePin: 1,
+        scrub: 0.5,
+        invalidateOnRefresh: true,
+        onUpdate(self) {
+          const index = Math.min(
+            Math.floor(self.progress * steps.length),
+            steps.length - 1
+          );
+          activateStep(index);
+          updateProgress(self.progress);
+        },
+        onRefresh(self) {
+          activateStep(
+            Math.min(
+              Math.floor(self.progress * steps.length),
+              steps.length - 1
+            )
+          );
+          updateProgress(self.progress);
         }
+      });
+      return () => {
+        trigger.kill();
+        tradeGuide.classList.remove("is-pinned");
+      };
+    }
+  );
+  // MOBILE: NORMAL SCROLLING
+  mm.add("(max-width: 767px)", () => {
+    if (!("IntersectionObserver" in window)) return;
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((entry) => entry.isIntersecting)
+          .sort(
+            (a, b) =>
+              Math.abs(a.boundingClientRect.top - window.innerHeight * 0.48) -
+              Math.abs(b.boundingClientRect.top - window.innerHeight * 0.48)
+          );
+        if (visible.length) {
+          activateStep(Number(visible[0].target.dataset.step));
+        }
+      },
+      {
+        rootMargin: "-30% 0px -35% 0px",
+        threshold: 0
+      }
+    );
+    steps.forEach((step) => observer.observe(step));
+    return () => observer.disconnect();
+  });
+  // KEYBOARD ACCESSIBILITY
+  steps.forEach((step, index) => {
+    step.addEventListener("focusin", () => activateStep(index));
+    step.addEventListener("mouseenter", () => {
+      if (window.innerWidth >= 768) {
+        activateStep(index);
       }
     });
   });
-
-  mm.add("(max-width: 767px)", () => {
-    const activateOnHover = steps.map((step, index) => {
-      const onMouseEnter = () => activateStep(index);
-      step.addEventListener("mouseenter", onMouseEnter);
-      return { step, onMouseEnter };
-    });
-
-    return () => {
-      activateOnHover.forEach(({ step, onMouseEnter }) => {
-        step.removeEventListener("mouseenter", onMouseEnter);
-      });
-    };
-  });
-  steps.forEach((step, index) => {
-    step.addEventListener("focusin", () => activateStep(index));
-  });
   activateStep(0);
-  ScrollTrigger.refresh();
-}
+  updateProgress(0);
+  window.addEventListener("load", () => ScrollTrigger.refresh(), {
+    once: true
+  });
+  window.addEventListener("resize", () => ScrollTrigger.refresh());
+});
