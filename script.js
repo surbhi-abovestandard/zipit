@@ -304,12 +304,22 @@ if (heroSlider) {
     function showSlide(index) {
       activeSlide = (index + heroSlides.length) % heroSlides.length;
       heroTrack.style.transform = `translateX(-${activeSlide * 100}%)`;
+      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
       heroSlides.forEach((slide, slideIndex) => {
         const isActive = slideIndex === activeSlide;
         slide.setAttribute('aria-hidden', String(!isActive));
         slide.inert = !isActive;
         dots[slideIndex].setAttribute('aria-current', String(isActive));
+
+        const smoke = slide.querySelector('.slide-smoke');
+        if (!smoke) return;
+
+        if (isActive && !reduceMotion) {
+          smoke.play().catch(() => {});
+        } else {
+          smoke.pause();
+        }
       });
     }
 
@@ -331,3 +341,76 @@ if (heroSlider) {
   }
 }
 
+// Keep the trading guide's highlighted step, timeline and preview in sync with scroll
+const tradeGuide = document.querySelector(".trade-guide");
+
+if (tradeGuide && window.gsap && window.ScrollTrigger) {
+  gsap.registerPlugin(ScrollTrigger);
+
+  const steps = gsap.utils.toArray(".trade-step", tradeGuide);
+  const shots = gsap.utils.toArray(".trade-shot", tradeGuide);
+  const progress = tradeGuide.querySelector(".trade-rail-progress");
+
+  let activeStep = -1;
+
+  function activateStep(index) {
+    if (index === activeStep) return;
+    activeStep = index;
+
+    steps.forEach((step, i) => {
+      step.classList.toggle("is-active", i === index);
+      step.classList.toggle("is-complete", i < index);
+      step.setAttribute("aria-current", i === index ? "step" : "false");
+    });
+
+    shots.forEach((shot, i) => {
+      shot.classList.toggle("is-active", i === index);
+    });
+
+    if (progress) {
+      progress.style.height =
+        `${(index / Math.max(steps.length - 1, 1)) * 100}%`;
+    }
+  }
+
+  const mm = gsap.matchMedia();
+  mm.add("(min-width: 768px) and (prefers-reduced-motion: no-preference)", () => {
+    ScrollTrigger.create({
+      trigger: tradeGuide,
+      start: "top top",
+      end: () => `+=${window.innerHeight * steps.length}`,
+      pin: true,
+      scrub: 0.5,
+      invalidateOnRefresh: true,
+      onUpdate(self) {
+        const index = Math.min(
+          Math.floor(self.progress * steps.length),
+          steps.length - 1
+        );
+        activateStep(index);
+        if (progress) {
+          progress.style.height = `${self.progress * 100}%`;
+        }
+      }
+    });
+  });
+
+  mm.add("(max-width: 767px)", () => {
+    const activateOnHover = steps.map((step, index) => {
+      const onMouseEnter = () => activateStep(index);
+      step.addEventListener("mouseenter", onMouseEnter);
+      return { step, onMouseEnter };
+    });
+
+    return () => {
+      activateOnHover.forEach(({ step, onMouseEnter }) => {
+        step.removeEventListener("mouseenter", onMouseEnter);
+      });
+    };
+  });
+  steps.forEach((step, index) => {
+    step.addEventListener("focusin", () => activateStep(index));
+  });
+  activateStep(0);
+  ScrollTrigger.refresh();
+}
