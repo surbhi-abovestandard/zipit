@@ -13,6 +13,51 @@ const dropData = [
   { meta: "Phosphor", name: "Phosphor" }
 ];
 
+// Reveal text and images as they enter view without changing page layout.
+(() => {
+  const targets = 'h1, h2, h3, p, .bonus, .skin-action-link, .skin-art-label, .skin-price-tag, .nav-link, .currency-text, .slide-title, .slide-text, .card-info .title, img';
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduceMotion || !('IntersectionObserver' in window)) return;
+
+  document.body.classList.add('content-motion-ready');
+  let previousScrollY = window.scrollY;
+  let scrollDirection = 'down';
+  window.addEventListener('scroll', () => {
+    const currentY = window.scrollY;
+    if (currentY !== previousScrollY) scrollDirection = currentY > previousScrollY ? 'down' : 'up';
+    previousScrollY = currentY;
+  }, { passive: true });
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.dataset.motionDirection = scrollDirection;
+      entry.target.classList.toggle('is-motion-visible', entry.isIntersecting);
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+
+  const watch = (node) => {
+    if (!(node instanceof Element)) return;
+    if (node.matches(targets)) {
+      const siblings = node.parentElement ? Array.from(node.parentElement.querySelectorAll(':scope > h1, :scope > h2, :scope > h3, :scope > p, :scope > img')) : [];
+      node.classList.add(node.tagName === 'IMG' ? 'content-image-motion' : 'content-text-motion');
+      const siblingIndex = siblings.indexOf(node);
+      node.dataset.motionDirection = 'down';
+      if (siblingIndex >= 0) node.style.transitionDelay = `${Math.min(siblingIndex, 4) * 75}ms`;
+      observer.observe(node);
+    }
+      node.querySelectorAll(targets).forEach((target) => {
+        if (target.classList.contains('content-text-motion') || target.classList.contains('content-image-motion')) return;
+        const siblings = target.parentElement ? Array.from(target.parentElement.querySelectorAll(':scope > h1, :scope > h2, :scope > h3, :scope > p, :scope > img')) : [];
+        target.classList.add(target.tagName === 'IMG' ? 'content-image-motion' : 'content-text-motion');
+        target.dataset.motionDirection = 'down';
+        target.style.transitionDelay = `${Math.max(0, Math.min(siblings.indexOf(target), 4)) * 75}ms`;
+        observer.observe(target);
+      });
+  };
+  watch(document.body);
+  new MutationObserver((records) => records.forEach((record) => record.addedNodes.forEach(watch)))
+    .observe(document.body, { childList: true, subtree: true });
+})();
+
 const DROP_INTERVAL = 1300;
 const CARDS_PER_DROP = 2;
 const MAX_CARDS = 26;
@@ -318,6 +363,26 @@ if (heroSlider && window.Swiper) {
   }
 }
 
+// A soft cursor-follow glow spans the full page on desktop pointers.
+if (window.matchMedia('(hover: hover) and (pointer: fine)').matches &&
+    !window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  const pageGlow = document.createElement('span');
+  pageGlow.className = 'page-cursor-glow';
+  pageGlow.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(pageGlow);
+  let glowFrame = null;
+  document.addEventListener('pointermove', (event) => {
+    if (glowFrame) return;
+    glowFrame = requestAnimationFrame(() => {
+      glowFrame = null;
+      pageGlow.style.setProperty('--pointer-x', `${event.clientX}px`);
+      pageGlow.style.setProperty('--pointer-y', `${event.clientY}px`);
+      pageGlow.classList.add('is-visible');
+    });
+  }, { passive: true });
+  document.documentElement.addEventListener('pointerleave', () => pageGlow.classList.remove('is-visible'));
+}
+
 // Keep the trading guide's highlighted step, timeline and preview in sync with scroll
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -338,6 +403,7 @@ document.addEventListener("DOMContentLoaded", () => {
       step.classList.toggle("is-active", active);
       step.classList.toggle("is-complete", i < index);
       step.setAttribute("aria-current", active ? "step" : "false");
+      step.setAttribute("aria-pressed", String(active));
     });
     shots.forEach((shot, i) => {
       shot.classList.toggle("is-active", i === index);
@@ -414,6 +480,16 @@ document.addEventListener("DOMContentLoaded", () => {
   // KEYBOARD ACCESSIBILITY
   steps.forEach((step, index) => {
     step.addEventListener("focusin", () => activateStep(index));
+    step.addEventListener("click", () => {
+      activateStep(index);
+      updateProgress(steps.length > 1 ? index / (steps.length - 1) : 0);
+    });
+    step.addEventListener("keydown", (event) => {
+      if (event.key !== "Enter" && event.key !== " ") return;
+      event.preventDefault();
+      activateStep(index);
+      updateProgress(steps.length > 1 ? index / (steps.length - 1) : 0);
+    });
   });
   activateStep(0);
   updateProgress(0);
