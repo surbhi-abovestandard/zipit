@@ -58,6 +58,7 @@ html {
 .container {
   max-width: 1440px;
   margin: 0 auto;
+  width: 100%;
 }
 .section-spacing-inline {
   padding-inline: 50px !important;
@@ -205,12 +206,6 @@ input {
 .header-icon-btn[aria-expanded="true"] {
   background: rgba(255, 255, 255, 0.15);
 }
-.header-icon-btn:focus-visible,
-.currency-box:focus-visible,
-.signin-btn:focus-visible {
-  outline: 2px solid var(--gold);
-  outline-offset: 3px;
-}
 .signin-control {
   position: relative;
 }
@@ -291,7 +286,7 @@ input {
   object-fit: cover;
   flex-shrink: 0;
 }
-.signin-btn {
+.common-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -310,7 +305,7 @@ input {
     box-shadow 0.35s ease,
     filter 0.35s ease;
 }
-.signin-btn::before {
+.common-btn::before {
   content: "";
   position: absolute;
   inset: 0;
@@ -324,13 +319,13 @@ input {
   pointer-events: none;
 }
 /* Hover effect */
-.signin-btn:hover {
+.common-btn:hover {
   filter: brightness(1.15);
   box-shadow:
     0 8px 24px rgba(112, 0, 255, 0.4),
     0 0 16px rgba(171, 47, 254, 0.3);
 }
-.signin-btn:hover::before {
+.common-btn:hover::before {
   transform: translateX(130%);
 }
 .steam-icon {
@@ -344,6 +339,7 @@ input {
   width: 100%;
   overflow: hidden;
   padding-top: 12px;
+  padding-bottom:20px;
   padding-left: 20px;
 }
 .drop-row[data-row="combined"] {
@@ -762,26 +758,41 @@ input {
 }
 /* ---------- Slide ---------- */
 .slide {
-  position: relative;
-  min-height: 480px;
-  display: flex;
-  align-items: center;
-  padding: 0 92px;
-  overflow: hidden;
-  background-position: 50% 44%, center;
-  animation: hero-background-smoke-rise 28s ease-in-out infinite alternate;
-  background:
-    url('images/hero-bg-image.png') center / cover no-repeat,
-    linear-gradient(100deg, #150a3a 0%, #1d0b52 45%, #240a5e 100%);
+    position: relative;
+    isolation: isolate;
+    overflow: hidden;
+
+    /* Main background image */
+    background:
+        url("./images/hero-bg-image.png") center center / cover no-repeat,
+        linear-gradient(100deg, #150a3a 0%, #1d0b52 45%, #240a5e 100%);
 }
-@keyframes hero-background-smoke-rise {
-  from {
-    background-position: 50% 44%, center;
-  }
-  to {
-    background-position: 50% 56%, center;
-  }
+.slide::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background:  linear-gradient(90deg, transparent 0%, transparent 25%, rgba(21, 10, 58, 0.12) 32%, rgb(21 10 58 / 99%) 38%, rgba(21, 10, 58, 0.78) 43%, rgba(21, 10, 58, 0.96) 48%, transparent 58%), url(./images/hero-left-img.png) left center / auto 100% no-repeat;
+    -webkit-mask-image: linear-gradient(
+        90deg,
+        #000 0%,
+        #000 28%,
+        rgba(0, 0, 0, 0.9) 36%,
+        rgba(0, 0, 0, 0.45) 44%,
+        transparent 52%
+    );
+    mask-image: linear-gradient(
+        90deg,
+        #000 0%,
+        #000 28%,
+        rgba(0, 0, 0, 0.9) 36%,
+        rgba(0, 0, 0, 0.45) 44%,
+        transparent 52%
+    );
 }
+
+
 .slide::after {
   position: absolute;
   top: 0;
@@ -790,8 +801,6 @@ input {
   height: 1px;
   content: "";
   pointer-events: none;
-}
-.slide::after {
   z-index: 4;
   opacity: 0.75;
   background: linear-gradient(90deg, transparent, rgba(198, 92, 255, 0.9) 35%, rgba(85, 220, 255, 0.85) 65%, transparent);
@@ -806,31 +815,6 @@ input {
     opacity: 0.85;
   }
 }
-/* ---------- Left Smoke Image ---------- */
-.slide-smoke {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  width: 100%;
-  object-fit: cover;
-  object-position: center;
-  z-index: 0;
-  pointer-events: none;
-  mix-blend-mode: screen;
-  opacity: 0.48;
-  filter: saturate(1.15);
-  transform: scale(1.08);
-  animation: hero-smoke-drift 18s ease-in-out infinite alternate;
-}
-@keyframes hero-smoke-drift {
-  from {
-    transform: scale(1.08) translate3d(-1%, 0, 0);
-  }
-  to {
-    transform: scale(1.14) translate3d(1%, -1%, 0);
-  }
-}
 /* ---------- Slide Content ---------- */
 .slide-content {
   position: relative;
@@ -838,15 +822,16 @@ input {
   max-width: 520px;
 }
 .slide-title {
-  font-size: clamp(36px, 4.6vw, 56px);
-  line-height: 1.18;
+  font-size: clamp(30px, 4.6vw, 56px);
+  line-height: 100%;
   font-weight: 500;
   letter-spacing: -0.01em;
+  color:var(--white);
 }
 .slide-text {
-  margin-top: 26px;
-  font-size: 15px;
-  line-height: 2;
+  margin-top: 16px;
+  font-size: clamp(15px, 1.25vw, 17px);
+  line-height: 1.6;
   color: #a79fc4;
   max-width: 430px;
 }
@@ -858,65 +843,40 @@ input {
   gap: 28px;
   flex-wrap: wrap;
 }
-/* ---------- Chamfered Button ---------- */
-.btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 14px;
-  height: 50px;
-  padding: 0 20px;
-  color: #fff;
-  text-decoration: none;
-  font-size: 16px;
-  font-weight: 500;
-  background: linear-gradient(180deg, #9b3dff, #6f18ea);
-  clip-path: polygon(10px 0,
-      calc(100% - 10px) 0,
-      100% 10px,
-      100% calc(100% - 10px),
-      calc(100% - 10px) 100%,
-      10px 100%,
-      0 calc(100% - 10px),
-      0 10px);
-  transition: filter 0.2s, transform 0.2s;
-}
-.btn:hover {
-  filter: brightness(1.12);
-  transform: translateY(-1px);
-}
-.btn:focus-visible,
-.bonus:focus-visible {
-  outline: 2px solid #fff;
-  outline-offset: 3px;
-}
 .btn svg {
   width: 14px;
   height: 14px;
 }
-/* ---------- Bonus Link ---------- */
 .bonus {
   display: inline-flex;
   align-items: center;
-  gap: 10px;
-  color: #fff;
+  gap: 12px;
+  font-weight: 500;
+  line-height: 100%;
+  color: var(--white);
   text-decoration: none;
-  font-size: 16px;
+  font-size: clamp(15px, 1.4vw, 19px);
 }
 .bonus svg {
-  width: 20px;
-  height: 20px;
+  width: 22px;
+  height: 22px;
+  margin-top: 3px;
 }
 /* ---------- Right Image ---------- */
+.hero-slide-inner {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    min-height: 520px;
+}
 .slide-media {
-  position: absolute;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  width: 56%;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 45%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-right: 100px;
 }
 .slide-media img {
   width: 100%;
@@ -930,17 +890,17 @@ input {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: 6px;
+  bottom: 15px !important;
   display: flex;
   justify-content: center;
   gap: 10px;
   z-index: 5;
 }
 .hero-dot {
-  width: 8px;
-  height: 8px;
+  width: 10px;
+  height: 10px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(95, 79, 123, 1);
   border: 0;
   padding: 0;
   transition: background 0.2s;
@@ -977,8 +937,7 @@ input {
   .hero-dot {
     transition: none;
   }
-  .slide,
-  .slide-smoke {
+  .slide {
     animation: none;
     transform: none;
   }

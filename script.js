@@ -291,15 +291,6 @@ if (heroSlider && window.Swiper) {
       const active = slide.classList.contains('swiper-slide-active');
       slide.setAttribute('aria-hidden', String(!active));
       slide.inert = !active;
-
-      const smoke = slide.querySelector('.slide-smoke');
-      if (!smoke) return;
-
-      if (active && !reduceMotion.matches) {
-        smoke.play().catch(() => {});
-      } else {
-        smoke.pause();
-      }
     });
   }
 
@@ -310,11 +301,6 @@ if (heroSlider && window.Swiper) {
       fadeEffect: { crossFade: true },
       loop: true,
       speed: reduceMotion.matches ? 0 : 800,
-      autoplay: reduceMotion.matches ? false : {
-        delay: 5000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true
-      },
       pagination: {
         el: heroDots,
         clickable: true,
@@ -327,23 +313,6 @@ if (heroSlider && window.Swiper) {
       on: {
         init: updateHeroSlides,
         slideChangeTransitionStart: updateHeroSlides
-      }
-    });
-
-    heroSlider.addEventListener('focusin', () => heroSwiper.autoplay.stop());
-    heroSlider.addEventListener('focusout', (event) => {
-      if (!heroSlider.contains(event.relatedTarget) && !reduceMotion.matches) {
-        heroSwiper.autoplay.start();
-      }
-    });
-    reduceMotion.addEventListener('change', (event) => {
-      heroSwiper.params.speed = event.matches ? 0 : 800;
-      if (event.matches) {
-        heroSwiper.autoplay.stop();
-        heroSlider.querySelectorAll('.slide-smoke').forEach((smoke) => smoke.pause());
-      } else {
-        heroSwiper.autoplay.start();
-        updateHeroSlides(heroSwiper);
       }
     });
   }
