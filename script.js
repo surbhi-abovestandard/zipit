@@ -282,61 +282,69 @@ if (searchToggle && searchBox && signinToggle && signinPanel) {
 // ============================== hero slider ===========================
 const heroSlider = document.querySelector('.hero-slider');
 
-if (heroSlider) {
-  const heroTrack = heroSlider.querySelector('.hero-track');
-  const heroSlides = heroTrack ? Array.from(heroTrack.children) : [];
+if (heroSlider && window.Swiper) {
   const heroDots = heroSlider.parentElement.querySelector('.hero-dots');
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 
-  if (heroTrack && heroDots && heroSlides.length > 1) {
-    let activeSlide = 0;
-    let autoplayTimer;
+  function updateHeroSlides(swiper) {
+    swiper.slides.forEach((slide) => {
+      const active = slide.classList.contains('swiper-slide-active');
+      slide.setAttribute('aria-hidden', String(!active));
+      slide.inert = !active;
 
-    const dots = heroSlides.map((slide, index) => {
-      const dot = document.createElement('button');
-      dot.className = 'hero-dot';
-      dot.type = 'button';
-      dot.setAttribute('aria-label', `Show slide ${index + 1}`);
-      dot.addEventListener('click', () => showSlide(index));
-      heroDots.appendChild(dot);
-      return dot;
+      const smoke = slide.querySelector('.slide-smoke');
+      if (!smoke) return;
+
+      if (active && !reduceMotion.matches) {
+        smoke.play().catch(() => {});
+      } else {
+        smoke.pause();
+      }
+    });
+  }
+
+  if (heroDots) {
+    heroSlider.classList.add('is-enhanced');
+    const heroSwiper = new Swiper(heroSlider, {
+      effect: 'fade',
+      fadeEffect: { crossFade: true },
+      loop: true,
+      speed: reduceMotion.matches ? 0 : 800,
+      autoplay: reduceMotion.matches ? false : {
+        delay: 5000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      },
+      pagination: {
+        el: heroDots,
+        clickable: true,
+        bulletClass: 'hero-dot',
+        bulletActiveClass: 'is-active',
+        renderBullet(index, className) {
+          return `<button type="button" class="${className}" aria-label="Show slide ${index + 1}"></button>`;
+        }
+      },
+      on: {
+        init: updateHeroSlides,
+        slideChangeTransitionStart: updateHeroSlides
+      }
     });
 
-    function showSlide(index) {
-      activeSlide = (index + heroSlides.length) % heroSlides.length;
-      heroTrack.style.transform = `translateX(-${activeSlide * 100}%)`;
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      heroSlides.forEach((slide, slideIndex) => {
-        const isActive = slideIndex === activeSlide;
-        slide.setAttribute('aria-hidden', String(!isActive));
-        slide.inert = !isActive;
-        dots[slideIndex].setAttribute('aria-current', String(isActive));
-
-        const smoke = slide.querySelector('.slide-smoke');
-        if (!smoke) return;
-
-        if (isActive && !reduceMotion) {
-          smoke.play().catch(() => {});
-        } else {
-          smoke.pause();
-        }
-      });
-    }
-
-    function startAutoplay() {
-      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-      window.clearInterval(autoplayTimer);
-      autoplayTimer = window.setInterval(() => showSlide(activeSlide + 1), 5000);
-    }
-
-    heroSlider.classList.add('is-enhanced');
-    showSlide(0);
-    startAutoplay();
-    heroSlider.addEventListener('mouseenter', () => window.clearInterval(autoplayTimer));
-    heroSlider.addEventListener('mouseleave', startAutoplay);
-    heroSlider.addEventListener('focusin', () => window.clearInterval(autoplayTimer));
+    heroSlider.addEventListener('focusin', () => heroSwiper.autoplay.stop());
     heroSlider.addEventListener('focusout', (event) => {
-      if (!heroSlider.contains(event.relatedTarget)) startAutoplay();
+      if (!heroSlider.contains(event.relatedTarget) && !reduceMotion.matches) {
+        heroSwiper.autoplay.start();
+      }
+    });
+    reduceMotion.addEventListener('change', (event) => {
+      heroSwiper.params.speed = event.matches ? 0 : 800;
+      if (event.matches) {
+        heroSwiper.autoplay.stop();
+        heroSlider.querySelectorAll('.slide-smoke').forEach((smoke) => smoke.pause());
+      } else {
+        heroSwiper.autoplay.start();
+        updateHeroSlides(heroSwiper);
+      }
     });
   }
 }
@@ -384,7 +392,7 @@ document.addEventListener("DOMContentLoaded", () => {
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
-        scrub: 0.5,
+        scrub: true,
         invalidateOnRefresh: true,
         onUpdate(self) {
           const index = Math.min(
@@ -437,16 +445,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // KEYBOARD ACCESSIBILITY
   steps.forEach((step, index) => {
     step.addEventListener("focusin", () => activateStep(index));
-    step.addEventListener("mouseenter", () => {
-      if (window.innerWidth >= 768) {
-        activateStep(index);
-      }
-    });
   });
   activateStep(0);
   updateProgress(0);
-  window.addEventListener("load", () => ScrollTrigger.refresh(), {
-    once: true
-  });
-  window.addEventListener("resize", () => ScrollTrigger.refresh());
 });
