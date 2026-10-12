@@ -121,7 +121,7 @@ input {
   padding: 20px 32px;
   background: linear-gradient(90deg, #2c153f 0%, #4a1f77 38%, #3c2d5d 100%);
   background: linear-gradient(270deg, #2603fb17 0%, #dc06ff21 100%);
-  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+  clip-path: polygon(var(--skin-card-cut) 0, calc(100% - var(--skin-card-cut)) 0, 100% var(--skin-card-cut), 100% calc(100% - var(--skin-card-cut)), calc(100% - var(--skin-card-cut)) 100%, var(--skin-card-cut) 100%, 0 calc(100% - var(--skin-card-cut)), 0 var(--skin-card-cut));
 }
 
 .header-inner {
@@ -2041,10 +2041,12 @@ input {
 
 .popular-skin-card {
   position: relative;
+  isolation: isolate;
   min-width: 0;
   overflow: hidden;
+  --skin-card-cut: 15px;
   clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
-  background: linear-gradient(0deg, #1512250d 34.18%, rgba(171, 47, 254, 0.15) 100%);
+  background: transparent;
   transition: all .24s ease;
   backdrop-filter: blur(14px);
   height: 100%;
@@ -2052,9 +2054,38 @@ input {
   flex-direction: column;
 }
 
-.popular-skin-card:hover {
-background: linear-gradient(0deg, rgba(112, 0, 255, 0.12) 37.9%, rgba(171, 47, 254, 0.5) 100%);
+.popular-skin-card::before,
+.popular-skin-card::after {
+  position: absolute;
+  pointer-events: none;
+  content: "";
+}
 
+.popular-skin-card::before {
+  z-index: -2;
+  inset: 0;
+  background: linear-gradient(360deg, rgba(112, 0, 255, 0.175) 8.76%, rgba(171, 47, 254, 0.25) 100%);
+  clip-path: inherit;
+}
+
+.popular-skin-card::after {
+  z-index: -1;
+  inset: 1px;
+  background: var(--skin-card-fill, linear-gradient(0deg, #171326 34.18%, #2a163b 100%));
+  clip-path: polygon(
+    calc(var(--skin-card-cut) - 1px) 0,
+    calc(100% - var(--skin-card-cut) + 1px) 0,
+    100% calc(var(--skin-card-cut) - 1px),
+    100% calc(100% - var(--skin-card-cut) + 1px),
+    calc(100% - var(--skin-card-cut) + 1px) 100%,
+    calc(var(--skin-card-cut) - 1px) 100%,
+    0 calc(100% - var(--skin-card-cut) + 1px),
+    0 calc(var(--skin-card-cut) - 1px)
+  );
+}
+
+.popular-skin-card:hover {
+  --skin-card-fill: linear-gradient(0deg, #21143a 37.9%, #382052 100%);
 }
 
 .popular-skin-card:hover,
@@ -2364,7 +2395,7 @@ background: linear-gradient(0deg, rgba(112, 0, 255, 0.12) 37.9%, rgba(171, 47, 2
 @media (max-width:575px) {
   .popular-skin-actions a {
     padding: 9px 4px;
-    clip-path: polygon(7px 0, calc(100% - 7px) 0, 100% 7px, 100% calc(100% - 7px), calc(100% - 7px) 100%, 7px 100%, 0 calc(100% - 7px), 0 7px);
+    --skin-card-cut: 7px;
   }
   .popular-skin-card h3 {
     font-size: 14px;
