@@ -13,6 +13,94 @@ const dropData = [
   { meta: "Phosphor", name: "Phosphor" }
 ];
 
+// Fill the static Popular CS2 skin cards with catalogue data.
+(() => {
+  const grid = document.querySelector('#popularSkinsGrid');
+  if (!grid) return;
+
+  const skins = [
+    ['M4A4 | Spider Lily', 'Minimal Wear', '€84.99', '0.002398089884', '14.0'],
+    ['Specialist Gloves | The Oligarch', 'Minimal Wear', '€104.05', '0.002398089884', '9.5'],
+    ['The Professionals | Mantis', 'Minimal Wear', '€104.05', '0.002398089884', ''],
+    ['AK-47 | The Oligarch', 'Minimal Wear', '€78.02', '0.002398089884', ''],
+    ['Doppler | Ruby', 'Minimal Wear', '€49.99', '0.002398089884', ''],
+    ['★ Karambit | Doppler', 'Factory New', '€249.99', '0.001928440032', ''],
+    ['AWP | Green Energy', 'Minimal Wear', '€84.99', '0.002398089884', ''],
+    ['Sticker | The Verkkars', 'Holo', '€84.99', '0.002398089884', ''],
+    ['Glock-18 | Vogue', 'Minimal Wear', '€78.02', '0.002398089884', ''],
+    ['MP9 | Starlight Protector', 'Minimal Wear', '€49.99', '0.002398089884', ''],
+    ['USP-S | Whiteout', 'Minimal Wear', '€84.99', '0.002398089884', '12.6'],
+    ['AK-47 | Slate', 'Minimal Wear', '€84.99', '0.002398089884', ''],
+    ['M4A1-S | Blue Phosphor', 'Minimal Wear', '€84.99', '0.002398089884', ''],
+    ['USP-S | Neo-Noir', 'Minimal Wear', '€78.02', '0.002398089884', ''],
+    ['Specialist Gloves | Foundation', 'Minimal Wear', '€49.99', '0.002398089884', '9.5']
+  ];
+
+  const cards = grid.querySelectorAll('[data-skin-card]');
+  const cardKeychains = [
+    [5, 1, 2, 3, 4], [1, 4], [1], [1, 3], [1, 3, 4],
+    [1, 2, 3, 4], [1, 2, 3, 4], [1], [1, 4], [1, 2, 3],
+    [5, 1, 2, 3, 4], [1, 2, 3, 4], [1, 2, 3, 4], [1], [1, 2, 3, 4]
+  ];
+  const cardCharms = [
+    ['images/keychain-5.png'], [], [], [], [], [], [], [], [], [],
+    ['images/keychain-5.png'], [], [], [], []
+  ];
+  cards.forEach((card) => {
+    const index = Number(card.dataset.skinCard);
+    const skin = skins[index];
+    if (!skin) return;
+
+    const [name, condition, price, float, badge] = skin;
+    card.querySelector('[data-skin-name]').textContent = name;
+    card.querySelector('[data-skin-condition]').textContent = `${condition} (Sapphire)`;
+    card.querySelector('[data-skin-price]').textContent = price;
+    card.querySelector('[data-skin-float]').textContent = float;
+
+    const image = card.querySelector('[data-skin-image]');
+    image.src = `images/image-${index + 1}.png`;
+    image.alt = name;
+    card.querySelector('[data-skin-link]').setAttribute('aria-label', `View ${name}`);
+
+    card.querySelectorAll('[data-keychain]').forEach((keychain) => {
+      const keychainIndex = Number(keychain.dataset.keychain);
+      keychain.hidden = keychainIndex === 5 || !cardKeychains[index]?.includes(keychainIndex);
+      keychain.setAttribute('aria-label', `View ${name} keychain ${keychainIndex}`);
+    });
+
+    card.querySelectorAll('[data-charm-slot]').forEach((charm, charmIndex) => {
+      const imagePath = cardCharms[index]?.[charmIndex];
+      charm.hidden = !imagePath;
+      if (!imagePath) return;
+      charm.querySelector('[data-charm-image]').src = imagePath;
+      charm.setAttribute('aria-label', `View ${name} charm ${charmIndex + 1}`);
+    });
+
+    const badgeElement = card.querySelector('[data-skin-badge]');
+    badgeElement.textContent = badge;
+    badgeElement.hidden = !badge;
+  });
+
+  const timers = grid.querySelectorAll('.popular-skin-footer time');
+  let seconds = 12 * 3600 + 35 * 60 + 32;
+  window.setInterval(() => {
+    seconds = seconds > 0 ? seconds - 1 : 12 * 3600 + 35 * 60 + 32;
+    const formatted = [Math.floor(seconds / 3600), Math.floor(seconds / 60) % 60, seconds % 60]
+      .map(value => String(value).padStart(2, '0')).join(':');
+    timers.forEach(timer => { timer.textContent = formatted; });
+  }, 1000);
+})();
+
+// Respect reduced-motion preferences for the decorative section background.
+const popularSkinsVideo = document.querySelector('.popular-skins-video');
+if (popularSkinsVideo) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    popularSkinsVideo.pause();
+  } else {
+    popularSkinsVideo.play().catch(() => {});
+  }
+}
+
 // Reveal text and images as they enter view without changing page layout.
 (() => {
   const targets = 'h1, h2, h3, p, .bonus, .skin-action-link, .skin-art-label, .skin-price-tag, .nav-link, .currency-text, .slide-title, .slide-text, .card-info .title, img';
