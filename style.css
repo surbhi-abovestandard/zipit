@@ -725,18 +725,6 @@ input {
   .nav-mian-menu a {
     padding: 12px 4px;
   }
-}
-@media (max-width:575px) {
-  .topbar.is-scrolled {
-    right: 15px;
-    left: 15px;
-  }
-  .header-icon-btn {
-    width: 34px;
-    height: 34px;
-}
-}
-
   .header-inner {
     gap: 14px;
   }
@@ -805,11 +793,6 @@ input {
   .signin-panel .signin-btn {
     width: 100%;
   }
-
-  .currency-box {
-    font-size: 14px;
-  }
-
   .currency-flag,
   .currency-text {
     padding: 8px 11px;
@@ -817,6 +800,7 @@ input {
 
   .currency-box {
     clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+    font-size: 14px;
   }
 }
 
@@ -858,47 +842,6 @@ input {
   .nav-toggle {
     display: inline-flex;
   }
-
-  .nav-actions {
-    position: absolute;
-    top: calc(100% + 8px);
-    left: 0;
-    right: auto;
-    z-index: 40;
-    display: block;
-    width: min(280px, calc(100vw - 40px));
-    padding: 8px 14px;
-    background: #21162e;
-    border: 1px solid var(--panel-border);
-    box-shadow: 0 12px 28px rgba(7, 2, 20, 0.35);
-    visibility: hidden;
-    opacity: 0;
-    pointer-events: none;
-    transform: translateY(-6px);
-    transition: opacity .18s ease, transform .18s ease, visibility .18s;
-  }
-
-  .topbar.nav-open .nav-actions {
-    visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-    transform: translateY(0);
-  }
-
-  .nav-mian-menu {
-    flex-direction: column;
-    align-items: stretch;
-    gap: 0;
-  }
-
-  .nav-mian-menu a {
-    padding: 12px 4px;
-  }
-
-  .currency-flag {
-    padding: 6px 8px;
-  }
-
   .currency-text {
     display: none;
   }
@@ -907,8 +850,15 @@ input {
     padding: 0 15px;
   }
 }
-
-@media (max-width: 575px) {
+@media (max-width:575px) {
+  .topbar.is-scrolled {
+    right: 15px;
+    left: 15px;
+  }
+  .header-icon-btn {
+    width: 34px;
+    height: 34px;
+  }
   .brand-logo {
     width: 98px;
   }
@@ -1085,11 +1035,20 @@ input {
   position: relative;
   isolation: isolate;
   overflow: hidden;
-
-  /* Main background image */
   background:
-    url("./images/hero-bg-image.png") center center / cover no-repeat,
-    linear-gradient(100deg, #150a3a 0%, #1d0b52 45%, #240a5e 100%);
+    linear-gradient(100deg, rgba(21, 10, 58, .55) 0%, rgba(21, 10, 58, .18) 62%, rgba(21, 10, 58, .12) 100%),
+    url("./images/hero-bg-image-2.png") center center / cover no-repeat;
+}
+.hero-track > .slide:nth-child(2) {
+  background:
+    linear-gradient(100deg, rgba(21, 10, 58, .48) 0%, rgba(21, 10, 58, .14) 68%, rgba(21, 10, 58, .22) 100%),
+    url("./images/hero-bg-image-3.png") center center / cover no-repeat;
+}
+
+.hero-track > .slide:nth-child(3) {
+  background:
+    linear-gradient(100deg, rgba(21, 10, 58, .5) 0%, rgba(21, 10, 58, .16) 68%, rgba(21, 10, 58, .24) 100%),
+    url("./images/hero-bg-image.png") center center / cover no-repeat;
 }
 
 .slide::before {
@@ -1306,7 +1265,7 @@ input {
 @media (max-width: 991px) {
   .slide {
     min-height: 0;
-    background-position: left;
+    background-position: center center;
   }
 
   .slide::before {

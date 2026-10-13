@@ -484,11 +484,11 @@ if (heroSlider && window.Swiper) {
       fadeEffect: { crossFade: true },
       loop: true,
       speed: reduceMotion.matches ? 0 : 2500,
-      autoplay: reduceMotion.matches ? false : {
-        delay: 3000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true
-      },
+      // autoplay: reduceMotion.matches ? false : {
+      //   delay: 3000,
+      //   disableOnInteraction: false,
+      //   pauseOnMouseEnter: true
+      // },
       pagination: {
         el: heroDots,
         clickable: true,
