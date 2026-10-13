@@ -940,8 +940,8 @@ input {
   isolation: isolate;
   overflow: hidden;
   background:
-    linear-gradient(100deg, rgba(21, 10, 58, .55) 0%, rgba(21, 10, 58, .18) 62%, rgba(21, 10, 58, .12) 100%),
-    url("./images/hero-bg-image-2.png") center center / cover no-repeat;
+    linear-gradient(100deg, rgba(21, 10, 58, .5) 0%, rgba(21, 10, 58, .16) 68%, rgba(21, 10, 58, .24) 100%),
+    url("./images/hero-bg-image.png") center center / cover no-repeat;
 }
 .hero-track > .slide:nth-child(2) {
   background:
@@ -950,8 +950,8 @@ input {
 }
 .hero-track > .slide:nth-child(3) {
   background:
-    linear-gradient(100deg, rgba(21, 10, 58, .5) 0%, rgba(21, 10, 58, .16) 68%, rgba(21, 10, 58, .24) 100%),
-    url("./images/hero-bg-image.png") center center / cover no-repeat;
+    linear-gradient(100deg, rgba(21, 10, 58, .55) 0%, rgba(21, 10, 58, .18) 62%, rgba(21, 10, 58, .12) 100%),
+    url("./images/hero-bg-image-2.png") center center / cover no-repeat;
 }
 .slide::before {
   content: "";
