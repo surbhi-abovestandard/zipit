@@ -25,6 +25,29 @@ if (topbar) {
   };
   window.addEventListener("scroll", updateTopbarState, { passive: true });
   updateTopbarState();
+
+  const navToggle = topbar.querySelector(".nav-toggle");
+  const navPanel = topbar.querySelector("#primaryNavigation");
+  if (navToggle && navPanel) {
+    const setNavOpen = (open) => {
+      topbar.classList.toggle("nav-open", open);
+      navToggle.setAttribute("aria-expanded", String(open));
+      navToggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+    };
+
+    navToggle.addEventListener("click", () => {
+      setNavOpen(navToggle.getAttribute("aria-expanded") !== "true");
+    });
+    navPanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setNavOpen(false));
+    });
+    document.addEventListener("click", (event) => {
+      if (!topbar.contains(event.target)) setNavOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setNavOpen(false);
+    });
+  }
 }
 
 // Fill the static Popular CS2 skin cards with catalogue data.
