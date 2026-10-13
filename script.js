@@ -1,4 +1,23 @@
 
+// Smooth the page's native scroll and keep GSAP ScrollTrigger in sync.
+if (
+  window.Lenis &&
+  window.gsap &&
+  window.ScrollTrigger &&
+  !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+) {
+  gsap.registerPlugin(ScrollTrigger);
+  const lenis = new Lenis({
+    duration: 1.2,
+    smoothWheel: true,
+    anchors: true
+  });
+  window.lenis = lenis;
+  lenis.on("scroll", ScrollTrigger.update);
+  gsap.ticker.add((time) => lenis.raf(time * 1000));
+  gsap.ticker.lagSmoothing(0);
+}
+
 // Fill the static Popular CS2 skin cards with catalogue data.
 (() => {
   const grid = document.querySelector('#popularSkinsGrid');
