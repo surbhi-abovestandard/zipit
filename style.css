@@ -1247,8 +1247,7 @@ input {
 ======================================== */
 .trade-guide {
   position: relative;
-  isolation: isolate;
-  overflow: clip;
+  overflow: hidden;
   padding-block: 100px !important;
   background: url("images/sec-background-image.png") center / cover no-repeat;
 }
@@ -1655,14 +1654,14 @@ input {
     aspect-ratio: 1.25;
   }
 }
-
+/* 
 @media (min-width: 768px) {
   .trade-guide.is-pinned {
     min-height: 100vh;
     display: flex;
     align-items: center;
   }
-}
+} */
 
 @media (max-width: 767px) {
   .trade-guide.is-pinned {

@@ -481,6 +481,13 @@ document.addEventListener("DOMContentLoaded", () => {
   const tradeGuide = document.querySelector(".trade-guide");
   if (!tradeGuide || !window.gsap || !window.ScrollTrigger) return;
   gsap.registerPlugin(ScrollTrigger);
+  let refreshTimer;
+  const refreshAfterViewportChange = () => {
+    window.clearTimeout(refreshTimer);
+    refreshTimer = window.setTimeout(() => ScrollTrigger.refresh(), 250);
+  };
+  window.addEventListener("resize", refreshAfterViewportChange, { passive: true });
+  window.visualViewport?.addEventListener("resize", refreshAfterViewportChange, { passive: true });
   const steps = gsap.utils.toArray(".trade-step", tradeGuide);
   const shots = gsap.utils.toArray(".trade-shot", tradeGuide);
   const progress = tradeGuide.querySelector(".trade-rail-progress");
@@ -515,10 +522,11 @@ document.addEventListener("DOMContentLoaded", () => {
       const trigger = ScrollTrigger.create({
         trigger: tradeGuide,
         start: "top top",
-        end: () => `+=${window.innerHeight * steps.length}`,
+        end: () => `+=${(steps.length - 1) * 300}`,
         pin: true,
         pinSpacing: true,
         anticipatePin: 1,
+        refreshPriority: 1,
         scrub: true,
         invalidateOnRefresh: true,
         onUpdate(self) {
@@ -585,4 +593,8 @@ document.addEventListener("DOMContentLoaded", () => {
   });
   activateStep(0);
   updateProgress(0);
+  window.addEventListener("load", () => {
+    ScrollTrigger.refresh();
+    window.setTimeout(() => ScrollTrigger.refresh(), 500);
+  }, { once: true });
 });
