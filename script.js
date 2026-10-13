@@ -1,18 +1,4 @@
 
-const dropData = [
-  { meta: "Superconductor", name: "Superconductor" },
-  { meta: "Heat treated", name: "Heat treated" },
-  { meta: "Gamma Doppler (phase 1)", name: "Gamma Doppler (phase 1)" },
-  { meta: "Army sheen", name: "Army sheen" },
-  { meta: "Safety net", name: "Safety net" },
-  { meta: "Spectre", name: "Spectre" },
-  { meta: "Titan", name: "Titan" },
-  { meta: "Royal legion", name: "Royal legion" },
-  { meta: "Chromatic aberration", name: "Chromatic aberration" },
-  { meta: "Brass", name: "Brass" },
-  { meta: "Phosphor", name: "Phosphor" }
-];
-
 // Fill the static Popular CS2 skin cards with catalogue data.
 (() => {
   const grid = document.querySelector('#popularSkinsGrid');
@@ -151,6 +137,19 @@ const CARDS_PER_DROP = 2;
 const MAX_CARDS = 26;
 
 // ===== CREATE CARD =====
+const dropData = [
+  { meta: "Superconductor", name: "Superconductor" },
+  { meta: "Heat treated", name: "Heat treated" },
+  { meta: "Gamma Doppler (phase 1)", name: "Gamma Doppler (phase 1)" },
+  { meta: "Army sheen", name: "Army sheen" },
+  { meta: "Safety net", name: "Safety net" },
+  { meta: "Spectre", name: "Spectre" },
+  { meta: "Titan", name: "Titan" },
+  { meta: "Royal legion", name: "Royal legion" },
+  { meta: "Chromatic aberration", name: "Chromatic aberration" },
+  { meta: "Brass", name: "Brass" },
+  { meta: "Phosphor", name: "Phosphor" }
+];
 let skinImageIndex = 0;
 
 function createCard(item, bgIndex, isNew = false) {
@@ -434,6 +433,11 @@ if (heroSlider && window.Swiper) {
       fadeEffect: { crossFade: true },
       loop: true,
       speed: reduceMotion.matches ? 0 : 800,
+      autoplay: reduceMotion.matches ? false : {
+        delay: 5000,
+        disableOnInteraction: false,
+        pauseOnMouseEnter: true
+      },
       pagination: {
         el: heroDots,
         clickable: true,
