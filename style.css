@@ -117,11 +117,33 @@ input {
 }
 
 .topbar {
-  width: 100%;
+  margin: 0 20px 12px;
   padding: 20px 32px;
-  background: linear-gradient(90deg, #2c153f 0%, #4a1f77 38%, #3c2d5d 100%);
   background: linear-gradient(270deg, #2603fb17 0%, #dc06ff21 100%);
-  clip-path: polygon(var(--skin-card-cut) 0, calc(100% - var(--skin-card-cut)) 0, 100% var(--skin-card-cut), 100% calc(100% - var(--skin-card-cut)), calc(100% - var(--skin-card-cut)) 100%, var(--skin-card-cut) 100%, 0 calc(100% - var(--skin-card-cut)), 0 var(--skin-card-cut));
+  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+  transition: background 250ms ease, box-shadow 250ms ease, backdrop-filter 250ms ease;
+}
+
+.topbar.is-scrolled {
+  position: fixed;
+  max-width: 100%;
+  width: calc(100% - 40px);
+  top: 20px;
+  background: linear-gradient(90deg, #2c153f 0%, #4a1f77 38%, #3c2d5d 100%);
+  animation: 0.9s forwards smoothscroll;
+  left: 0;
+  z-index: 20;
+}
+
+@keyframes smoothscroll {
+  0% {
+    opacity: 0;
+    transform: translateY(-100%);
+}
+100% {
+    opacity: 1;
+    transform: translateY(0);
+}
 }
 
 .header-inner {
@@ -610,8 +632,9 @@ input {
 
 @media (max-width: 991px) {
   .topbar {
-    position: relative;
-    z-index: 20;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     clip-path: polygon(13px 0, calc(100% - 13px) 0, 100% 13px, 100% calc(100% - 13px), calc(100% - 13px) 100%, 13px 100%, 0 calc(100% - 13px), 0 13px);
   }
 
@@ -2035,7 +2058,7 @@ input {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: start;
-  gap: 14px;
+  gap: 30px 20px;
 }
 
 .popular-skin-card {

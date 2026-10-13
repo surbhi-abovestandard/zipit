@@ -18,6 +18,15 @@ if (
   gsap.ticker.lagSmoothing(0);
 }
 
+const topbar = document.querySelector(".topbar");
+if (topbar) {
+  const updateTopbarState = () => {
+    topbar.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+  window.addEventListener("scroll", updateTopbarState, { passive: true });
+  updateTopbarState();
+}
+
 // Fill the static Popular CS2 skin cards with catalogue data.
 (() => {
   const grid = document.querySelector('#popularSkinsGrid');
@@ -451,9 +460,9 @@ if (heroSlider && window.Swiper) {
       effect: 'fade',
       fadeEffect: { crossFade: true },
       loop: true,
-      speed: reduceMotion.matches ? 0 : 800,
+      speed: reduceMotion.matches ? 0 : 2500,
       autoplay: reduceMotion.matches ? false : {
-        delay: 5000,
+        delay: 3000,
         disableOnInteraction: false,
         pauseOnMouseEnter: true
       },
