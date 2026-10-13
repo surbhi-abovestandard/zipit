@@ -2328,25 +2328,13 @@ input {
   display: flex;
   width: max-content;
   align-items: center;
-  gap: 12px;
+  gap: 8px;
   margin: 28px auto 0;
-  padding: 10px 16px;
-  border-radius: 7px;
-  background: #51208b;
-  color: #fff;
-  font-size: 13px;
-  font-weight: 600;
-  transition: background .2s ease, transform .2s ease;
+  background: linear-gradient(262.76deg, #4B1887 16.36%, #4F1A82 88.58%);
 }
-
-.popular-skins-more:hover {
-  transform: translateY(-2px);
-  background: #7028ba;
-}
-
 .popular-skins-more span {
-  font-size: 20px;
-  line-height: 14px;
+  width: 20px;
+  height:18px;
 }
 
 /* @media (max-width: 767px) and (min-width:768px) {
