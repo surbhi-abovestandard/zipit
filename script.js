@@ -128,6 +128,59 @@ if (topbar) {
   }, 1000);
 })();
 
+// Use a Coverflow carousel for popular skins on compact screens only.
+(() => {
+  const grid = document.querySelector('#popularSkinsGrid');
+  if (!grid || !window.Swiper) return;
+
+  const compactViewport = window.matchMedia('(max-width: 767px)');
+  let slider = null;
+
+  const syncPopularSkinsSlider = () => {
+    if (compactViewport.matches && !slider) {
+      grid.classList.add('is-mobile-slider');
+      slider = new Swiper(grid, {
+        wrapperClass: 'popular-skins-track',
+        slideClass: 'popular-skin-card',
+        effect: 'coverflow',
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 8,
+        speed: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 550,
+        grabCursor: true,
+        watchSlidesProgress: true,
+        coverflowEffect: {
+          rotate: 0,
+          stretch: -16,
+          depth: 110,
+          modifier: 1.15,
+          slideShadows: false
+        },
+        pagination: {
+          el: grid.querySelector('.popular-skins-pagination'),
+          clickable: true,
+          bulletClass: 'popular-skin-dot',
+          bulletActiveClass: 'is-active',
+          renderBullet(index, className) {
+            return `<button type="button" class="${className}" aria-label="Go to skin ${index + 1}"></button>`;
+          }
+        },
+        keyboard: {
+          enabled: true,
+          onlyInViewport: true
+        }
+      });
+    } else if (!compactViewport.matches && slider) {
+      slider.destroy(true, true);
+      slider = null;
+      grid.classList.remove('is-mobile-slider');
+    }
+  };
+
+  syncPopularSkinsSlider();
+  compactViewport.addEventListener('change', syncPopularSkinsSlider);
+})();
+
 // Respect reduced-motion preferences for the decorative section background.
 const popularSkinsVideo = document.querySelector('.popular-skins-video');
 if (popularSkinsVideo) {
