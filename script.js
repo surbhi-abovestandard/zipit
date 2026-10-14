@@ -18,6 +18,38 @@ if (
   gsap.ticker.lagSmoothing(0);
 }
 
+const topbar = document.querySelector(".topbar");
+if (topbar) {
+  const updateTopbarState = () => {
+    topbar.classList.toggle("is-scrolled", window.scrollY > 24);
+  };
+  window.addEventListener("scroll", updateTopbarState, { passive: true });
+  updateTopbarState();
+
+  const navToggle = topbar.querySelector(".nav-toggle");
+  const navPanel = topbar.querySelector("#primaryNavigation");
+  if (navToggle && navPanel) {
+    const setNavOpen = (open) => {
+      topbar.classList.toggle("nav-open", open);
+      navToggle.setAttribute("aria-expanded", String(open));
+      navToggle.setAttribute("aria-label", open ? "Close navigation menu" : "Open navigation menu");
+    };
+
+    navToggle.addEventListener("click", () => {
+      setNavOpen(navToggle.getAttribute("aria-expanded") !== "true");
+    });
+    navPanel.querySelectorAll("a").forEach((link) => {
+      link.addEventListener("click", () => setNavOpen(false));
+    });
+    document.addEventListener("click", (event) => {
+      if (!topbar.contains(event.target)) setNavOpen(false);
+    });
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") setNavOpen(false);
+    });
+  }
+}
+
 // Fill the static Popular CS2 skin cards with catalogue data.
 (() => {
   const grid = document.querySelector('#popularSkinsGrid');
@@ -94,6 +126,59 @@ if (
       .map(value => String(value).padStart(2, '0')).join(':');
     timers.forEach(timer => { timer.textContent = formatted; });
   }, 1000);
+})();
+
+// Use a Coverflow carousel for popular skins on compact screens only.
+(() => {
+  const grid = document.querySelector('#popularSkinsGrid');
+  if (!grid || !window.Swiper) return;
+
+  const compactViewport = window.matchMedia('(max-width: 767px)');
+  let slider = null;
+
+  const syncPopularSkinsSlider = () => {
+    if (compactViewport.matches && !slider) {
+      grid.classList.add('is-mobile-slider');
+      slider = new Swiper(grid, {
+        wrapperClass: 'popular-skins-track',
+        slideClass: 'popular-skin-card',
+        effect: 'coverflow',
+        slidesPerView: 'auto',
+        centeredSlides: true,
+        spaceBetween: 8,
+        speed: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 550,
+        grabCursor: true,
+        watchSlidesProgress: true,
+        coverflowEffect: {
+          rotate: 0,
+          stretch: -16,
+          depth: 110,
+          modifier: 1.15,
+          slideShadows: false
+        },
+        pagination: {
+          el: grid.querySelector('.popular-skins-pagination'),
+          clickable: true,
+          bulletClass: 'popular-skin-dot',
+          bulletActiveClass: 'is-active',
+          renderBullet(index, className) {
+            return `<button type="button" class="${className}" aria-label="Go to skin ${index + 1}"></button>`;
+          }
+        },
+        keyboard: {
+          enabled: true,
+          onlyInViewport: true
+        }
+      });
+    } else if (!compactViewport.matches && slider) {
+      slider.destroy(true, true);
+      slider = null;
+      grid.classList.remove('is-mobile-slider');
+    }
+  };
+
+  syncPopularSkinsSlider();
+  compactViewport.addEventListener('change', syncPopularSkinsSlider);
 })();
 
 // Respect reduced-motion preferences for the decorative section background.
@@ -451,12 +536,12 @@ if (heroSlider && window.Swiper) {
       effect: 'fade',
       fadeEffect: { crossFade: true },
       loop: true,
-      speed: reduceMotion.matches ? 0 : 800,
-      autoplay: reduceMotion.matches ? false : {
-        delay: 5000,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: true
-      },
+      speed: reduceMotion.matches ? 0 : 2500,
+      // autoplay: reduceMotion.matches ? false : {
+      //   delay: 3000,
+      //   disableOnInteraction: false,
+      //   pauseOnMouseEnter: true
+      // },
       pagination: {
         el: heroDots,
         clickable: true,
