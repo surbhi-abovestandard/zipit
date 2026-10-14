@@ -1457,47 +1457,32 @@ input {
   display: grid;
   place-items: center;
   overflow: hidden;
-  border: 1px solid rgba(174, 73, 255, 0.35);
-  border-radius: 18px;
-  background: rgba(19, 5, 33, 0.76);
-  box-shadow:
+  border: 0;
+  background: linear-gradient(135deg, rgba(198, 114, 255, .82), rgba(112, 0, 255, .42) 55%, rgba(196, 93, 255, .72));
+  /* box-shadow:
     0 24px 70px rgba(0, 0, 0, 0.34),
-    inset 0 0 40px rgba(114, 0, 255, 0.08);
-}
-.trade-visual-glow {
-  position: absolute;
-  inset: 20% 14%;
-  border-radius: 50%;
-  background: #8b1eff;
-  filter: blur(70px);
-  opacity: 0.14;
-  animation: tradeVisualGlow 6s ease-in-out infinite alternate;
-}
-@keyframes tradeVisualGlow {
-  to {
-    transform: translate(7%, -5%) scale(1.12);
-    opacity: 0.27;
-  }
+    inset 0 0 40px rgba(114, 0, 255, 0.08); */
+    clip-path: polygon(20px 0, calc(100% - 20px) 0, 100% 20px, 100% calc(100% - 20px), calc(100% - 20px) 100%, 20px 100%, 0 calc(100% - 20px), 0 20px);
 }
 .trade-shot {
   position: absolute;
-  inset: 0;
+  inset: 1px;
+  clip-path: polygon(19px 0, calc(100% - 19px) 0, 100% 19px, 100% calc(100% - 19px), calc(100% - 19px) 100%, 19px 100%, 0 calc(100% - 19px), 0 19px);
   display: grid;
   place-items: center;
   padding: 0;
   opacity: 0;
   visibility: hidden;
-  transform: translateY(12px) scale(0.98);
   transition:
     opacity 0.45s ease,
     transform 0.55s cubic-bezier(0.2, 0.75, 0.25, 1),
     visibility 0.45s;
+
 }
 .trade-shot.is-active {
   z-index: 1;
   opacity: 1;
   visibility: visible;
-  transform: translateY(0) scale(1);
 }
 .trade-shot img {
   display: block;
@@ -1505,18 +1490,14 @@ input {
   height: 100%;
   object-fit: cover;
 }
-.trade-shot[data-visual="1"] img {
-  transform: scale(1.045);
-  filter: hue-rotate(15deg) brightness(1.1);
-}
 .trade-shot[data-visual="2"] img {
-  transform: scale(1.09);
   filter: hue-rotate(-12deg) brightness(1.15);
 }
 .trade-visual::after {
   position: absolute;
   z-index: 2;
-  inset: 0;
+  inset: 1px;
+  clip-path: polygon(19px 0, calc(100% - 19px) 0, 100% 19px, 100% calc(100% - 19px), calc(100% - 19px) 100%, 19px 100%, 0 calc(100% - 19px), 0 19px);
   content: "";
   pointer-events: none;
   border-radius: inherit;
@@ -2127,7 +2108,6 @@ input {
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
-  transition: height .2s ease, opacity .2s ease;
 }
 .popular-skin-card:hover .popular-skin-actions {
   height: auto;
