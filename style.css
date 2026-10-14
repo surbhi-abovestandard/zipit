@@ -941,38 +941,21 @@ input {
   overflow: hidden;
   background:
     linear-gradient(100deg, rgba(21, 10, 58, .5) 0%, rgba(21, 10, 58, .16) 68%, rgba(21, 10, 58, .24) 100%),
-    url("./images/hero-bg-image.png") center center / cover no-repeat;
+    url("./images/Group\ 1272628424.png") center center / cover no-repeat;
 }
 .hero-track>.slide:nth-child(2) {
   background:
     linear-gradient(100deg, rgba(21, 10, 58, .48) 0%, rgba(21, 10, 58, .14) 68%, rgba(21, 10, 58, .22) 100%),
-    url("./images/hero-bg-image-3.png") center center / cover no-repeat;
+    url("./images/Group\ 1272628426.png") center center / cover no-repeat;
 }
 .hero-track>.slide:nth-child(3) {
   background:
     linear-gradient(100deg, rgba(21, 10, 58, .55) 0%, rgba(21, 10, 58, .18) 62%, rgba(21, 10, 58, .12) 100%),
-    url("./images/hero-bg-image-2.png") center center / cover no-repeat;
+    url("./images/Group\ 1272628428.png") center center / cover no-repeat;
 }
-.slide::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background: linear-gradient(90deg, transparent 0%, transparent 25%, rgba(21, 10, 58, 0.12) 32%, rgb(21 10 58 / 99%) 38%, rgba(21, 10, 58, 0.78) 43%, rgba(21, 10, 58, 0.96) 48%, transparent 58%), url(./images/hero-left-img.png) left center / auto 100% no-repeat;
-  -webkit-mask-image: linear-gradient(90deg,
-      #000 0%,
-      #000 28%,
-      rgba(0, 0, 0, 0.9) 36%,
-      rgba(0, 0, 0, 0.45) 44%,
-      transparent 52%);
-  mask-image: linear-gradient(90deg,
-      #000 0%,
-      #000 28%,
-      rgba(0, 0, 0, 0.9) 36%,
-      rgba(0, 0, 0, 0.45) 44%,
-      transparent 52%);
-}
+ .slide-media {
+  display:none
+ }
 .slide::after {
   position: absolute;
   top: 0;
@@ -1050,21 +1033,7 @@ input {
   height: 100%;
   min-height: 520px;
 }
-.slide-media {
-  width: 45%;
-  z-index: 2;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding-right: 100px;
-}
-.slide-media img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-  object-position: center right;
-  display: block;
-}
+
 /* Replay text and artwork reveals whenever a carousel slide becomes active. */
 .hero-slider.is-enhanced .swiper-slide-active .slide-title {
   animation: heroTextReveal 650ms cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -1132,20 +1101,78 @@ input {
     padding: 48px 0 64px;
   }
 }
-@media (max-width:1150px) {
+@media (max-width:1199px) and (min-width:992px) {
   .slide-media {
-    padding: 0px;
+    width: 45%;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .slide-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center right;
+    display: block;
+  }
+  .hero-track>.slide:nth-child(1) {
+    background:
+    linear-gradient(100deg, rgba(21, 10, 58, .5) 0%, rgba(21, 10, 58, .16) 68%, rgba(21, 10, 58, .24) 100%),
+    url("./images/hero-bg-image.png") center center / cover no-repeat;
+  }
+  .hero-track>.slide:nth-child(1)::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    background: linear-gradient(90deg, transparent 0%, transparent 25%, rgba(21, 10, 58, 0.12) 32%, rgb(21 10 58 / 99%) 38%, rgba(21, 10, 58, 0.78) 43%, rgba(21, 10, 58, 0.96) 48%, transparent 58%), url(./images/hero-left-img.png) left center / auto 100% no-repeat;
+    -webkit-mask-image: linear-gradient(90deg,
+        #000 0%,
+        #000 28%,
+        rgba(0, 0, 0, 0.9) 36%,
+        rgba(0, 0, 0, 0.45) 44%,
+        transparent 52%);
+    mask-image: linear-gradient(90deg,
+        #000 0%,
+        #000 28%,
+        rgba(0, 0, 0, 0.9) 36%,
+        rgba(0, 0, 0, 0.45) 44%,
+        transparent 52%);
   }
 }
 @media (max-width: 991px) {
   .slide {
     min-height: 0;
-    background-position: center center;
+    background: linear-gradient(118deg, #0d0919 0%, #170b2a 48%, #0c1025 100%);
   }
   .slide::before {
-    background: none;
+    content: "";
+    position: absolute;
+    inset: -30% -20%;
+    z-index: 1;
+    pointer-events: none;
+    background:
+      radial-gradient(ellipse 48% 70% at 76% 48%, rgba(119, 31, 255, .55), transparent 72%),
+      radial-gradient(ellipse 52% 72% at 18% 95%, rgba(40, 75, 202, .38), transparent 72%),
+      radial-gradient(ellipse 36% 45% at 50% 0%, rgba(192, 36, 255, .2), transparent 72%),
+      repeating-linear-gradient(132deg, transparent 0 62px, rgba(190, 140, 255, .045) 63px, transparent 65px);
+    filter: blur(17px);
+    opacity: .95;
+    animation: hero-mobile-aurora 13s ease-in-out infinite alternate;
     -webkit-mask-image: none;
     mask-image: none;
+  }
+  .hero-track>.slide:nth-child(1),
+  .hero-track>.slide:nth-child(2),
+  .hero-track>.slide:nth-child(3) {
+    background: linear-gradient(118deg, #0d0919 0%, #170b2a 48%, #0c1025 100%);
+  }
+  @keyframes hero-mobile-aurora {
+    0% { transform: translate3d(-5%, 2%, 0) scale(.94) rotate(-2deg); opacity: .68; }
+    50% { opacity: 1; }
+    100% { transform: translate3d(5%, -3%, 0) scale(1.08) rotate(2deg); opacity: .82; }
   }
   .hero-slide-inner {
     flex-direction: column;
@@ -1153,10 +1180,10 @@ input {
     justify-content: center;
     gap: 22px;
     height: auto;
-    min-height: 0;
+    min-height: 300px;
   }
   .slide::before {
-    content: unset;
+    content: "";
   }
   .slide-content {
     max-width: 100%;
@@ -1216,6 +1243,9 @@ input {
     transform: none;
   }
   .slide::after {
+    animation: none;
+  }
+  .slide::before {
     animation: none;
   }
   .hero-slider.is-enhanced .swiper-slide-active .slide-title,
