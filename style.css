@@ -1863,9 +1863,9 @@ input {
   position: relative;
   isolation: isolate;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
   --skin-card-cut: 15px;
-  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+  clip-path: none;
   background: transparent;
   transition: all .24s ease;
   backdrop-filter: blur(14px);
@@ -1882,7 +1882,7 @@ input {
   z-index: -2;
   inset: 0;
   background: linear-gradient(360deg, rgba(112, 0, 255, 0.175) 8.76%, rgba(171, 47, 254, 0.25) 100%);
-  clip-path: inherit;
+  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
 }
 .popular-skin-card::after {
   z-index: -1;
@@ -1898,6 +1898,12 @@ input {
     0 calc(100% - var(--skin-card-cut) + 1px),
     0 calc(var(--skin-card-cut) - 1px)
   );
+}
+.popular-skin-card:hover::before,
+.popular-skin-card:focus-within::before,
+.popular-skin-card:hover::after,
+.popular-skin-card:focus-within::after {
+  bottom: -58px;
 }
 .popular-skin-card:hover {
   --skin-card-fill: linear-gradient(0deg, #21143a 37.9%, #382052 100%);
@@ -2078,19 +2084,25 @@ input {
   color: rgba(35, 123, 255, 1);
 }
 .popular-skin-actions {
+  position: absolute;
+  z-index: 2;
+  top: 100%;
+  right: 0;
+  left: 0;
   display: flex;
   align-items: center;
   gap: 5px;
-  margin-top: 15px;
+  margin-top: 0;
   height: 0;
+  padding: 0 16px 8px;
+  box-sizing: border-box;
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
   transition: height .2s ease, opacity .2s ease;
 }
-.popular-skin-card:hover .popular-skin-actions,
-.popular-skin-card:focus-within .popular-skin-actions {
-  height: 46px;
+.popular-skin-card:hover .popular-skin-actions {
+  height: auto;
   opacity: 1;
   pointer-events: auto;
 }
@@ -2134,8 +2146,15 @@ input {
   }
 }
 @media (max-width: 767px) {
+  .popular-skin-card:hover::before,
+  .popular-skin-card:focus-within::before,
+  .popular-skin-card:hover::after,
+  .popular-skin-card:focus-within::after {
+    bottom: 0;
+  }
   .popular-skin-actions {
     position: static;
+    padding: 0;
     height: auto;
     opacity: 1;
     pointer-events: auto;
