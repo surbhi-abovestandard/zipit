@@ -702,3 +702,46 @@ document.addEventListener("DOMContentLoaded", () => {
     window.setTimeout(() => ScrollTrigger.refresh(), 500);
   }, { once: true });
 });
+
+// FAQ accordion: one open item on mobile, one per column on wider screens.
+const faqColumns = Array.from(document.querySelectorAll(".faq-column"));
+const faqQuestions = faqColumns.flatMap((column) => Array.from(column.querySelectorAll(".faq-question")));
+
+function setFaqOpen(question, isOpen) {
+  const answer = document.getElementById(question.getAttribute("aria-controls"));
+  question.setAttribute("aria-expanded", String(isOpen));
+  question.closest(".faq-item")?.classList.toggle("is-open", isOpen);
+  if (answer) answer.hidden = !isOpen;
+}
+
+faqColumns.forEach((column) => {
+  const questions = Array.from(column.querySelectorAll(".faq-question"));
+  questions.forEach((question) => {
+    question.addEventListener("click", () => {
+      const shouldOpen = question.getAttribute("aria-expanded") !== "true";
+      const affectedQuestions = window.matchMedia("(max-width: 767px)").matches
+        ? faqQuestions
+        : questions;
+      affectedQuestions.forEach((item) => setFaqOpen(item, item === question && shouldOpen));
+    });
+  });
+});
+
+let faqWasMobile = null;
+function setFaqDefaultsForViewport() {
+  if (!faqQuestions.length) return;
+  const isMobile = window.matchMedia("(max-width: 767px)").matches;
+  if (faqWasMobile === isMobile) return;
+  faqWasMobile = isMobile;
+  if (isMobile) {
+    faqQuestions.forEach((question, index) => setFaqOpen(question, index === 0));
+    return;
+  }
+  faqColumns.forEach((column) => {
+    const questions = Array.from(column.querySelectorAll(".faq-question"));
+    questions.forEach((question, index) => setFaqOpen(question, index === 0));
+  });
+}
+
+setFaqDefaultsForViewport();
+window.addEventListener("resize", setFaqDefaultsForViewport);
