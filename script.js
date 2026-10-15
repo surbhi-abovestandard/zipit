@@ -191,6 +191,21 @@ if (popularSkinsVideo) {
   }
 }
 
+// Reveal the market checker extension section when it enters the viewport.
+const extensionSection = document.querySelector('.extension-section');
+if (extensionSection && 'IntersectionObserver' in window) {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    extensionSection.classList.add('is-visible');
+  } else {
+    const extensionObserver = new IntersectionObserver((entries) => {
+      if (!entries.some((entry) => entry.isIntersecting)) return;
+      extensionSection.classList.add('is-visible');
+      extensionObserver.disconnect();
+    }, { threshold: 0.2 });
+    extensionObserver.observe(extensionSection);
+  }
+}
+
 // Reveal text and images as they enter view without changing page layout.
 (() => {
   const targets = 'h1, h2, h3, p, .bonus, .skin-action-link, .skin-art-label, .skin-price-tag, .nav-link, .currency-text, .slide-title, .slide-text, .card-info .title, img';
