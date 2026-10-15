@@ -1569,7 +1569,6 @@ input {
     gap: 28px;
   }
   .trade-visual {
-    grid-row: 1;
     aspect-ratio: 1.42;
   }
   .trade-step {

@@ -618,9 +618,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
   const mm = gsap.matchMedia();
-  // DESKTOP: PINNED SCROLL STORY
+  // Keep the pinned scroll story on tablet and desktop widths (768px+).
   mm.add(
-    "(min-width: 768px) and (prefers-reduced-motion: no-preference)",
+    "(min-width: 768px)",
     () => {
       tradeGuide.classList.add("is-pinned");
       const trigger = ScrollTrigger.create({
@@ -657,38 +657,16 @@ document.addEventListener("DOMContentLoaded", () => {
       };
     }
   );
-  // MOBILE: NORMAL SCROLLING
-  mm.add("(max-width: 767px)", () => {
-    if (!("IntersectionObserver" in window)) return;
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort(
-            (a, b) =>
-              Math.abs(a.boundingClientRect.top - window.innerHeight * 0.48) -
-              Math.abs(b.boundingClientRect.top - window.innerHeight * 0.48)
-          );
-        if (visible.length) {
-          activateStep(Number(visible[0].target.dataset.step));
-        }
-      },
-      {
-        rootMargin: "-30% 0px -35% 0px",
-        threshold: 0
-      }
-    );
-    steps.forEach((step) => observer.observe(step));
-    return () => observer.disconnect();
-  });
-  // KEYBOARD ACCESSIBILITY
+  // Desktop changes with pinned scroll; mobile changes only on explicit selection.
+  const desktopViewport = window.matchMedia("(min-width: 768px)");
   steps.forEach((step, index) => {
-    step.addEventListener("focusin", () => activateStep(index));
     step.addEventListener("click", () => {
+      if (desktopViewport.matches) return;
       activateStep(index);
       updateProgress(steps.length > 1 ? index / (steps.length - 1) : 0);
     });
     step.addEventListener("keydown", (event) => {
+      if (desktopViewport.matches) return;
       if (event.key !== "Enter" && event.key !== " ") return;
       event.preventDefault();
       activateStep(index);
