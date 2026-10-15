@@ -1597,27 +1597,33 @@ input {
   position: relative;
   display: flex;
   align-items: center;
-  overflow: hidden;
+  /* overflow: hidden; */
   isolation: isolate;
   padding: 25px clamp(20px, 3vw, 40px);
-  background-color: #211a36;
-  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
+  /* background-color: transparent; */
+  /* clip-path: polygon(15px 0, calc(100% - 1 5px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px); */
 }
 .skin-action-card::before {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    content: "";
+    pointer-events: none;
+    background: linear-gradient(135deg, rgb(92 47 122 / 80%), rgb(73 24 115 / 55%));
+    clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
+    /* background: linear-gradient(0deg, #1C1933, #1C1933);linear-gradient(0deg, rgba(171, 47, 254, 0.15) -11.91%, rgba(21, 18, 37, 0.05) 41.03%); */
+}
+.skin-action-card::after {
   position: absolute;
   z-index: 0;
-  inset: 0;
+  inset: 1px;
   content: "";
   background-position: center;
-  background-size: cover;
-  opacity: 1;
+  background-size: 100% 100%;
+  background-blend-mode: screen;
+  clip-path: polygon(13px 0, calc(100% - 13px) 0, 100% 13px, 100% calc(100% - 13px), calc(100% - 13px) 100%, 13px 100%, 0 calc(100% - 13px), 0 13px);
+  background-image: linear-gradient(0deg, #1C1933, #1C1933),linear-gradient(0deg, rgba(171, 47, 254, 0.15) -11.91%, rgba(21, 18, 37, 0.05) 41.03%), url("images/invetory-left-bg=img.png");;
   pointer-events: none;
-}
-.skin-action-buy::before {
-  background-image: linear-gradient(90deg, rgba(32, 26, 54, .68) 0%, rgba(32, 26, 54, .55) 48%, rgba(32, 26, 54, .72) 100%), url("images/invetory-left-bg=img.png");
-}
-.skin-action-sell::before {
-  background-image: linear-gradient(90deg, rgba(32, 26, 54, .68) 0%, rgba(32, 26, 54, .55) 48%, rgba(32, 26, 54, .72) 100%), url("images/invetory-right-bg-img.png");
 }
 .skin-action-copy {
   position: relative;
@@ -1676,6 +1682,8 @@ input {
 }
 .skin-action-art img {
   align-self: flex-end;
+      position: relative;
+    z-index: 1;
 }
 .skin-art-label {
   position: absolute;
@@ -2143,6 +2151,11 @@ input {
 .popular-skins-more span {
   width: 20px;
   height: 18px;
+}
+@media (min-width:768px) {
+  .popular-skins-grid {
+    overflow: unset ;
+  }
 }
 @media (max-width: 991px) and (min-width:768px) {
   .popular-skins-grid {
