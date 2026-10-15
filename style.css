@@ -76,7 +76,7 @@ body {
   font-family: "Satoshi";
   background: var(--bg);
   color: var(--text);
-  padding-top: 20px;
+  padding-top: 10px;
 }
 a {
   text-decoration: none;
@@ -112,7 +112,7 @@ input {
   position: relative;
   isolation: isolate;
   z-index: 100;
-  margin: 0 20px 12px;
+  margin: 0 10px 12px;
   padding: 20px 32px;
   background: transparent;
   transition: background 250ms ease, box-shadow 250ms ease, backdrop-filter 250ms ease;
@@ -130,11 +130,11 @@ input {
   position: fixed;
   max-width: none;
   width: auto;
-  top: 20px;
+  top: 10px;
   background: transparent;
   animation: 0.9s forwards smoothscroll;
-  right: 20px;
-  left: 20px;
+  right: 10px;
+  left: 10px;
   margin: 0;
   z-index: 100;
 }
@@ -197,6 +197,7 @@ input {
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.4s ease;
+      transition-delay: 0s;
     }
     &:hover::after,
     &:focus-visible::after {
@@ -380,21 +381,23 @@ input {
   cursor: pointer;
   overflow: hidden;
   transition:
-    transform 0.65s ease,
-    box-shadow 0.65s ease,
-    filter 0.65s ease;
+    transform 0.18s ease,
+    box-shadow 0.18s ease,
+    filter 0.18s ease;
 }
 .common-btn::before {
   content: "";
   position: absolute;
-  inset: 0;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
   z-index: -1;
   background: linear-gradient(110deg,
       transparent 20%,
       rgba(255, 255, 255, 0.4) 50%,
       transparent 80%);
-  transform: translateX(-130%);
-  transition: transform 1.5s ease;
+  transition: left 0.35s ease;
   pointer-events: none;
 }
 /* Hover effect */
@@ -405,7 +408,7 @@ input {
     0 0 16px rgba(171, 47, 254, 0.3);
 }
 .common-btn:hover::before {
-  transform: translateX(130%);
+  left: 100%;
 }
 .steam-icon {
   width: 24px;
@@ -417,7 +420,6 @@ input {
   align-items: stretch;
   width: 100%;
   overflow: hidden;
-  padding-top: 12px;
   padding-bottom: 20px;
   padding-left: 20px;
 }
@@ -457,9 +459,6 @@ input {
   pointer-events: none;
   transition: transform 0.65s cubic-bezier(0.2, 0.75, 0.25, 1);
 }
-.drop-card:hover .drop-item-image {
-  transform: translateX(-50%) perspective(700px) rotateY(180deg);
-}
 @media (prefers-reduced-motion: reduce) {
   .drop-item-image {
     transition: none;
@@ -471,6 +470,7 @@ input {
   min-height: 115px;
   overflow: hidden;
   isolation: isolate;
+  cursor:pointer;
 }
 .drop-card .visual {
   position: absolute;
@@ -842,7 +842,7 @@ input {
 ================================================================*/
 .trust-strip-section {
   background: #151221 url("images/sec-background-image.png") center / cover no-repeat;
-  padding-block: 80px;
+  padding-block: 80px !important;
 }
 .trust-strip {
   display: flex;
@@ -946,12 +946,17 @@ input {
 .hero-track>.slide:nth-child(2) {
   background:
     linear-gradient(100deg, rgba(21, 10, 58, .48) 0%, rgba(21, 10, 58, .14) 68%, rgba(21, 10, 58, .22) 100%),
-    url("./images/Group\ 1272628426.png") center center / cover no-repeat;
+    url("./images/hero-bg-image-2.png") center center / cover no-repeat;
 }
 .hero-track>.slide:nth-child(3) {
   background:
     linear-gradient(100deg, rgba(21, 10, 58, .55) 0%, rgba(21, 10, 58, .18) 62%, rgba(21, 10, 58, .12) 100%),
-    url("./images/Group\ 1272628428.png") center center / cover no-repeat;
+    url("./images/hero-bg-image-3.png") center center / cover no-repeat;
+}
+.hero-track>.slide:nth-child(4) {
+  background:
+    linear-gradient(100deg, rgba(21, 10, 58, .18) 0%, rgba(21, 10, 58, .12) 45%, rgba(21, 10, 58, .08) 100%),
+    url("./images/hero-bg-image-4.png") center center / cover no-repeat;
 }
 .slide-media {
   display: none
@@ -1168,6 +1173,11 @@ input {
   .hero-track>.slide:nth-child(3) {
     background: linear-gradient(118deg, #0d0919 0%, #170b2a 48%, #0c1025 100%);
   }
+  .hero-track>.slide:nth-child(4) {
+    background:
+      linear-gradient(90deg, rgba(13, 9, 25, .92) 0%, rgba(23, 11, 42, .82) 62%, rgba(12, 16, 37, .55) 100%),
+      url("./images/Group%201272628429.png") 68% center / cover no-repeat;
+  }
   @keyframes hero-mobile-aurora {
     0% {
       transform: translate3d(-5%, 2%, 0) scale(.94) rotate(-2deg);
@@ -1272,7 +1282,7 @@ input {
 }
 @media (min-width: 768px) {
   .trade-guide {
-    min-height: 100vh;
+    min-height: 100vh; 
     display: flex;
     align-items: center;
     margin-block: 0;
@@ -2487,7 +2497,7 @@ input {
   isolation: isolate;
   display: flex;
   align-items: center;
-  height: 400px;
+  height: 430px;
   margin: 0 auto;
   overflow: hidden;
   background: #241047;
@@ -2926,7 +2936,7 @@ input {
   z-index: 1;
 }
 .extension-intro {
-  max-width: 610px;
+  max-width: 690px;
   color: #e8e2ef;
   font-size: clamp(16px, 1.45vw, 25px);
   line-height: 1.4;
@@ -2974,7 +2984,7 @@ input {
   background: linear-gradient(261.18deg, #4B1887 21.89%, #4F1A82 86.44%);
 }
 .extension-product-frame {
-  width: min(100%, 380px);
+  width: min(100%, 345px);
   justify-self: end;
   padding: 1px;
   background: linear-gradient(145deg, rgb(92 32 137 / 80%), rgb(63 31 97 / 52%));
@@ -3028,17 +3038,17 @@ input {
 .extension-section.is-visible .extension-heading h2 {
   animation: extensionHeadingIn 650ms cubic-bezier(.2, .75, .25, 1) both;
 }
-x .extension-section.is-visible .extension-copy {
+.extension-section.is-visible .extension-copy {
   animation: extensionCopyIn 700ms 100ms cubic-bezier(.2, .75, .25, 1) both;
 }
 .extension-section.is-visible .extension-product-frame {
   animation: extensionCardIn 750ms 180ms cubic-bezier(.2, .75, .25, 1) both;
 }
 .extension-section.is-visible .extension-download {
-  animation: extensionButtonIn 550ms 280ms cubic-bezier(.2, .75, .25, 1) both;
+  animation: extensionButtonIn 550ms 0ms cubic-bezier(.2, .75, .25, 1) both;
 }
 .extension-section.is-visible .extension-download-firefox {
-  animation-delay: 380ms;
+  animation-delay: 0ms !important;
 }
 @keyframes extensionHeadingIn {
   from {
@@ -3167,11 +3177,6 @@ x .extension-section.is-visible .extension-copy {
 .footer-brand {
   display: inline-flex;
   align-items: center;
-}
-.footer-brand img {
-  display: block;
-  width: 154px;
-  height: auto;
 }
 .footer-description {
   margin-top: 24px;
