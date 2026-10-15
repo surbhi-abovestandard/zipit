@@ -398,89 +398,61 @@ const currencies = [
   }
 ];
 
-const dropdown = document.querySelector(".currency-dropdown");
+const currencyDropdowns = Array.from(document.querySelectorAll(".currency-dropdown"));
 
-if (dropdown) {
+currencyDropdowns.forEach((dropdown) => {
   const box = dropdown.querySelector(".currency-box");
-  const menu = dropdown.querySelector("#currencyMenu");
-  const currencyText = dropdown.querySelector("#currencyText");
-  const currencyFlag = dropdown.querySelector("#currencyFlag");
+  const menu = dropdown.querySelector(".currency-menu");
+  const currencyText = dropdown.querySelector(".currency-text");
+  if (!box || !menu || !currencyText) return;
 
-  if (box && menu && currencyText && currencyFlag) {
-
-    // Generate options dynamically
-    currencies.forEach((currency) => {
-      const option = document.createElement("button");
-
-      option.type = "button";
-
-      option.innerHTML = `
-        <img src="${currency.flag}" alt="${currency.name}">
-        <span>${currency.symbol} ${currency.code}</span>
-      `;
-
-      option.addEventListener("click", (event) => {
-        event.stopPropagation();
-
-        currencyText.textContent = `${currency.symbol} ${currency.code}`;
-        currencyFlag.src = currency.flag;
-        currencyFlag.alt = `${currency.name} Flag`;
-
-        menu.classList.remove("show");
-        box.setAttribute("aria-expanded", "false");
-
-        console.log("Selected:", currency);
-      });
-
-      menu.appendChild(option);
-    });
-
-    // Move dropdown menu outside the header/parent
-    document.body.appendChild(menu);
-
-    // Position menu below currency button
-    const positionMenu = () => {
-      const rect = box.getBoundingClientRect();
-
-      menu.style.left = `${rect.right - menu.offsetWidth}px`;
-      menu.style.top = `${rect.bottom + 8}px`;
-    };
-
-    // Open / close
-    box.addEventListener("click", (event) => {
+  currencies.forEach((currency) => {
+    const option = document.createElement("button");
+    option.type = "button";
+    option.innerHTML = `<img src="${currency.flag}" alt="${currency.name}"><span>${currency.symbol} ${currency.code}</span>`;
+    option.addEventListener("click", (event) => {
       event.stopPropagation();
-
-      const isOpen = menu.classList.toggle("show");
-
-      if (isOpen) {
-        positionMenu();
-      }
-
-      box.setAttribute("aria-expanded", String(isOpen));
+      document.querySelectorAll(".currency-text").forEach((text) => {
+        text.textContent = `${currency.symbol} ${currency.code}`;
+      });
+      document.querySelectorAll("#currencyFlag").forEach((flag) => {
+        flag.src = currency.flag;
+        flag.alt = `${currency.name} Flag`;
+      });
+      document.querySelectorAll(".currency-menu").forEach((currencyMenu) => currencyMenu.classList.remove("show"));
+      document.querySelectorAll(".currency-box").forEach((currencyBox) => currencyBox.setAttribute("aria-expanded", "false"));
     });
+    menu.appendChild(option);
+  });
 
-    // Close when clicking outside
-    document.addEventListener("click", (event) => {
-      if (!menu.contains(event.target) && !box.contains(event.target)) {
-        menu.classList.remove("show");
-        box.setAttribute("aria-expanded", "false");
-      }
-    });
+  document.body.appendChild(menu);
+  const positionMenu = () => {
+    const rect = box.getBoundingClientRect();
+    const menuHeight = menu.offsetHeight;
+    const openAbove = dropdown.classList.contains("footer-currency-dropdown") || rect.bottom + menuHeight + 8 > window.innerHeight;
+    menu.style.left = `${Math.max(8, rect.right - menu.offsetWidth)}px`;
+    menu.style.top = `${openAbove ? Math.max(8, rect.top - menuHeight - 8) : rect.bottom + 8}px`;
+  };
 
-    // Keep menu aligned
-    window.addEventListener("resize", () => {
-      if (menu.classList.contains("show")) {
-        positionMenu();
-      }
+  box.addEventListener("click", (event) => {
+    event.stopPropagation();
+    document.querySelectorAll(".currency-menu").forEach((otherMenu) => {
+      if (otherMenu !== menu) otherMenu.classList.remove("show");
     });
+    const isOpen = menu.classList.toggle("show");
+    if (isOpen) positionMenu();
+    box.setAttribute("aria-expanded", String(isOpen));
+  });
 
-    window.addEventListener("scroll", () => {
-      if (menu.classList.contains("show")) {
-        positionMenu();
-      }
-    });
-  }
-}
+  document.addEventListener("click", (event) => {
+    if (!menu.contains(event.target) && !box.contains(event.target)) {
+      menu.classList.remove("show");
+      box.setAttribute("aria-expanded", "false");
+    }
+  });
+  window.addEventListener("resize", () => menu.classList.contains("show") && positionMenu());
+  window.addEventListener("scroll", () => menu.classList.contains("show") && positionMenu());
+});
 
 const searchToggle = document.querySelector(".search-toggle");
 const searchBox = document.querySelector("#headerSearch");
