@@ -192,8 +192,8 @@ input {
       left: 0;
       bottom: -5px;
       width: 100%;
-      height: 2px;
-      background: rgba(165, 149, 182, 1);
+      height: 1.7px;
+      background: #fff;
       transform: scaleX(0);
       transform-origin: right;
       transition: transform 0.4s ease;
@@ -203,6 +203,9 @@ input {
     &:focus-visible::after {
       transform: scaleX(1);
       transform-origin: left;
+    }
+    &:hover{
+      color: #fff;
     }
   }
 }
@@ -1892,12 +1895,6 @@ input {
 .popular-skins-heading h2 {
   font-size: clamp(24px, 2.1vw, 32px);
 }
-.popular-skins-heading h2::after {
-  margin-top: 14px;
-}
-.popular-skins-heading .trade-guide-border {
-  opacity: .48;
-}
 .popular-skins-grid {
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
@@ -2164,7 +2161,7 @@ input {
   background: linear-gradient(259.4deg, #4B1887 -21.32%, #4F1A82 84.03%);
 }
 .popular-skin-actions a:hover {
-  filter: brightness(1.18);
+  filter: brightness(1.15);
 }
 .popular-skins-more {
   display: flex;
@@ -3392,4 +3389,24 @@ input {
     gap: 8px;
     flex-wrap:wrap;
   }
+}
+
+/* Keep hover feedback consistent across every shared button. */
+.common-btn,
+.app-promo.has-scroll-motion .app-promo-stores a.common-btn {
+  transition:
+    opacity 180ms ease 0s,
+    transform 180ms ease 0s,
+    box-shadow 180ms ease 0s,
+    filter 180ms ease 0s !important;
+  transition-delay: 0s !important;
+}
+.common-btn::before {
+  transition: left 280ms ease 0s;
+  transition-delay: 0s;
+}
+.common-btn:hover,
+.common-btn:focus-visible {
+  filter: brightness(1.15);
+  box-shadow: 0 8px 24px rgba(112, 0, 255, .32), 0 0 14px rgba(171, 47, 254, .24);
 }

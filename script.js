@@ -229,6 +229,7 @@ if (extensionSection && 'IntersectionObserver' in window) {
 
   const watch = (node) => {
     if (!(node instanceof Element)) return;
+    if (node.matches('img') && node.closest('.common-btn')) return;
     if (node.matches(targets)) {
       const siblings = node.parentElement ? Array.from(node.parentElement.querySelectorAll(':scope > h1, :scope > h2, :scope > h3, :scope > p, :scope > img')) : [];
       node.classList.add(node.tagName === 'IMG' ? 'content-image-motion' : 'content-text-motion');
@@ -238,6 +239,7 @@ if (extensionSection && 'IntersectionObserver' in window) {
       observer.observe(node);
     }
       node.querySelectorAll(targets).forEach((target) => {
+        if (target.matches('img') && target.closest('.common-btn')) return;
         if (target.classList.contains('content-text-motion') || target.classList.contains('content-image-motion')) return;
         const siblings = target.parentElement ? Array.from(target.parentElement.querySelectorAll(':scope > h1, :scope > h2, :scope > h3, :scope > p, :scope > img')) : [];
         target.classList.add(target.tagName === 'IMG' ? 'content-image-motion' : 'content-text-motion');
