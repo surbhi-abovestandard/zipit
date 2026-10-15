@@ -1954,9 +1954,10 @@ input {
 .popular-skin-card:hover {
   --skin-card-fill: linear-gradient(0deg, #21143a 37.9%, #382052 100%);
 }
-.popular-skin-card:hover,
-.popular-skin-card:focus-within {
-  z-index: 2;
+.popular-skin-card:hover {
+  z-index: 5;
+  transform: none;
+  margin-top: -18px;
 }
 .popular-skin-art {
   position: relative;
@@ -2006,8 +2007,8 @@ input {
 .popular-skin-badge {
   position: absolute;
   z-index: 1;
-  top: 10px;
-  left: 10px;
+  top: 12px;
+  left: 17px;
   padding: 3px 5px;
   border-radius: 4px;
   background: linear-gradient(110deg, #3778e8, #62b9ff);
@@ -2207,6 +2208,7 @@ input {
     padding: 0;
     height: auto;
     opacity: 1;
+    margin-top: 13px;
     pointer-events: auto;
   }
   .popular-skin-card {
