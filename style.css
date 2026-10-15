@@ -2555,9 +2555,299 @@ input {
     background-position: 62% center;
   }
 }
+
+/* Scroll reveals for the app promo and community cards. */
+.app-promo.has-scroll-motion .app-promo-features li,
+.app-promo.has-scroll-motion .app-promo-stores a,
+.community-section.has-scroll-motion .community-card {
+  opacity: 0;
+  transform: translateY(22px);
+  transition: opacity 650ms ease var(--motion-delay, 0ms), transform 650ms cubic-bezier(.2, .75, .25, 1) var(--motion-delay, 0ms), box-shadow 250ms ease;
+  will-change: opacity, transform;
+}
+.app-promo.has-scroll-motion .app-promo-features li.is-section-visible,
+.app-promo.has-scroll-motion .app-promo-stores a.is-section-visible,
+.community-section.has-scroll-motion .community-card.is-section-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.community-section.has-scroll-motion .community-card.is-section-visible:hover {
+  box-shadow: 0 14px 38px rgba(114, 0, 255, .14), inset 0 1px 0 rgba(255, 255, 255, .035);
+}
+@media (prefers-reduced-motion: reduce) {
+  .app-promo.has-scroll-motion .app-promo-features li,
+  .app-promo.has-scroll-motion .app-promo-stores a,
+  .community-section.has-scroll-motion .community-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
+    will-change: auto;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .world-cta::after {
     animation: none;
     transform: scale(1.04);
   }
+}
+
+/* Social community */
+.community-section {
+  position: relative;
+  overflow: hidden;
+  background: #151221 url(images/sec-background-image.png) center / cover no-repeat;
+}
+.community-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(20px, 2.7vw, 32px);
+}
+.community-card {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  padding: clamp(18px, 2.2vw, 32px);
+  background: linear-gradient(135deg, rgba(185, 74, 255, .58), rgba(112, 32, 185, .3) 48%, rgba(185, 74, 255, .5));
+  clip-path: polygon(14px 0, calc(100% - 14px) 0, 100% 14px, 100% calc(100% - 14px), calc(100% - 14px) 100%, 14px 100%, 0 calc(100% - 14px), 0 14px);
+}
+.community-card::before {
+  position: absolute;
+  z-index: 0;
+  inset: 1px;
+  background-color: #241638;
+  background-image: url("images/community-bg-img.png");
+  background-position: center, center top;
+  background-size: cover, 100% auto;
+  background-repeat: no-repeat;
+  content: "";
+  pointer-events: none;
+  clip-path: polygon(13px 0, calc(100% - 13px) 0, 100% 13px, 100% calc(100% - 13px), calc(100% - 13px) 100%, 13px 100%, 0 calc(100% - 13px), 0 13px);
+}
+.community-card > * {
+  position: relative;
+  z-index: 1;
+}
+.community-card-heading {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 16px;
+}
+.community-icon {
+  display: grid;
+  width: 45px;
+  height: 45px;
+  flex: 0 0 45px;
+  place-items: center;
+  object-fit: contain;
+}
+.community-card-heading h3 {
+  color:  rgba(228, 227, 231, 1);
+  font-size: clamp(15px, 1.4vw, 20px);
+  font-weight: 500;
+  line-height: 100%;
+  margin-bottom: 8px;
+}
+.community-card-heading p {
+  color: rgba(139, 135, 174, 1);
+  font-size: clamp(14px, 1.25vw, 16px);
+  line-height: 100%;
+}
+.discord-preview,
+.facebook-preview {
+  min-height: 208px;
+  overflow: hidden;
+  border-radius: 10px;
+  background: #171128;
+  color: #ddd7e8;
+}
+.discord-preview {
+  padding: 18px;
+}
+.discord-channel {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 100%;
+  color: rgba(188, 183, 223, 1);
+}
+.discord-channel span {
+  color: #a32aff;
+  font-size: 16px;
+  font-weight: 700;
+}
+.discord-divider {
+  height: 1px;
+  margin: 15px 0;
+  background: rgba(39, 34, 70, 1);
+}
+.discord-preview h4,
+.facebook-details h4 {
+  font-weight: 700;
+  font-size: 17px;
+  line-height: 100%;
+  color: rgba(218, 216, 238, 1);
+
+}
+.discord-message {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 12px;
+}
+.discord-message > img {
+  width: 30px;
+  height: 30px;
+  flex: 0 0 30px;
+  border-radius: 50%;
+}
+.discord-message-copy {
+  min-width: 0;
+  flex: 1;
+}
+.discord-user {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 9px;
+  color: rgba(235, 167, 247, 1);
+  font-weight: 600;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+
+}
+.discord-user strong {
+  font-weight: 700;
+}
+.discord-user span {
+  padding: 4px;
+  border-radius: 4px;
+  background: linear-gradient(263.35deg, #7000FF 32.14%, #AB2FFE 89.45%);
+  color: rgba(233, 222, 235, 1);
+  font-size: 13px;
+}
+.discord-embed {
+  padding: 14px;
+  border-left: 2px solid rgba(168, 85, 247, 1);
+  border-radius: 6px;
+  background: rgba(34, 26, 63, 1);
+}
+.discord-embed strong {
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: rgba(255, 255, 255, 1);
+}
+.discord-embed p {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 13px;;
+  line-height: 21px;
+  letter-spacing: 0%;
+  color: rgba(187, 182, 204, 1);
+}
+.facebook-preview {
+  display: flex;
+  flex-direction: column;
+}
+.facebook-cover {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  background: linear-gradient(270.59deg, #AB2FFE 0.35%, #7000FF 70.32%);
+  color: #fff;
+}
+.facebook-cover strong {
+  font-weight: 700;
+ font-size: clamp(15px, 1.2vw, 17px);
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+  color: rgba(229, 228, 243, 1);
+}
+.facebook-cover span {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  text-transform: uppercase;
+  color:rgba(218, 217, 235, 1);
+  margin-top:7px;
+}
+.facebook-details {
+  padding: 20px;
+}
+.facebook-details > p {
+  font-weight: 500;
+  font-size: 14px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color:rgba(173, 171, 201, 1);
+  margin-top: 5px;
+}
+.facebook-details > p span {
+  margin-inline: 4px;
+}
+.facebook-tags {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 12px;
+}
+.facebook-tags > div {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: 15px 12px;
+  border-radius: 6px;
+  background: rgba(34, 26, 63, 1);
+}
+.facebook-tags strong {
+  font-weight: 500;
+  font-size: 15px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color:rgba(236, 235, 245, 1);
+}
+.facebook-tags span {
+  font-weight: 400;
+  font-size: 13px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  color: rgba(173, 171, 201, 1);
+  margin-top: 7px;
+}
+.community-button {
+  margin-top: 20px;
+  width: fit-content;
+}
+.community-button span {
+    width: 17px;
+    height: 20px;
+}
+@media (max-width: 919px) {
+  .community-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
+  }
+}
+@media (max-width: 400px) {
+.facebook-tags > div {
+    padding: 15px 10px;
+    text-align: center;
+    width:48%;
+}
+.facebook-tags {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.facebook-cover {
+  padding:15px;
+}
 }

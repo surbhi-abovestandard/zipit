@@ -745,3 +745,37 @@ function setFaqDefaultsForViewport() {
 
 setFaqDefaultsForViewport();
 window.addEventListener("resize", setFaqDefaultsForViewport);
+
+// Reveal the app feature rows, store links, and community cards as they scroll into view.
+(() => {
+  const animatedSections = [
+    {
+      section: document.querySelector(".app-promo"),
+      items: ".app-promo-features li, .app-promo-stores a"
+    },
+    {
+      section: document.querySelector(".community-section"),
+      items: ".community-card"
+    }
+  ].filter(({ section }) => section);
+  if (!animatedSections.length || !("IntersectionObserver" in window)) return;
+
+  const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  if (reduceMotion) return;
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      entry.target.classList.toggle("is-section-visible", entry.isIntersecting);
+    });
+  }, { threshold: 0.16, rootMargin: "0px 0px -35px 0px" });
+
+  animatedSections.forEach(({ section, items }) => {
+    const targets = Array.from(section.querySelectorAll(items));
+    if (!targets.length) return;
+    section.classList.add("has-scroll-motion");
+    targets.forEach((target, index) => {
+      target.style.setProperty("--motion-delay", `${(index % 5) * 100}ms`);
+      observer.observe(target);
+    });
+  });
+})();
