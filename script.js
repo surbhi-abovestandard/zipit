@@ -156,14 +156,9 @@ if (topbar) {
           modifier: 1.15,
           slideShadows: false
         },
-        pagination: {
-          el: grid.querySelector('.popular-skins-pagination'),
-          clickable: true,
-          bulletClass: 'popular-skin-dot',
-          bulletActiveClass: 'is-active',
-          renderBullet(index, className) {
-            return `<button type="button" class="${className}" aria-label="Go to skin ${index + 1}"></button>`;
-          }
+        navigation: {
+          prevEl: grid.querySelector('.popular-skin-prev'),
+          nextEl: grid.querySelector('.popular-skin-next')
         },
         keyboard: {
           enabled: true,
