@@ -931,6 +931,22 @@ input {
 .hero-track {
   align-items: stretch;
 }
+.hero-slider.is-native .hero-track {
+  display: grid;
+}
+.hero-slider.is-native .hero-track > .slide {
+  grid-area: 1 / 1;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 1000ms ease, visibility 1000ms ease;
+}
+.hero-slider.is-native .hero-track > .slide.swiper-slide-active {
+  z-index: 1;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 .hero-slider:not(.is-enhanced) .slide:not(:first-child) {
   display: none;
 }

@@ -505,45 +505,55 @@ if (searchToggle && searchBox && signinToggle && signinPanel) {
 // ============================== hero slider ===========================
 const heroSlider = document.querySelector('.hero-slider');
 
-if (heroSlider && window.Swiper) {
+if (heroSlider) {
   const heroDots = heroSlider.parentElement.querySelector('.hero-dots');
+  const heroSlides = Array.from(heroSlider.querySelectorAll('.hero-track > .slide'));
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let activeHeroSlide = 0;
 
-  function updateHeroSlides(swiper) {
-    swiper.slides.forEach((slide) => {
-      const active = slide.classList.contains('swiper-slide-active');
-      slide.setAttribute('aria-hidden', String(!active));
-      slide.inert = !active;
+  if (heroDots && heroSlides.length) {
+    heroSlider.classList.add('is-enhanced', 'is-native');
+    heroDots.innerHTML = heroSlides.map((_, index) =>
+      `<button type="button" class="hero-dot${index === 0 ? ' is-active' : ''}" aria-label="Show slide ${index + 1}" aria-current="${index === 0}"></button>`
+    ).join('');
+    const heroDotButtons = Array.from(heroDots.querySelectorAll('.hero-dot'));
+
+    function showHeroSlide(index) {
+      activeHeroSlide = (index + heroSlides.length) % heroSlides.length;
+      heroSlides.forEach((slide, slideIndex) => {
+        const active = slideIndex === activeHeroSlide;
+        slide.classList.toggle('swiper-slide-active', active);
+        slide.setAttribute('aria-hidden', String(!active));
+        slide.inert = !active;
+      });
+      heroDotButtons.forEach((dot, dotIndex) => {
+        const active = dotIndex === activeHeroSlide;
+        dot.classList.toggle('is-active', active);
+        dot.setAttribute('aria-current', String(active));
+      });
+    }
+
+    heroDots.addEventListener('click', (event) => {
+      const dotIndex = heroDotButtons.indexOf(event.target.closest('.hero-dot'));
+      if (dotIndex >= 0) showHeroSlide(dotIndex);
     });
-  }
 
-  if (heroDots) {
-    heroSlider.classList.add('is-enhanced');
-    const heroSwiper = new Swiper(heroSlider, {
-      effect: 'fade',
-      fadeEffect: { crossFade: true },
-      loop: true,
-      speed: reduceMotion.matches ? 0 : 800,
-      autoplay: reduceMotion.matches ? false : {
-        delay: 3500,
-        disableOnInteraction: false,
-        pauseOnMouseEnter: false,
-        waitForTransition: true
-      },
-      pagination: {
-        el: heroDots,
-        clickable: true,
-        bulletClass: 'hero-dot',
-        bulletActiveClass: 'is-active',
-        renderBullet(index, className) {
-          return `<button type="button" class="${className}" aria-label="Show slide ${index + 1}"></button>`;
-        }
-      },
-      on: {
-        init: updateHeroSlides,
-        slideChangeTransitionStart: updateHeroSlides
+    let touchStartX = 0;
+    heroSlider.addEventListener('touchstart', (event) => {
+      touchStartX = event.changedTouches[0]?.clientX ?? 0;
+    }, { passive: true });
+    heroSlider.addEventListener('touchend', (event) => {
+      const touchEndX = event.changedTouches[0]?.clientX ?? touchStartX;
+      const swipeDistance = touchEndX - touchStartX;
+      if (Math.abs(swipeDistance) > 45) {
+        showHeroSlide(activeHeroSlide + (swipeDistance < 0 ? 1 : -1));
       }
-    });
+    }, { passive: true });
+
+    showHeroSlide(0);
+    if (!reduceMotion.matches && heroSlides.length > 1) {
+      window.setInterval(() => showHeroSlide(activeHeroSlide + 1), 4500);
+    }
   }
 }
 
