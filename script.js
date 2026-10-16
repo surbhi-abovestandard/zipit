@@ -203,7 +203,7 @@ if (extensionSection && 'IntersectionObserver' in window) {
 
 // Reveal text and images as they enter view without changing page layout.
 (() => {
-  const targets = 'h1, h2, h3, p, .bonus, .skin-action-link, .skin-art-label, .skin-price-tag, .nav-link, .currency-text, .slide-title, .slide-text, .card-info .title, img';
+  const targets = 'h1, h2, h3, p, .bonus, .btn, .common-btn, .skin-action-link, .skin-art-label, .skin-price-tag, .nav-link, .currency-text, .slide-title, .slide-text, .card-info .title, img';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   if (reduceMotion || !('IntersectionObserver' in window)) return;
 
@@ -217,8 +217,10 @@ if (extensionSection && 'IntersectionObserver' in window) {
   }, { passive: true });
   const observer = new IntersectionObserver((entries) => {
     entries.forEach((entry) => {
+      if (!entry.isIntersecting) return;
       entry.target.dataset.motionDirection = scrollDirection;
-      entry.target.classList.toggle('is-motion-visible', entry.isIntersecting);
+      entry.target.classList.add('is-motion-visible');
+      observer.unobserve(entry.target);
     });
   }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
 
@@ -371,10 +373,16 @@ if (dropRow) {
 
   // ===== HORIZONTAL SCROLL =====
   dropGrid.addEventListener("wheel", (e) => {
-    if (!hovering) return;
+    const horizontalGesture = e.shiftKey || Math.abs(e.deltaX) > Math.abs(e.deltaY);
+    if (!hovering || !horizontalGesture) return;
 
+    const delta = e.shiftKey ? e.deltaY : e.deltaX;
+    const maxScroll = dropGrid.scrollWidth - dropGrid.clientWidth;
+    const atStart = dropGrid.scrollLeft <= 0 && delta < 0;
+    const atEnd = dropGrid.scrollLeft >= maxScroll && delta > 0;
+    if (atStart || atEnd) return;
     e.preventDefault();
-    dropGrid.scrollLeft += e.deltaY + e.deltaX;
+    dropGrid.scrollLeft += delta;
   }, { passive: false });
 
   // ===== DUPLICATE EXISTING ITEMS =====
