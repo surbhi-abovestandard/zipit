@@ -2030,7 +2030,13 @@ article.drop-card:hover .card-info{
 .popular-skin-card::after {
   z-index: -1;
   inset: 1px;
-  background: var(--skin-card-fill, linear-gradient(0deg, #171326 34.18%, #2a163b 100%));
+  background-image:
+    linear-gradient(180deg, rgba(171, 47, 254, 0.34), rgba(112, 0, 255, 0.16)),
+    linear-gradient(0deg, #171326 34.18%, #2a163b 100%);
+  background-size: 100% 0%, 100% 100%;
+  background-position: top, center;
+  background-repeat: no-repeat;
+  transition: background-size 420ms cubic-bezier(.65, 0, .35, 1);
   clip-path: polygon(calc(var(--skin-card-cut) - 1px) 0,
       calc(100% - var(--skin-card-cut) + 1px) 0,
       100% calc(var(--skin-card-cut) - 1px),
@@ -2046,8 +2052,12 @@ article.drop-card:hover .card-info{
 .popular-skin-card:focus-within::after {
   bottom: -58px;
 }
+.popular-skin-card:hover::after,
+.popular-skin-card:focus-within::after {
+  background-size: 100% 100%, 100% 100%;
+}
 .popular-skin-card:hover {
-  --skin-card-fill: linear-gradient(0deg, #21143a 37.9%, #382052 100%);
+  --skin-card-fill: linear-gradient(0deg, rgba(112, 0, 255, 0.12) 37.9%, rgb(166 61 236 / 33%) 100%);
 }
 .popular-skin-card:hover {
   z-index: 5;
@@ -2241,8 +2251,10 @@ article.drop-card:hover .card-info{
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
+  transition: opacity 180ms ease;
 }
-.popular-skin-card:hover .popular-skin-actions {
+.popular-skin-card:hover .popular-skin-actions,
+.popular-skin-card:focus-within .popular-skin-actions {
   height: auto;
   opacity: 1;
   pointer-events: auto;
@@ -2373,6 +2385,7 @@ article.drop-card:hover .card-info{
 }
 @media (prefers-reduced-motion: reduce) {
   .popular-skin-card,
+  .popular-skin-card::after,
   .popular-skin-art>.popular-skin-image-link img,
   .popular-skin-actions,
   .popular-skins-more {
