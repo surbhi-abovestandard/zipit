@@ -436,15 +436,22 @@ input {
 .drop-row[data-row="combined"] {
   flex: 1 1 auto;
   min-width: 0;
-  overflow: hidden;
+  overflow: visible;
 }
 /* ===== Combined WOW and LIVE horizontal strip ===== */
 .drop-row[data-row="combined"] .drop-row-grid {
+  position: relative;
   display: flex;
   width: 100%;
+  padding-top: 0;
   overflow-x: hidden;
   scrollbar-width: none;
   gap: 6px;
+  transition: padding-top 180ms cubic-bezier(.2, .75, .25, 1);
+}
+.drop-row[data-row="combined"] .drop-row-grid:has(.drop-card:hover),
+.drop-row[data-row="combined"] .drop-row-grid:has(.drop-card:focus) {
+  padding-top: 30px;
 }
 .drop-row[data-row="combined"] .drop-row-grid::-webkit-scrollbar {
   display: none;
@@ -453,22 +460,40 @@ input {
   overflow-x: auto;
 }
 .drop-row[data-row="combined"] .drop-card {
-  flex: 0 0 134px;
-  width: 134px;
+  flex: 0 0 var(--drop-base-width);
   min-width: 0;
+  --drop-base-width: 134px;
+  --drop-base-height: 115px;
+  z-index: 0;
+  flex-basis: var(--drop-base-width);
+  width: var(--drop-base-width);
+  height: var(--drop-base-height);
+  transform: scale(var(--dock-scale, 1));
+  transform-origin: center bottom;
+  transition: transform 180ms cubic-bezier(.2, .75, .25, 1);
+  will-change: transform;
+  overflow: visible;
+}
+@media (prefers-reduced-motion: reduce) {
+  .drop-row[data-row="combined"] .drop-card {
+    transition: none;
+  }
 }
 .drop-item-image {
   position: absolute;
-  top: 10px;
+  top: 0;
   left: 50%;
-  transform: translateX(-50%) perspective(700px) rotateY(0deg);
+  width: min(96px, 84%);
+  height: 82px;
+  transform: translateX(-50%);
   transform-style: preserve-3d;
   z-index: 3;
   object-fit: contain;
   filter: drop-shadow(0 8px 12px rgba(0, 0, 0, 0.55));
   pointer-events: none;
-  transition: transform 0.65s cubic-bezier(0.2, 0.75, 0.25, 1);
-}
+  transition: transform 180ms cubic-bezier(.2, .75, .25, 1);
+  will-change: transform;
+} 
 @media (prefers-reduced-motion: reduce) {
   .drop-item-image {
     transition: none;
@@ -478,7 +503,6 @@ input {
 .drop-card {
   position: relative;
   min-height: 115px;
-  overflow: hidden;
   isolation: isolate;
   cursor:pointer;
 }
@@ -489,6 +513,9 @@ input {
   background-repeat: no-repeat;
   background-size: cover;
 }
+article.drop-card:hover .card-info{
+    transform: scale(0.9);
+}
 .card-info {
   position: absolute;
   right: 0;
@@ -497,8 +524,9 @@ input {
   z-index: 4;
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  padding: 14px 12px 12px;
+  align-items: center;
+  gap: 0;
+  padding: 0 4px 3px;
 }
 .card-info .title {
   overflow: hidden;
@@ -507,7 +535,9 @@ input {
   font-weight: 500;
   letter-spacing: 1%;
   text-overflow: ellipsis;
-  white-space: nowrap;
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 /* ===== NEW: DROP-IN ANIMATION ===== */
 .drop-card.is-new {
@@ -551,8 +581,8 @@ input {
 }
 @media (max-width: 767px) and (min-width:480px) {
   .drop-row[data-row="combined"] .drop-card {
-    flex: 0 0 120px;
-    width: 120px;
+    --drop-base-width: 120px;
+    --drop-base-height: 115px;
   }
   @keyframes dropIn {
     from {
@@ -813,8 +843,8 @@ input {
 }
 @media (max-width: 479px) {
   .drop-row[data-row="combined"] .drop-card {
-    flex: 0 0 100px;
-    width: 100px;
+    --drop-base-width: 100px;
+    --drop-base-height: 100px;
     border-radius: 5px;
   }
   @keyframes dropIn {

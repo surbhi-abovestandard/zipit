@@ -276,7 +276,7 @@ function createCard(item, bgIndex, isNew = false) {
   visual.className = "visual";
 
   visual.style.backgroundImage =
-    `linear-gradient(180deg, rgba(28,19,34,.08), rgba(7,9,20,.2)), url('images/bg-img-${bgIndex}.png')`;
+    `url('images/bg-img-${bgIndex}.png')`;
 
   const itemImage = document.createElement("img");
   itemImage.className = "drop-item-image";
@@ -306,6 +306,44 @@ if (dropRow) {
   const dropGrid = document.createElement("div");
   dropGrid.className = "drop-row-grid";
   dropRow.appendChild(dropGrid);
+
+  const resetDock = () => {
+    dropGrid.querySelectorAll(".drop-card").forEach((card) => {
+      card.style.transform = "scale(1) translateY(0px)";
+      card.style.marginInline = "0px";
+      card.style.zIndex = "0";
+    });
+  };
+
+  const setDockFocus = (card) => {
+    const cards = [...dropGrid.querySelectorAll(".drop-card")];
+    const index = cards.indexOf(card);
+    resetDock();
+    card.style.transform = "scale(1.14) translateY(-10px)";
+    card.style.marginInline = "12px";
+    card.style.zIndex = "20";
+    [-1, 1].forEach((offset) => {
+      const sideCard = cards[index + offset];
+      if (!sideCard) return;
+      sideCard.style.transform = "scale(1.1) translateY(-6px)";
+      sideCard.style.marginInline = "9px";
+      sideCard.style.zIndex = "10";
+    });
+  };
+
+  dropGrid.addEventListener("pointerover", (event) => {
+    if (event.pointerType === "touch") return;
+    const card = event.target.closest(".drop-card");
+    if (card && dropGrid.contains(card)) setDockFocus(card);
+  });
+  dropGrid.addEventListener("pointerleave", resetDock);
+  dropGrid.addEventListener("focusin", (event) => {
+    const card = event.target.closest(".drop-card");
+    if (card) setDockFocus(card);
+  });
+  dropGrid.addEventListener("focusout", (event) => {
+    if (!dropGrid.contains(event.relatedTarget)) resetDock();
+  });
 
   // Show all 11 items together
   dropData.forEach((item, index) => {
