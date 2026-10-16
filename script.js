@@ -611,7 +611,18 @@ if (heroSlider) {
 
     showHeroSlide(0);
     if (!reduceMotion.matches && heroSlides.length > 1) {
-      window.setInterval(() => showHeroSlide(activeHeroSlide + 1), 4500);
+      let heroAutoplay = null;
+      const startHeroAutoplay = () => {
+        if (heroAutoplay !== null) return;
+        heroAutoplay = window.setInterval(() => showHeroSlide(activeHeroSlide + 1), 4500);
+      };
+      const pauseHeroAutoplay = () => {
+        window.clearInterval(heroAutoplay);
+        heroAutoplay = null;
+      };
+      heroSlider.addEventListener('mouseenter', pauseHeroAutoplay);
+      heroSlider.addEventListener('mouseleave', startHeroAutoplay);
+      if (!heroSlider.matches(':hover')) startHeroAutoplay();
     }
   }
 }
