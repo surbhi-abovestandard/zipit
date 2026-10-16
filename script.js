@@ -49,6 +49,22 @@ if (topbar) {
     });
   }
 }
+// ===============================backtop button==================================
+const backToTopButton = document.querySelector(".back-to-top");
+if (backToTopButton) {
+  const updateBackToTopVisibility = () => {
+    backToTopButton.classList.toggle("is-visible", window.scrollY > 320);
+  };
+  window.addEventListener("scroll", updateBackToTopVisibility, { passive: true });
+  updateBackToTopVisibility();
+  backToTopButton.addEventListener("click", () => {
+    if (window.lenis) {
+      window.lenis.scrollTo(0);
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  });
+}
 
 // Fill the static Popular CS2 skin cards with catalogue data.
 (() => {
