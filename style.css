@@ -1997,6 +1997,8 @@ article.drop-card:hover .card-info{
   font-size: clamp(24px, 2.1vw, 32px);
 }
 .popular-skins-grid {
+  position: relative;
+  z-index: 2;
   display: grid;
   grid-template-columns: repeat(5, minmax(0, 1fr));
   align-items: start;
@@ -2081,7 +2083,7 @@ article.drop-card:hover .card-info{
 .popular-skin-card:hover {
   z-index: 5;
   transform: none;
-  margin-top: 0;
+  margin-top: -20px;
 }
 .popular-skin-art {
   position: relative;
