@@ -389,12 +389,17 @@ input {
     box-shadow 180ms ease 0s,
     filter 180ms ease 0s;
   transition-delay: 0s;
+  z-index: 1;
 }
 .common-btn::before {
+    top: 0px;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    transition: 0.5s;
   content: "";
   position: absolute;
-  inset: 0;
-  z-index: 0;
 
   background: linear-gradient(
     110deg,
@@ -402,22 +407,26 @@ input {
     rgba(255, 255, 255, 0.4) 50%,
     transparent 80%
   );
-
-  transform: translateX(-100%);
-  transition: transform 0.5s ease;
   pointer-events: none;
 }
 
 .common-btn:hover::before {
-  transform: translateX(100%);
+    left: 100%;
+}
+.common-btn:hover,
+.common-btn:focus-visible {
+  filter: brightness(1.2);
+  box-shadow: 0 0 22px rgba(156, 43, 255, 0.55);
+  transform: translateY(-2px);
+}
+.common-btn:active {
+  filter: brightness(1.05);
+  box-shadow: 0 0 12px rgba(156, 43, 255, 0.35);
+  transform: translateY(0);
 }
 .common-btn > * {
   position: relative;
   z-index: 1;
-}
-.common-btn:hover {
-  filter: brightness(1.15);
-  box-shadow: 0 8px 24px rgba(112, 0, 255, .32), 0 0 14px rgba(171, 47, 254, .24);
 }
 
 .steam-icon {
@@ -2028,24 +2037,37 @@ article.drop-card:hover .card-info{
   clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
 }
 .popular-skin-card::after {
-  z-index: -1;
-  inset: 1px;
-  background-image:
-    linear-gradient(180deg, rgba(171, 47, 254, 0.34), rgba(112, 0, 255, 0.16)),
-    linear-gradient(0deg, #171326 34.18%, #2a163b 100%);
-  background-size: 2px 2px, 100% 100%;
-  background-position: top center, center;
-  background-repeat: no-repeat;
-  transition: background-size 180ms cubic-bezier(.16, 1, .3, 1);
-  transition-delay: 0s;
-  clip-path: polygon(calc(var(--skin-card-cut) - 1px) 0,
-      calc(100% - var(--skin-card-cut) + 1px) 0,
-      100% calc(var(--skin-card-cut) - 1px),
-      100% calc(100% - var(--skin-card-cut) + 1px),
-      calc(100% - var(--skin-card-cut) + 1px) 100%,
-      calc(var(--skin-card-cut) - 1px) 100%,
-      0 calc(100% - var(--skin-card-cut) + 1px),
-      0 calc(var(--skin-card-cut) - 1px));
+    z-index: -1;
+    inset: 1px;
+    background-image:
+        linear-gradient(
+            180deg,
+            rgba(171, 47, 254, 0.34),
+            rgba(112, 0, 255, 0.16)
+        ),
+        linear-gradient(
+            0deg,
+            #171326 34.18%,
+            #2a163b 100%
+        );
+    background-size: 2px 2px, 100% 100%;
+    background-position: top center, center;
+    background-repeat: no-repeat;
+    transition: background-size 180ms cubic-bezier(.16, 1, .3, 1);
+    transition-delay: 0s;
+    clip-path: polygon(
+        calc(var(--skin-card-cut) - 1px) 0,
+        calc(100% - var(--skin-card-cut) + 1px) 0,
+        100% calc(var(--skin-card-cut) - 1px),
+        100% calc(100% - var(--skin-card-cut) + 1px),
+        calc(100% - var(--skin-card-cut) + 1px) 100%,
+        calc(var(--skin-card-cut) - 1px) 100%,
+        0 calc(100% - var(--skin-card-cut) + 1px),
+        0 calc(var(--skin-card-cut) - 1px)
+    );
+}
+.popular-skin-card:hover::after {
+    transition-delay: 0.3s;
 }
 .popular-skin-card:hover::before,
 .popular-skin-card:focus-within::before,
@@ -3110,10 +3132,7 @@ article.drop-card:hover .card-info{
   object-fit: contain;
 }
 .extension-download {
-  transition: box-shadow 300ms ease 0s, filter 300ms ease 0s;
-}
-.extension-download::before {
-  transition: transform 450ms ease 0s;
+  transition: box-shadow 300ms ease 0s, filter 300ms ease 0s, transform 180ms ease;
 }
 .extension-download-firefox {
   background: linear-gradient(261.18deg, #4B1887 21.89%, #4F1A82 86.44%);
