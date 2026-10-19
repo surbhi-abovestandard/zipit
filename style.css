@@ -3524,3 +3524,280 @@ article.drop-card:hover .card-info{
   }
 }
 
+/* Buy page: reuse the shared popular-skin cards and global spacing system. */
+.buy-market-page {
+  display: block;
+  min-height: 100vh;
+  overflow: visible;
+}
+html:has(> body.buy-market-page) {
+  overflow-x: hidden;
+  overflow-y: auto;
+  scrollbar-color: #75419a #151221;
+  scrollbar-width: thin;
+}
+.buy-market-page > main {
+  display: block;
+  min-height: calc(100vh - 80px);
+  overflow: visible;
+}
+.buy-market-page .buy-market {
+  min-height: calc(100vh - 80px);
+  height: auto;
+  padding-block: 20px;
+}
+.buy-market-page .buy-market > .container {
+  display: block;
+  height: auto;
+}
+html:has(> body.buy-market-page)::-webkit-scrollbar {
+  width: 10px;
+}
+html:has(> body.buy-market-page)::-webkit-scrollbar-track {
+  background: #151221;
+}
+html:has(> body.buy-market-page)::-webkit-scrollbar-thumb {
+  border: 2px solid #151221;
+  border-radius: 10px;
+  background: #75419a;
+}
+html:has(> body.buy-market-page)::-webkit-scrollbar-thumb:hover {
+  background: #a52cff;
+}
+.buy-market-page .search-box {
+  max-width: 592px;
+}
+.buy-market-heading {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 48px;
+  margin-bottom: 7px;
+}
+.buy-market-heading h1 {
+  color: #f1edf7;
+  font-size: 24px;
+  font-weight: 700;
+  line-height: 32px;
+}
+.buy-market-switch {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+.buy-market-switch a {
+  display: inline-flex;
+  min-width: 95px;
+  height: 40px;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  border: 1px solid rgba(190, 129, 235, .25);
+  border-radius: 8px;
+  color: #eee8f6;
+  background: #21162f;
+  font-size: 15px;
+  font-weight: 600;
+}
+.buy-market-switch a.is-active {
+  border-color: transparent;
+  background: linear-gradient(110deg, #ab2ffe, #7000ff);
+}
+.buy-market-layout {
+  display: grid;
+  grid-template-columns: 236px minmax(0, 1fr);
+  align-items: start;
+  gap: 15px;
+}
+.buy-market-sidebar {
+  position: sticky;
+  top: 12px;
+  height: fit-content;
+  min-height: 0;
+  max-height: calc(100vh - 24px);
+  overflow: visible;
+  padding: 18px;
+  border: 1px solid rgba(193, 137, 228, .16);
+  border-radius: 10px;
+  background: linear-gradient(145deg, rgba(31, 23, 43, .96), rgba(23, 20, 34, .96));
+}
+.buy-market-filter-group {
+  display: grid;
+  gap: 12px;
+}
+.buy-market-filter-group + .buy-market-filter-group {
+  margin-top: 30px;
+}
+.buy-market-filter-group h2 {
+  color: #a99caf;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 16px;
+  text-transform: uppercase;
+}
+.buy-market-filter-group > a,
+.buy-market-filter-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 30px;
+  margin-inline: -15px;
+  padding: 5px 15px;
+  border-radius: 0 5px 5px 0;
+  color: #ddd5e5;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 19px;
+}
+.buy-market-filter-row > a {
+  flex: 1;
+  color: inherit;
+}
+.buy-market-filter-row.is-active {
+  color: #f5effb;
+  background: linear-gradient(90deg, rgba(130, 46, 191, .2), rgba(99, 56, 132, .12));
+}
+.buy-market-filter-row.is-active::before {
+  position: absolute;
+  top: 4px;
+  bottom: 4px;
+  left: 0;
+  width: 5px;
+  border-radius: 0 3px 3px 0;
+  background: linear-gradient(180deg, #a52cff, #7027ff);
+  content: "";
+}
+.buy-market-filter-group > a:hover,
+.buy-market-filter-group > a:focus-visible,
+.buy-market-filter-row:hover,
+.buy-market-filter-row:focus-within {
+  color: #fff;
+}
+.buy-market-filter-group > a span {
+  color: #ad49f7;
+  font-size: 18px;
+}
+.buy-market-filter-group .buy-market-arrow.common-btn {
+  display: inline-flex;
+  width: 24px;
+  min-width: 24px;
+  height: 24px;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 4px;
+  clip-path: none;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+  transform: none;
+  cursor: pointer;
+}
+.buy-market-filter-group .buy-market-arrow.common-btn::before {
+  display: none;
+}
+.buy-market-filter-group .buy-market-arrow img {
+  display: block;
+  width: 8px;
+  height: 14px;
+  max-width: none;
+}
+.buy-market-products {
+  height: auto;
+  min-width: 0;
+  overflow: visible;
+}
+.buy-market {
+  background-color: #151221;
+  background-image: none;
+}
+.buy-market .popular-skins-grid {
+  gap: 13px 11px;
+}
+.buy-market .popular-skin-card:hover,
+.buy-market .popular-skin-card:focus-within {
+  z-index: 2;
+  margin-top: 0;
+}
+.buy-market .popular-skin-card:hover::before,
+.buy-market .popular-skin-card:focus-within::before,
+.buy-market .popular-skin-card:hover::after,
+.buy-market .popular-skin-card:focus-within::after {
+  bottom: 0;
+}
+.buy-market .popular-skin-art {
+  height: 174px;
+  flex: 0 0 174px;
+}
+.buy-market .popular-skin-art > .popular-skin-image-link {
+  align-items: end;
+}
+.buy-market .popular-skin-details {
+  min-height: 0;
+  padding: 0 14px 12px;
+}
+.buy-market .popular-skin-icons {
+  min-height: 38px;
+  padding-bottom: 10px;
+}
+.buy-market .popular-skin-icons a {
+  width: 28px;
+  height: 28px;
+}
+.buy-market .popular-skin-icons a:nth-child(n + 3) {
+  display: none;
+}
+.buy-market .popular-skin-footer {
+  display: none;
+}
+@media (max-width: 1199px) {
+  .buy-market-page .search-box {
+    max-width: 592px;
+  }
+  .buy-market-layout {
+    grid-template-columns: 210px minmax(0, 1fr);
+  }
+  .buy-market .popular-skins-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+@media (max-width: 767px) {
+  .buy-market-layout {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+  .buy-market-sidebar {
+    position: static;
+    max-height: none;
+    padding: 14px;
+  }
+  .buy-market-filter-group {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px 12px;
+  }
+  .buy-market-filter-group h2 {
+    grid-column: 1 / -1;
+  }
+  .buy-market-filter-group + .buy-market-filter-group {
+    margin-top: 18px;
+  }
+  .buy-market .popular-skins-grid {
+    grid-template-columns: 1fr;
+  }
+  .buy-market-filter-group > a,
+  .buy-market-filter-row {
+    margin-inline: -15px;
+    padding-inline: 15px;
+    font-size: 15px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .buy-market .popular-skin-card {
+    scroll-behavior: auto;
+  }
+}
+

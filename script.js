@@ -144,6 +144,28 @@ if (backToTopButton) {
   }, 1000);
 })();
 
+// Reveal Buy page cards as the product pane scrolls, using its own scroll area.
+(() => {
+  const cards = Array.from(document.querySelectorAll('.buy-market .popular-skin-card'));
+  if (!cards.length || !window.gsap || !window.ScrollTrigger) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+  gsap.registerPlugin(ScrollTrigger);
+  const revealCards = (batch) => {
+    gsap.fromTo(batch,
+      { autoAlpha: 0, y: 20 },
+      { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.06, ease: 'power2.out', overwrite: true }
+    );
+  };
+
+  ScrollTrigger.batch(cards, {
+    start: 'top 96%',
+    batchMax: 5,
+    onEnter: revealCards,
+    onEnterBack: revealCards
+  });
+})();
+
 // Use a Coverflow carousel for popular skins on compact screens only.
 (() => {
   const grid = document.querySelector('#popularSkinsGrid');

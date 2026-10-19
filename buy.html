@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Browse CS2 skins on ZIPIT." />
+    <link rel="icon" type="image/svg+xml" href="images/favicon.svg" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="style.css" />
+    <title>Buy CS2 Skins | ZIPIT</title>
+  </head>
+  <body class="buy-market-page">
+<header class="topbar" aria-label="Main navigation">
+        <div class="header-inner">
+          <div class="header-logo-menu">
+            <div class="brand" aria-label="ZIPIT brand">
+              <a href="index.html" aria-label="ZIPIT homepage">
+                <img src="images/new-zipit-logo.svg" alt="ZIPIT"
+                  class="brand-logo" />
+              </a>
+            </div>
+            <nav class="nav-actions" id="primaryNavigation" aria-label="Main navigation links">
+              <ul class="nav-mian-menu">
+                <li class="nav-item"><a href="#" class="nav-link">Market</a></li>
+                <!-- <li class="nav-item"><a href="#" class="nav-link">Buy</a></li>
+                <li class="nav-item"><a href="#" class="nav-link">Sell</a></li> -->
+              </ul>
+            </nav>
+          </div>
+          <div class="header-buttons">
+            <div class="currency-dropdown">
+              <button class="currency-box" type="button" aria-expanded="false">
+                <span class="currency-flag">
+                  <img id="currencyFlag" src="images/flag.svg" alt>
+                </span>
+                <span class="currency-text" id="currencyText">$ USD</span>
+              </button>
+              <div class="currency-menu" id="currencyMenu"></div>
+            </div>
+            <button type="button" class="header-icon-btn search-toggle"
+              aria-label="Open search" aria-expanded="false"
+              aria-controls="headerSearch">
+              <img src="images/search-icon.svg" alt />
+            </button>
+            <div class="signin-control">
+              <button type="button" class="header-icon-btn signin-toggle"
+                aria-label="Open sign-in options" aria-expanded="false"
+                aria-controls="signinPanel">
+                <img src="images/steam-icon.svg" alt />
+              </button>
+              <div class="signin-panel" id="signinPanel">
+                <button type="button" class="signin-btn common-btn"
+                  aria-label="Sign in via Steam">
+                  <img src="images/steam-icon.svg" alt class="steam-icon" />
+                  <span>Sign in via Steam</span>
+                </button>
+              </div>
+            </div>
+            <button type="button" class="nav-toggle header-icon-btn" aria-label="Open navigation menu" aria-expanded="false" aria-controls="primaryNavigation">
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16" /></svg>
+            </button>
+          </div>
+          <div class="search-box" id="headerSearch" role="search">
+            <span class="search-icon" aria-hidden="true">
+              <img src="images/search-icon.svg" alt>
+            </span>
+            <input type="search" placeholder="Search for items"
+              aria-label="Search items" />
+          </div>
+        </div>
+      </header>
+    <main>
+      <section class="popular-skins buy-market section-spacing-inline" aria-labelledby="buy-market-title">
+        <div class="container">
+          <div class="buy-market-heading">
+            <h1 id="buy-market-title">Buy</h1>
+            <div class="buy-market-switch" aria-label="Marketplace mode">
+              <a class="is-active" href="buy.html" aria-current="page">Buy</a>
+              <a href="#sell">Sell</a>
+            </div>
+          </div>
+          <div class="buy-market-layout">
+            <aside class="buy-market-sidebar" aria-label="Marketplace orders">
+              <nav class="buy-market-filter-group" aria-label="Active orders">
+                <h2>Active</h2>
+                <div class="buy-market-filter-row is-active">
+                  <a aria-current="page" href="#products">Winning bids</a>
+                  <button class="common-btn buy-market-arrow" type="button" aria-label="Open winning bids"><img src="images/sidebar-chevron.svg" alt=""></button>
+                </div>
+                <a href="#products">Losing bid <span>›</span></a>
+                <a href="#products">Losing bids <span>›</span></a>
+              </nav>
+              <nav class="buy-market-filter-group" aria-label="Pending orders">
+                <h2>Pending</h2>
+                <a href="#products">Make pending</a>
+                <a href="#products">Waiting for trade offer</a>
+                <a href="#products">Accept trade offers</a>
+              </nav>
+              <nav class="buy-market-filter-group" aria-label="Completed orders">
+                <h2>Completed</h2>
+                <a href="#products">Trades</a>
+                <a href="#products">Lost auctions</a>
+              </nav>
+            </aside>
+            <div class="buy-market-products" id="products">
+<div class="popular-skins-grid swiper" id="popularSkinsGrid" aria-live="polite">
+            <div class="popular-skins-track swiper-wrapper">
+            <article class="popular-skin-card" data-skin-card="0">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="1">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a></span>
+                  <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div></div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="2">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="3">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="4">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="5">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="6">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="7">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="8">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="9">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="10">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="11">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="12">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="13">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            <article class="popular-skin-card" data-skin-card="14">
+              <div class="popular-skin-art">
+                <span class="popular-skin-badge" data-skin-badge></span>
+                <span class="popular-skin-tools">
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="View skin in 3D"><img src="images/3d-search.svg" alt=""></a>
+                  <a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Zoom skin image"><img src="images/zoom.svg" alt=""></a><a class="popular-skin-tool-link" href="#popular-skins-title" aria-label="Search similar skins"><img src="images/search.svg" alt=""></a>
+                </span>
+                <a class="popular-skin-image-link" data-skin-link href="#popular-skins-title"><img data-skin-image alt="" loading="lazy"></a>
+                <div class="popular-skin-charms">
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                  <a class="popular-skin-charm" data-charm-slot hidden href="#popular-skins-title" aria-label="View charm keychain"><img data-charm-image alt="" loading="lazy"></a>
+                </div>
+              </div>
+              <div class="popular-skin-details">
+                <div>
+                  <span class="popular-skin-icons">
+                    <a class="popular-skin-keychain" data-keychain="1" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-1.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="2" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-2.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="3" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-3.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="4" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-4.png" alt="" loading="lazy"></a>
+                    <a class="popular-skin-keychain" data-keychain="5" href="#popular-skins-title" aria-label="View keychain"><img src="images/keychain-5.png" alt="" loading="lazy"></a>
+                  </span>
+                  <h3 data-skin-name></h3>
+                  <p class="popular-skin-condition" data-skin-condition></p>
+                  <strong class="popular-skin-price" data-skin-price></strong>
+                  <div class="popular-skin-meter" aria-label="Market price indicator">
+                    <span></span>
+                  </div>
+                  <div class="popular-skin-float">
+                    <span data-skin-float></span>
+                    <span>931</span>
+                  </div>
+                </div>
+              </div>
+            </article>
+            </div>
+            <div class="popular-skins-navigation" aria-label="Popular skins controls">
+              <button class="popular-skin-arrow popular-skin-prev" type="button" aria-label="Previous skin">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6" /></svg>
+              </button>
+              <button class="popular-skin-arrow popular-skin-next" type="button" aria-label="Next skin">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 18 6-6-6-6" /></svg>
+              </button>
+            </div>
+          </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="script.js"></script>
+  </body>
+</html>
