@@ -144,28 +144,6 @@ if (backToTopButton) {
   }, 1000);
 })();
 
-// Reveal Buy page cards as the product pane scrolls, using its own scroll area.
-(() => {
-  const cards = Array.from(document.querySelectorAll('.buy-market .popular-skin-card'));
-  if (!cards.length || !window.gsap || !window.ScrollTrigger) return;
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-  gsap.registerPlugin(ScrollTrigger);
-  const revealCards = (batch) => {
-    gsap.fromTo(batch,
-      { autoAlpha: 0, y: 20 },
-      { autoAlpha: 1, y: 0, duration: 0.45, stagger: 0.06, ease: 'power2.out', overwrite: true }
-    );
-  };
-
-  ScrollTrigger.batch(cards, {
-    start: 'top 96%',
-    batchMax: 5,
-    onEnter: revealCards,
-    onEnterBack: revealCards
-  });
-})();
-
 // Use a Coverflow carousel for popular skins on compact screens only.
 (() => {
   const grid = document.querySelector('#popularSkinsGrid');
@@ -239,53 +217,153 @@ if (extensionSection && 'IntersectionObserver' in window) {
   }
 }
 
-// Reveal text and images as they enter view without changing page layout.
+// Shared GSAP reveals for text, buttons, and images on every page using this script.
 (() => {
-  const targets = 'h1, h2, h3, p, .bonus, .btn, .common-btn, .skin-action-link, .skin-art-label, .skin-price-tag, .nav-link, .currency-text, .slide-title, .slide-text, .card-info .title, img';
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  if (reduceMotion || !('IntersectionObserver' in window)) return;
+  if (reduceMotion) return;
 
-  document.body.classList.add('content-motion-ready');
-  let previousScrollY = window.scrollY;
-  let scrollDirection = 'down';
-  window.addEventListener('scroll', () => {
-    const currentY = window.scrollY;
-    if (currentY !== previousScrollY) scrollDirection = currentY > previousScrollY ? 'down' : 'up';
-    previousScrollY = currentY;
-  }, { passive: true });
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => {
-      if (!entry.isIntersecting) return;
-      entry.target.dataset.motionDirection = scrollDirection;
-      entry.target.classList.add('is-motion-visible');
-      observer.unobserve(entry.target);
-    });
-  }, { threshold: 0.12, rootMargin: '0px 0px -32px 0px' });
+  const revealTargets = 'h1, h2, h3, h4, p, li, label, .bonus, .skin-action-link, .skin-art-label, .skin-price-tag, .nav-link, .currency-text, .slide-title, .slide-text, .card-info .title, .popular-skin-condition, .popular-skin-price, .popular-skin-float, .buy-market-filter-group a, .common-btn, .btn, .button, button, input[type="button"], input[type="submit"], [role="button"], img';
+  const gsapSource = 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js';
+  const scrollTriggerSource = 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js';
+  const animated = new WeakSet();
+  const animatedFooters = new WeakSet();
 
-  const watch = (node) => {
-    if (!(node instanceof Element)) return;
-    if (node.matches('img') && node.closest('.common-btn')) return;
-    if (node.matches(targets)) {
-      const siblings = node.parentElement ? Array.from(node.parentElement.querySelectorAll(':scope > h1, :scope > h2, :scope > h3, :scope > p, :scope > img')) : [];
-      node.classList.add(node.tagName === 'IMG' ? 'content-image-motion' : 'content-text-motion');
-      const siblingIndex = siblings.indexOf(node);
-      node.dataset.motionDirection = 'down';
-      if (siblingIndex >= 0) node.style.transitionDelay = `${Math.min(siblingIndex, 4) * 75}ms`;
-      observer.observe(node);
+  const loadScript = (source) => new Promise((resolve, reject) => {
+    const existing = document.querySelector(`script[src="${source}"]`);
+    if (existing) {
+      if (existing.dataset.loaded === 'true') return resolve();
+      existing.addEventListener('load', resolve, { once: true });
+      existing.addEventListener('error', reject, { once: true });
+      return;
     }
-      node.querySelectorAll(targets).forEach((target) => {
-        if (target.matches('img') && target.closest('.common-btn')) return;
-        if (target.classList.contains('content-text-motion') || target.classList.contains('content-image-motion')) return;
-        const siblings = target.parentElement ? Array.from(target.parentElement.querySelectorAll(':scope > h1, :scope > h2, :scope > h3, :scope > p, :scope > img')) : [];
-        target.classList.add(target.tagName === 'IMG' ? 'content-image-motion' : 'content-text-motion');
-        target.dataset.motionDirection = 'down';
-        target.style.transitionDelay = `${Math.max(0, Math.min(siblings.indexOf(target), 4)) * 75}ms`;
-        observer.observe(target);
+    const script = document.createElement('script');
+    script.src = source;
+    script.async = true;
+    script.addEventListener('load', () => {
+      script.dataset.loaded = 'true';
+      resolve();
+    }, { once: true });
+    script.addEventListener('error', reject, { once: true });
+    document.head.appendChild(script);
+  });
+
+  const initReveal = () => {
+    if (!window.gsap || !window.ScrollTrigger) return;
+    gsap.registerPlugin(ScrollTrigger);
+
+    const animateFooter = (footer) => {
+      if (animatedFooters.has(footer)) return false;
+      animatedFooters.add(footer);
+      const footerTargets = Array.from(footer.querySelectorAll(
+        '.footer-brand, .footer-main h2, .footer-main p, .footer-menu a, .footer-socials a, .footer-payment, .footer-currency-dropdown, .footer-copyright'
+      ));
+      if (!footerTargets.length) return false;
+
+      const reveal = () => {
+        gsap.killTweensOf(footerTargets);
+        gsap.fromTo(footerTargets,
+          { autoAlpha: 0, y: 16 },
+          {
+            autoAlpha: 1,
+            y: 0,
+            duration: 0.5,
+            stagger: 0.035,
+            ease: 'power2.out',
+            overwrite: 'auto',
+            onComplete: () => gsap.set(footerTargets, { clearProps: 'opacity,visibility,transform' })
+          }
+        );
+      };
+
+      const bounds = footer.getBoundingClientRect();
+      if (bounds.top < window.innerHeight * 0.85 && bounds.bottom > 0) reveal();
+
+      ScrollTrigger.create({
+        trigger: footer,
+        start: 'top 85%',
+        onEnter: reveal,
+        onEnterBack: reveal
       });
+      return true;
+    };
+
+    const animate = (element) => {
+      if (animated.has(element) || element.closest('[hidden]')) return false;
+      if (element.closest('.site-footer')) return false;
+      if (element.matches('img') && element.closest('.common-btn, .btn, .button, button, [role="button"]')) return false;
+      animated.add(element);
+
+      const isImage = element.matches('img');
+      const isButton = element.matches('.common-btn, button, [role="button"]');
+      const from = isImage ? { autoAlpha: 0, y: 18, scale: 0.97 }
+        : isButton ? { autoAlpha: 0, y: 10, scale: 0.97 }
+          : { autoAlpha: 0, y: 14 };
+
+      const reveal = () => {
+        gsap.killTweensOf(element);
+        gsap.set(element, from);
+        gsap.to(element, {
+          autoAlpha: 1,
+          y: 0,
+          scale: 1,
+          duration: isImage ? 0.7 : 0.55,
+          ease: 'power2.out',
+          overwrite: 'auto',
+          onComplete: () => gsap.set(element, { clearProps: 'opacity,visibility,transform' })
+        });
+      };
+      const hide = () => {
+        gsap.killTweensOf(element);
+        gsap.set(element, from);
+      };
+
+      const bounds = element.getBoundingClientRect();
+      const startsInView = bounds.top < window.innerHeight * 0.94 && bounds.bottom > 0;
+      if (startsInView) reveal();
+      else hide();
+
+      ScrollTrigger.create({
+        trigger: element,
+        start: 'top 94%',
+        end: 'bottom 6%',
+        onEnter: reveal,
+        onEnterBack: reveal,
+        onLeaveBack: hide
+      });
+      return true;
+    };
+
+    const scan = (node) => {
+      if (!(node instanceof Element)) return false;
+      let hasNewTarget = node.matches(revealTargets) ? animate(node) : false;
+      node.querySelectorAll(revealTargets).forEach((element) => {
+        hasNewTarget = animate(element) || hasNewTarget;
+      });
+      const footers = node.matches('.site-footer') ? [node] : Array.from(node.querySelectorAll('.site-footer'));
+      footers.forEach((footer) => {
+        hasNewTarget = animateFooter(footer) || hasNewTarget;
+      });
+      return hasNewTarget;
+    };
+
+    scan(document.body);
+    new MutationObserver((records) => {
+      let hasNewTarget = false;
+      records.forEach((record) => record.addedNodes.forEach((node) => {
+        hasNewTarget = scan(node) || hasNewTarget;
+      }));
+      if (hasNewTarget) requestAnimationFrame(() => ScrollTrigger.refresh());
+    }).observe(document.body, { childList: true, subtree: true });
   };
-  watch(document.body);
-  new MutationObserver((records) => records.forEach((record) => record.addedNodes.forEach(watch)))
-    .observe(document.body, { childList: true, subtree: true });
+
+  if (window.gsap && window.ScrollTrigger) {
+    initReveal();
+  } else {
+    loadScript(gsapSource)
+      .then(() => window.ScrollTrigger ? undefined : loadScript(scrollTriggerSource))
+      .then(initReveal)
+      .catch(() => {});
+  }
 })();
 
 const DROP_INTERVAL = 1300;
