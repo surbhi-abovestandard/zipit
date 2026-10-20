@@ -94,6 +94,7 @@ body {
   background: var(--bg);
   color: var(--text);
   padding-top: 10px;
+  position: relative;
 }
 a {
   text-decoration: none;
@@ -393,7 +394,9 @@ input {
   gap: 10px;
   padding: 12px 18px;
   border: none;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+  border-radius: 10px;
+  corner-shape: bevel;
+  /* clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px); */
   background: linear-gradient(264.24deg, #7000FF 32.05%, #AB2FFE 90.73%);
   color: var(--white);
   font-weight: 500;
@@ -433,7 +436,6 @@ input {
 .common-btn:hover,
 .common-btn:focus-visible {
   filter: brightness(1.2);
-  box-shadow: 0 0 22px rgba(156, 43, 255, 0.55);
 }
 .common-btn > * {
   position: relative;
@@ -1996,6 +1998,7 @@ article.drop-card:hover .card-info{
   backdrop-filter: blur(14px);
   display: flex;
   flex-direction: column;
+  height:100%;
 }
 .popular-skin-card::before,
 .popular-skin-card::after {
@@ -2241,7 +2244,6 @@ article.drop-card:hover .card-info{
   overflow: hidden;
   opacity: 0;
   pointer-events: none;
-  transition: opacity 180ms ease;
 }
 .popular-skin-card:hover .popular-skin-actions,
 .popular-skin-card:focus-within .popular-skin-actions {
@@ -2393,7 +2395,8 @@ article.drop-card:hover .card-info{
   overflow: hidden;
   background: #151221 url("images/sec-background-image.png") center / cover no-repeat;
 }
-.circle {
+.circle,
+.buy-circle {
   background: linear-gradient(270deg, #2603FB 0%, #DC06FF 100%);
   filter: blur(90px);
   width: 124px;
@@ -2411,6 +2414,20 @@ article.drop-card:hover .card-info{
 .circle-2 {
   right: -37px;
   bottom: 80px;
+}
+.buy-circle-1 {
+  top: 0;
+  left: -37px;
+  opacity: 1;
+}
+.buy-circle-2 {
+  right: -37px;
+  top: 0;
+  opacity: 1;
+}
+.buy-circle-3 {
+  left: -20px;
+  bottom: 50px;
 }
 .app-promo .container {
   position: relative;
@@ -3510,15 +3527,22 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
   display: flex;
   flex: 0 0 auto;
   align-items: center;
+  flex-wrap: wrap;
   justify-content: space-between;
   min-height: 48px;
   margin-bottom: 11px;
 }
 .buy-market-heading h1 {
   color: #f1edf7;
-  font-size: 24px;
+  font-size: clamp(20px, 1.7vw, 24px);
   font-weight: 700;
-  line-height: 32px;
+  line-height: 1.33;
+}
+.buy-market-title-group {
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: center;
+  gap: 12px;
 }
 .buy-market-switch {
   display: flex;
@@ -3531,7 +3555,7 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
     justify-content: center;
     gap: 10px;
     padding: 10px 20px;
-    font-size: 15px;
+    font-size: clamp(13px, 1.05vw, 15px);
     background: transparent;
     text-align: center;
     background: linear-gradient(259.54deg, #7000FF -28.59%, #AB2FFE 91.15%);
@@ -3548,11 +3572,6 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
     pointer-events: none;
     clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
 }
-/* .buy-market-switch a::after {
-  z-index: -1;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
-  background: linear-gradient(259.33deg, #7000FF -30.86%, #AB2FFE 90.99%);
-} */
 .buy-market-switch a.is-active::after {
   background: linear-gradient(259.54deg, #7000FF -28.59%, #AB2FFE 91.15%);
 
@@ -3563,25 +3582,26 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
   align-items: start;
   gap: 15px;
 }
+.buy-market-products {
+  min-width: 0;
+}
 .buy-market-sidebar {
   position: sticky;
-  top: 12px;
+  top: 100px;
   height: fit-content;
   min-height: 0;
-  position: relative;
   isolation: isolate;
   padding-block: 18px;
-  background: linear-gradient(259.54deg, #7000FF -28.59%, #AB2FFE 91.15%);
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+  clip-path: none;
+  background: transparent;
+  border-radius: 12px;
+  corner-shape: bevel;
+  border: 1px solid #FFFFFF0F;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.03) 150.73%);
 }
-.buy-market-sidebar::before {
-    position: absolute;
-    z-index: 0;
-    inset: 1px;
-    background: linear-gradient(180deg, rgba(255, 255, 255, 0.04) 0%, rgba(255, 255, 255, 0.03) 158.42%);
-    content: "";
-    pointer-events: none;
-    clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+.buy-market-filter-toggle,
+.buy-market-filter-back {
+  display: none;
 }
 .buy-market-filter-group {
   display: grid;
@@ -3594,7 +3614,7 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
 }
 .buy-market-filter-group h2 {
   color: #978CA4;
-  font-size: 12px;
+  font-size: clamp(11px, .84vw, 12px);
   font-weight: 600;
   line-height: 100%;
   text-transform: uppercase;
@@ -3649,12 +3669,33 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
 }
 .buy-market {
   background-image: none;
+  overflow: clip;
 }
 .buy-market .popular-skins-grid {
   gap: 13px 11px;
 }
 .buy-market .popular-skin-icons a:nth-child(n + 3) {
   display: none;
+}
+@media (min-width:1650px) {
+  .buy-market .popular-skins-grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+@media (max-width:900px) and (min-width:768px) {
+   .buy-market .popular-skins-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width:1160px) and (min-width:992px) {
+   .buy-market .popular-skins-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width:1360px) and (min-width:1160px) {
+   .buy-market .popular-skins-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 @media (max-width: 1199px) {
   .buy-market-page .search-box {
@@ -3663,29 +3704,153 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
   .buy-market-layout {
     grid-template-columns: 210px minmax(0, 1fr);
   }
-  .buy-market .popular-skins-grid {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
 }
 @media (max-width: 767px) {
+  .buy-market-heading {
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
   .buy-market-layout {
     grid-template-columns: 1fr;
     gap: 16px;
   }
+  .buy-market-products {
+    width: 100%;
+    min-width: 0;
+  }
+  .buy-market .popular-skins-grid.is-mobile-slider {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+  }
+  .buy-market .popular-skins-grid.is-mobile-slider .popular-skins-track {
+    display: flex;
+    width: 100%;
+  }
+  .buy-market .popular-skins-grid.is-mobile-slider .popular-skin-card {
+    width: min(78vw, 320px);
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
   .buy-market-sidebar {
-    position: static;
+    position: fixed;
     max-height: none;
-    padding: 14px;
+    padding: 0;
+    background: transparent;
+    border: 0;
   }
-  .buy-market-filter-group {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px 12px;
+  .buy-market-sidebar::before,
+  .buy-market-sidebar::after {
+    display: none;
   }
-  .buy-market-filter-group h2 {
-    grid-column: 1 / -1;
+ .buy-market-filter-toggle {
+    display: inline-flex;
+    padding: 10px 15px;
+    border-radius: 9px;
+    gap: 8px;
+}
+  .buy-market-filter-toggle svg {
+    width: 15px;
+    height: 15px;
+    margin-top: 2px;
   }
-  .buy-market .popular-skins-grid {
-    grid-template-columns: 1fr;
+  .buy-market-title-group .buy-market-filter-toggle {
+    margin-left: 2px;
+  }
+  .buy-market-filter-toggle span {
+    color: #ab2ffe;
+    font-size: 20px;
+    line-height: 14px;
+  }
+  .buy-market-filter-back {
+    display: none;
+  }
+  .buy-market-filter-list {
+    display: none;
+  }
+  .buy-market-sidebar.is-open {
+    position: fixed;
+    z-index: 10000;
+    inset: 12px;
+    display: block;
+    width: auto;
+    height: auto;
+    max-height: calc(100dvh - 24px);
+    overflow-y: auto;
+    padding: 0;
+    color: #f1edf7;
+    background: #0c0616;
+    border: 1px solid rgba(255, 255, 255, .2);
+    box-shadow: 0 18px 60px rgba(0, 0, 0, .55);
+    animation: buy-market-filter-slide-in 280ms cubic-bezier(.2, .75, .25, 1) both;
+  }
+  .buy-market-sidebar.is-open.is-closing {
+    animation: buy-market-filter-slide-out 280ms cubic-bezier(.55, 0, .8, .35) both;
+  }
+  .buy-market-sidebar.is-open .buy-market-filter-toggle {
+    display: none;
+  }
+  .buy-market-sidebar.is-open .buy-market-filter-back {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    min-height: 52px;
+    padding: 0 16px;
+    color: #f1edf7;
+    text-align: left;
+    font: inherit;
+    font-size: 15px;
+    background: #0c0616;
+    border: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, .2);
+    cursor: pointer;
+    margin-bottom: 15px;
+  }
+  .buy-market-sidebar.is-open .buy-market-filter-back:first-letter {
+    font-size: 22px;
+  }
+  .buy-market-sidebar.is-open .buy-market-filter-list {
+    display: block;
+  }
+  .buy-market-sidebar.is-open .buy-market-filter-group {
+    display: grid;
+  }
+  body.buy-market-filter-open {
+    overflow: hidden;
+  }
+  body.buy-market-filter-open .popular-skins {
+    z-index: 10001;
+  }
+}
+@keyframes buy-market-filter-slide-in {
+  from {
+    opacity: .7;
+    transform: translateX(-105%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+@keyframes buy-market-filter-slide-out {
+  from {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  to {
+    opacity: .7;
+    transform: translateX(-105%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .buy-market-sidebar.is-open {
+    animation: none;
   }
 }
 @media (prefers-reduced-motion: reduce) {

@@ -925,3 +925,50 @@ window.addEventListener("resize", setFaqDefaultsForViewport);
     });
   });
 })();
+
+// Collapse the buy sidebar into a mobile filter panel.
+(() => {
+  const sidebar = document.querySelector('.buy-market-sidebar');
+  if (!sidebar) return;
+
+  const toggle = document.querySelector('.buy-market-filter-toggle');
+  const back = sidebar.querySelector('.buy-market-filter-back');
+  const compactViewport = window.matchMedia('(max-width: 767px)');
+  if (!toggle || !back) return;
+
+  let closeTimer;
+  const setOpen = (open) => {
+    window.clearTimeout(closeTimer);
+    if (open) {
+      sidebar.classList.remove('is-closing');
+      sidebar.classList.add('is-open');
+      document.body.classList.toggle('buy-market-filter-open', compactViewport.matches);
+      toggle.setAttribute('aria-expanded', 'true');
+      back.focus();
+      return;
+    }
+
+    toggle.setAttribute('aria-expanded', 'false');
+    if (!sidebar.classList.contains('is-open')) return;
+
+    sidebar.classList.add('is-closing');
+    const closingDelay = window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 280;
+    closeTimer = window.setTimeout(() => {
+      sidebar.classList.remove('is-open', 'is-closing');
+      document.body.classList.remove('buy-market-filter-open');
+      toggle.focus();
+    }, closingDelay);
+  };
+
+  toggle.addEventListener('click', () => setOpen(true));
+  back.addEventListener('click', () => setOpen(false));
+  sidebar.querySelectorAll('.buy-market-filter-row').forEach((link) => {
+    link.addEventListener('click', () => setOpen(false));
+  });
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && sidebar.classList.contains('is-open')) setOpen(false);
+  });
+  compactViewport.addEventListener('change', (event) => {
+    if (!event.matches) setOpen(false);
+  });
+})();
