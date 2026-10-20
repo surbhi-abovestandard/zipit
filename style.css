@@ -132,31 +132,21 @@ input {
   z-index: 100;
   margin: 0 10px 12px;
   padding: 20px 32px;
-  background: transparent;
   transition: background 250ms ease, box-shadow 250ms ease, backdrop-filter 250ms ease;
-}
-.topbar::before {
-  position: absolute;
-  z-index: -1;
-  inset: 0;
-  content: "";
-  background: linear-gradient(270deg, #1f112f 0%, #2b0e40 100%);
-  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
-  pointer-events: none;
+  border-radius:14px;
+  corner-shape:bevel;
+  background: linear-gradient(270deg, #241931 0%, #2b0e40 100%);
 }
 .topbar.is-scrolled {
   position: fixed;
   max-width: none;
   width: auto;
   top: 10px;
-  background: transparent;
   animation: 0.9s forwards smoothscroll;
   right: 10px;
   left: 10px;
   margin: 0;
   z-index: 100;
-}
-.topbar.is-scrolled::before {
   background: linear-gradient(90deg, #2c153f 0%, #4a1f77 38%, #3c2d5d 100%);
 }
 @keyframes smoothscroll {
@@ -237,7 +227,8 @@ input {
   padding: 13px 18px;
   background: rgba(255, 255, 255, 0.07);
   box-shadow: 0px -2px 8px 0px rgba(255, 255, 255, 0.07) inset;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+  border-radius: 9px;
+  corner-shape: bevel;
 }
 .search-toggle,
 .signin-toggle {
@@ -287,7 +278,8 @@ input {
   background: rgba(255, 255, 255, 0.07);
   color: var(--white);
   cursor: pointer;
-  clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
+  border-radius:9px;
+  corner-shape: bevel;
 }
 .nav-toggle {
   display: none;
@@ -327,7 +319,9 @@ input {
   font-weight: 500;
   cursor: pointer;
   font-size: 15px;
-  clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px);
+  border-radius:9px;
+  corner-shape:bevel;
+  overflow: hidden;
   position: relative;
   z-index: 2;
 }
@@ -347,7 +341,8 @@ input {
   padding: 6px;
   background: rgba(47, 36, 81, 1);
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-radius: 8px;
+  border-radius:9px;
+  corner-shape:bevel;
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   opacity: 0;
   visibility: hidden;
@@ -396,7 +391,6 @@ input {
   border: none;
   border-radius: 10px;
   corner-shape: bevel;
-  /* clip-path: polygon(10px 0, calc(100% - 10px) 0, 100% 10px, 100% calc(100% - 10px), calc(100% - 10px) 100%, 10px 100%, 0 calc(100% - 10px), 0 10px); */
   background: linear-gradient(264.24deg, #7000FF 32.05%, #AB2FFE 90.73%);
   color: var(--white);
   font-weight: 500;
@@ -3556,25 +3550,19 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
     gap: 10px;
     padding: 10px 20px;
     font-size: clamp(13px, 1.05vw, 15px);
-    background: transparent;
+    border: 1px solid transparent;
+    background:
+        linear-gradient(#25114D, #25114D) padding-box,
+        linear-gradient(
+            259.33deg,
+            #7000FF -30.86%,
+            #AB2FFE 90.99%
+        ) border-box;
     text-align: center;
-    background: linear-gradient(259.54deg, #7000FF -28.59%, #AB2FFE 91.15%);
-    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
-    min-width: 0;
-}
-.buy-market-switch a::after{
-  position: absolute;
-    z-index: -1;
-    inset: 1px;
-    background: #25114D;
-    background-repeat: no-repeat;
-    content: "";
-    pointer-events: none;
-    clip-path: polygon(8px 0, calc(100% - 8px) 0, 100% 8px, 100% calc(100% - 8px), calc(100% - 8px) 100%, 8px 100%, 0 calc(100% - 8px), 0 8px);
-}
-.buy-market-switch a.is-active::after {
+    border-radius:8px;
+    }
+.buy-market-switch a.is-active {
   background: linear-gradient(259.54deg, #7000FF -28.59%, #AB2FFE 91.15%);
-
 }
 .buy-market-layout {
   display: grid;
