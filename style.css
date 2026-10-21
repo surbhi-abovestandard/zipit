@@ -508,7 +508,7 @@ input {
   height: var(--drop-base-height);
   transform: scale(var(--dock-scale, 1));
   transform-origin: center bottom;
-  transition: transform 180ms cubic-bezier(.2, .75, .25, 1);
+  transition: transform 260ms cubic-bezier(.2, .75, .25, 1);
   will-change: transform;
   overflow: visible;
 }
@@ -565,6 +565,7 @@ article.drop-card:hover .card-info{
   align-items: center;
   gap: 0;
   padding: 0 4px 3px;
+  transition: transform 220ms cubic-bezier(.2, .75, .25, 1);
 }
 .card-info .title {
   overflow: hidden;
@@ -1963,81 +1964,116 @@ article.drop-card:hover .card-info{
   display: none;
 }
 .popular-skin-card {
-  position: relative;
-  isolation: isolate;
-  min-width: 0;
-  overflow: visible;
-  --skin-card-cut: 15px;
-  clip-path: none;
-  background: transparent;
-  transition: all .24s ease;
-  backdrop-filter: blur(14px);
-  display: flex;
-  flex-direction: column;
-  height:100%;
-}
-.popular-skin-card::before,
-.popular-skin-card::after {
-  position: absolute;
-  pointer-events: none;
-  content: "";
-}
-.popular-skin-card::before {
-  z-index: -2;
-  inset: 0;
-  background: linear-gradient(360deg, rgba(112, 0, 255, 0.175) 8.76%, rgba(171, 47, 254, 0.25) 100%);
-  clip-path: polygon(15px 0, calc(100% - 15px) 0, 100% 15px, 100% calc(100% - 15px), calc(100% - 15px) 100%, 15px 100%, 0 calc(100% - 15px), 0 15px);
-}
-.popular-skin-card::after {
-    z-index: -1;
-    inset: 1px;
-    background-image:
-        linear-gradient(
-            180deg,
-            rgba(171, 47, 254, 0.34),
-            rgba(112, 0, 255, 0.16)
-        ),
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    overflow: visible;
+
+    --skin-card-cut: 15px;
+
+    background:
         linear-gradient(
             0deg,
             #171326 34.18%,
             #2a163b 100%
+        ) padding-box,
+        linear-gradient(
+            259.33deg,
+            #7000ff59 -30.86%,
+            #ab2ffe24 89.99%
+        ) border-box;
+
+    border: 1px solid transparent;
+    border-radius: 15px;
+    corner-shape: bevel;
+
+    backdrop-filter: blur(14px);
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    transition: transform .24s ease;
+}
+
+
+/* =========================
+   HOVER SMOKE / BACKGROUND
+   ========================= */
+
+.popular-skin-card::after {
+    content: "";
+    position: absolute;
+    z-index: 0;
+    pointer-events: none;
+
+    top: 0;
+    right: 0;
+    bottom: -58px;
+    left: 0;
+
+    background-color: #171326;
+
+    background-image:
+        linear-gradient(
+            rgb(190 70 255 / 28%),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 30% 60% at 25% 5%,
+            rgb(112 0 255 / 4%),
+            transparent 70%
+        ),
+        radial-gradient(
+            ellipse 30% 60% at 75% 5%,
+            rgb(171 47 254 / 12%),
+            transparent 70%
         );
-    background-size: 0px 0px, 100% 100%;
-    background-position: top center, center;
-    background-repeat: no-repeat;
-    transition: background-size 150ms ease-out 0s, bottom 150ms ease-out 0s;
-    clip-path: polygon(
-        calc(var(--skin-card-cut) - 1px) 0,
-        calc(100% - var(--skin-card-cut) + 1px) 0,
-        100% calc(var(--skin-card-cut) - 1px),
-        100% calc(100% - var(--skin-card-cut) + 1px),
-        calc(100% - var(--skin-card-cut) + 1px) 100%,
-        calc(var(--skin-card-cut) - 1px) 100%,
-        0 calc(100% - var(--skin-card-cut) + 1px),
-        0 calc(var(--skin-card-cut) - 1px)
-    );
+
+    opacity: 0;
+
+    border-radius: 15px;
+    corner-shape: bevel;
+
+    transition: .67s;
+
+}
+.popular-skin-card::before {
+    content: "";
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+
+    inset: 0;
+
+    border: 1px solid rgba(112, 0, 255, 0.35);
+
+    border-radius: 15px;
+    corner-shape: bevel;
+
+    box-sizing: border-box;
+
+    opacity: 0;
 }
 .popular-skin-card:hover::before,
-.popular-skin-card:focus-within::before,
-.popular-skin-card:hover::after,
-.popular-skin-card:focus-within::after {
-  bottom: -58px;
+.popular-skin-card:focus-within::before {
+    opacity: 1;
+    bottom: -58px;
 }
-.popular-skin-card:hover::after,
-.popular-skin-card:focus-within::after {
-  background-size: 100% 100%, 100% 100%;
-}
-.popular-skin-card:hover {
-  --skin-card-fill: linear-gradient(0deg, rgba(112, 0, 255, 0.12) 37.9%, rgb(166 61 236 / 33%) 100%);
-}
+
 .popular-skin-card:hover,
 .popular-skin-card:focus-within {
   z-index: 5;
-  transform: translateY(-20px);
   margin-top: 0;
+  border: 0px;
+}
+.popular-skin-card:hover::after,
+.popular-skin-card:focus-within::after {
+  opacity: 1;
 }
 .popular-skin-art {
   position: relative;
+  z-index: 1;
   display: grid;
   place-items: center;
   height: 210px;
@@ -2122,6 +2158,8 @@ article.drop-card:hover .card-info{
   object-fit: contain;
 }
 .popular-skin-details {
+  position: relative;
+  z-index: 1;
   padding: 0 16px 16px;
   flex: 1;
   display: flex;
@@ -2216,16 +2254,16 @@ article.drop-card:hover .card-info{
   align-items: center;
   gap: 5px;
   margin-top: 0;
-  height: 0;
+  height: 50px;
   padding: 0 16px 8px;
   box-sizing: border-box;
-  overflow: hidden;
+  overflow: visible;
   opacity: 0;
   pointer-events: none;
+  transition: none;
 }
 .popular-skin-card:hover .popular-skin-actions,
 .popular-skin-card:focus-within .popular-skin-actions {
-  height: auto;
   opacity: 1;
   pointer-events: auto;
 }
@@ -2274,8 +2312,6 @@ article.drop-card:hover .card-info{
   }
 }
 @media (max-width: 767px) {
-  .popular-skin-card:hover::before,
-  .popular-skin-card:focus-within::before,
   .popular-skin-card:hover::after,
   .popular-skin-card:focus-within::after {
     bottom: 0;
@@ -2287,6 +2323,7 @@ article.drop-card:hover .card-info{
     opacity: 1;
     margin-top: 13px;
     pointer-events: auto;
+    transition: none;
   }
   .popular-skin-card {
     height: 100%;

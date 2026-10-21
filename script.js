@@ -293,6 +293,7 @@ if (extensionSection && 'IntersectionObserver' in window) {
       if (element.closest('.site-footer')) return false;
       // Drop item art is positioned by its card; GSAP transform reveals override its centering transform.
       if (element.matches('.drop-item-image')) return false;
+      if (element.closest('.popular-skin-actions')) return false;
       if (element.matches('img') && element.closest('.common-btn, .btn, .button, button, [role="button"]')) return false;
       animated.add(element);
 
@@ -423,15 +424,17 @@ if (dropRow) {
   dropGrid.className = "drop-row-grid";
   dropRow.appendChild(dropGrid);
 
+  let activeDockCard = null;
   const resetDock = () => {
     dropGrid.querySelectorAll(".drop-card").forEach((card) => {
       card.style.transform = "scale(1) translateY(0px)";
-      card.style.marginInline = "0px";
       card.style.zIndex = "0";
     });
+    activeDockCard = null;
   };
 
   const setDockFocus = (card) => {
+    if (activeDockCard === card) return;
     const cards = [...dropGrid.querySelectorAll(".drop-card")];
     const index = cards.indexOf(card);
     resetDock();
