@@ -43,6 +43,30 @@
               aria-controls="headerSearch">
               <img src="images/search-icon.svg" alt />
             </button>
+            <button type="button" class="header-icon-btn buy-notification-btn" aria-label="Notifications">
+              <img src="images/notification.svg" alt />
+            </button>
+            <div class="buy-user-menu">
+              <button type="button" class="buy-user-toggle" aria-label="Open user menu" aria-expanded="false" aria-controls="buyUserDropdown">
+                <img src="images/user-img.png" alt="" class="buy-user-avatar" />
+                <svg class="buy-user-chevron" xmlns="http://www.w3.org/2000/svg" width="11" height="6" viewBox="0 0 11 6" fill="none">
+                  <path d="M10.1288 0.480162C10.1474 0.879103 9.92016 1.02221 9.66144 1.2809L9.04975 1.89265L7.14495 3.79749L5.98484 4.95649C5.79866 5.14309 5.59926 5.36576 5.39574 5.52733C5.28095 5.61552 5.10654 5.65618 4.96425 5.62606C4.71562 5.57356 4.50132 5.30615 4.32661 5.13051L3.75459 4.55869L1.89798 2.70178L0.736069 1.53991C0.56685 1.37111 0.208256 1.03462 0.0900135 0.861232C-0.235767 0.349193 0.396226 -0.238784 0.881968 0.100298C1.03736 0.208709 1.24455 0.441619 1.38587 0.582994L2.22306 1.4201L5.06908 4.2699C5.28914 4.03124 5.60201 3.73623 5.83647 3.50182L7.38871 1.94981L8.58275 0.755459C8.74653 0.591607 8.90997 0.427287 9.07361 0.263365C9.17786 0.158939 9.27957 0.0565644 9.42828 0.0224511C9.77566 -0.0572481 10.0513 0.13972 10.1288 0.480162Z" fill="white"/>
+                  </svg>
+              </button>
+              <div class="buy-user-dropdown" id="buyUserDropdown" aria-label="User menu">
+                <a href="#deposit"><img src="images/deposit.svg" alt="" /><span>Deposit</span></a>
+                <a href="#withdraw"><img src="images/withdraw.svg" alt="" /><span>Withdraw</span></a>
+                <div class="buy-user-divider"></div>
+                <a href="#transactions"><img src="images/transactions.svg" alt="" /><span>Transactions</span></a>
+                <a href="#shop"><img src="images/shop.svg" alt="" /><span>My shop</span></a>
+                <a href="#settings"><img src="images/setting.svg" alt="" /><span>Setting</span></a>
+                <a href="#notifications"><img src="images/notification.svg" alt="" /><span>Notifications</span></a>
+                <a href="#following"><img src="images/following.svg" alt="" /><span>Following</span></a>
+                <div class="buy-user-divider"></div>
+                <a href="#support"><img src="images/support.svg" alt="" /><span>Support</span></a>
+                <a href="#logout"><img src="images/logout.svg" alt="" /><span>Logout</span></a>
+              </div>
+            </div>
             <div class="signin-control">
               <button type="button" class="header-icon-btn signin-toggle"
                 aria-label="Open sign-in options" aria-expanded="false"
@@ -83,7 +107,7 @@
             </div>
             <div class="buy-market-switch" aria-label="Marketplace mode">
               <a class="is-active common-btn" href="buy.html" aria-current="page"> <img src="images/buy-icon.svg" alt="">Buy</a>
-              <a href="#sell" class="common-btn"><img src="images/sell-icon.svg" alt=""> Sell</a>
+              <a href="sell.html" class="common-btn"><img src="images/sell-icon.svg" alt=""> Sell</a>
             </div>
           </div>
           <div class="buy-market-layout">

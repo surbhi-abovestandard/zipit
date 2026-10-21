@@ -119,12 +119,8 @@ button,
 input {
   font: inherit;
 }
-.page-shell {
-  width: 100%;
-  padding: 0 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+.header-drop-container {
+  overflow:hidden;
 }
 .topbar {
   position: relative;
@@ -452,13 +448,13 @@ input {
   place-items: center;
   color: #fff;
   border: 1px solid rgba(222, 194, 255, 0.45);
-  border-radius: 14px;
+  border-radius: 9px;
+  corner-shape: bevel;
   background: linear-gradient(145deg, #a92cff, #6413c9);
   box-shadow: 0 8px 24px rgba(94, 20, 180, 0.34), inset 0 1px rgba(255, 255, 255, 0.2);
   opacity: 0;
   visibility: hidden;
   pointer-events: none;
-  transform: translateY(10px) scale(0.94);
   transition: opacity 180ms ease, visibility 180ms ease, transform 180ms ease, box-shadow 180ms ease, filter 180ms ease;
   cursor: pointer;
 }
@@ -487,12 +483,14 @@ input {
   }
 }
 .drops-wrap {
-  display: flex;
-  align-items: stretch;
-  width: 100%;
-  overflow: hidden;
-  padding-bottom: 20px;
-  padding-left: 20px;
+    display: flex;
+    align-items: stretch;
+    width: 100%;
+    /* overflow: hidden; */
+    padding-bottom: 20px;
+    padding-left: 20px;
+    position: relative;
+    z-index: 999;
 }
 .drop-row[data-row="combined"] {
   flex: 1 1 auto;
@@ -505,21 +503,17 @@ input {
   display: flex;
   width: 100%;
   padding-top: 0;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */
   scrollbar-width: none;
   gap: 6px;
   transition: padding-top 180ms cubic-bezier(.2, .75, .25, 1);
 }
-.drop-row[data-row="combined"] .drop-row-grid:has(.drop-card:hover),
-.drop-row[data-row="combined"] .drop-row-grid:has(.drop-card:focus) {
-  padding-top: 30px;
-}
 .drop-row[data-row="combined"] .drop-row-grid::-webkit-scrollbar {
   display: none;
 }
-.drop-row[data-row="combined"]:hover .drop-row-grid {
+/* .drop-row[data-row="combined"]:hover .drop-row-grid {
   overflow-x: auto;
-}
+} */
 .drop-row[data-row="combined"] .drop-card {
   flex: 0 0 var(--drop-base-width);
   min-width: 0;
@@ -544,7 +538,6 @@ input {
   position: absolute;
   top: 0;
   left: 50%;
-  width: min(96px, 84%);
   height: 82px;
   transform: translateX(-50%);
   transform-style: preserve-3d;
@@ -647,14 +640,14 @@ article.drop-card:hover .card-info{
   }
   @keyframes dropIn {
     from {
-      flex-basis: 0;
-      width: 0;
+      /* flex-basis: 0;
+      width: 0; */
       opacity: 0;
       transform: translateY(-150px);
     }
     to {
-      flex-basis: 120px;
-      width: 120px;
+      /* flex-basis: 120px;
+      width: 120px; */
       opacity: 1;
       transform: translateY(0);
     }
@@ -845,6 +838,8 @@ article.drop-card:hover .card-info{
   .header-icon-btn {
     width: 38px;
     height: 38px;
+    border-radius: 5px;
+    padding: 6px;
   }
   .currency-flag,
   .currency-text {
@@ -907,20 +902,6 @@ article.drop-card:hover .card-info{
     --drop-base-width: 100px;
     --drop-base-height: 100px;
     border-radius: 5px;
-  }
-  @keyframes dropIn {
-    from {
-      flex-basis: 0;
-      width: 0;
-      opacity: 0;
-      transform: translateY(-150px);
-    }
-    to {
-      flex-basis: 100px;
-      width: 100px;
-      opacity: 1;
-      transform: translateY(0);
-    }
   }
   .drop-item-image {
     max-width: 85px;
@@ -2023,7 +2004,7 @@ article.drop-card:hover .card-info{
     background-size: 0px 0px, 100% 100%;
     background-position: top center, center;
     background-repeat: no-repeat;
-    transition: background-size 180ms ease-out 0s, bottom 180ms ease-out 0s;
+    transition: background-size 150ms ease-out 0s, bottom 150ms ease-out 0s;
     clip-path: polygon(
         calc(var(--skin-card-cut) - 1px) 0,
         calc(100% - var(--skin-card-cut) + 1px) 0,
@@ -2363,7 +2344,6 @@ article.drop-card:hover .card-info{
 @media (max-width:575px) {
   .popular-skin-actions a {
     padding: 9px 4px;
-    --skin-card-cut: 7px;
   }
   .popular-skin-card h3 {
     font-size: 14px;
@@ -2376,6 +2356,10 @@ article.drop-card:hover .card-info{
   .popular-skin-actions,
   .popular-skins-more {
     transition: none;
+  }
+  .popular-skin-card:hover::after,
+  .popular-skin-card:focus-within::after {
+    animation: none;
   }
   .popular-skins-video {
     display: none;
@@ -3549,7 +3533,7 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
     justify-content: center;
     gap: 10px;
     padding: 10px 20px;
-    font-size: clamp(13px, 1.05vw, 15px);
+    font-size: 15px;
     border: 1px solid transparent;
     background:
         linear-gradient(#25114D, #25114D) padding-box,
@@ -3736,16 +3720,13 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
  .buy-market-filter-toggle {
     display: inline-flex;
     padding: 10px 15px;
-    border-radius: 9px;
+    border-radius: 7px;
     gap: 8px;
 }
   .buy-market-filter-toggle svg {
     width: 15px;
     height: 15px;
     margin-top: 2px;
-  }
-  .buy-market-title-group .buy-market-filter-toggle {
-    margin-left: 2px;
   }
   .buy-market-filter-toggle span {
     color: #ab2ffe;
@@ -3847,3 +3828,163 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
   }
 }
 
+/* Buy page account controls */
+.buy-market-page .header-buttons {
+  gap: 16px;
+}
+.buy-market-page .search-box {
+  max-width: 510px;
+}
+.buy-market-page .signin-control,
+.buy-market-page .search-toggle {
+  display: none;
+}
+.buy-notification-btn {
+  position: relative;
+  flex: 0 0 48px;
+  height:48px;
+  width: 48px;
+  border: 1px solid rgba(255,255,255,.07);
+}
+.buy-user-menu {
+  position: relative;
+}
+.buy-user-toggle {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 10px;
+  color: #fff;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 9px;
+  corner-shape: bevel;
+  background: rgba(255,255,255,.07);
+  cursor: pointer;
+}
+.buy-user-avatar {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+.buy-user-chevron {
+  transition: transform .2s ease;
+}
+.buy-user-toggle[aria-expanded="true"] .buy-user-chevron {
+  transform: rotate(-180deg);
+}
+.buy-user-dropdown {
+  position: absolute;
+  backdrop-filter: blur(80px);
+  z-index: 1000;
+  top: calc(100% + 12px);
+  right: 0;
+  width: 294px;
+  padding: 15px 0;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 9px;
+  corner-shape: bevel;
+  background: #242424;
+  opacity: 0;
+  visibility: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  pointer-events: none;
+  transform: translateY(-7px);
+  transition: opacity .18s ease, transform .18s ease, visibility .18s ease;
+}
+.buy-user-dropdown.is-open {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+  transform: translateY(0);
+}
+.buy-user-dropdown a {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 0 15px;
+  color: #C8C4D9;
+  font-size: 15px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: background .18s ease, color .18s ease;
+}
+.buy-user-dropdown a:hover,
+.buy-user-dropdown a:focus-visible {
+  color: #fff;
+}
+.buy-user-dropdown a img {
+  width: 20px;
+  height: 20px;
+  flex: 0 0 20px;
+  object-fit: contain;
+}
+.buy-user-divider {
+  height: 1px;
+  background: rgba(255,255,255,.08);
+}
+@media (max-width:991px) and (min-width:768px) {
+  .buy-notification-btn {
+    width: 42px;
+    height:42px;
+    flex: 0 0 42px;
+  }
+  .buy-user-toggle {
+    padding: 5px 10px;
+  }
+}
+@media (max-width: 767px) and (min-width:576px){
+  .buy-market-page .header-buttons {
+    gap: 8px;
+  }
+  .buy-market-page .buy-user-dropdown {
+    width: min(294px, calc(100vw - 28px));
+  }
+  .buy-notification-btn {
+    width: 38px;
+    height:38px;
+    flex: 0 0 38px;
+  }
+  .buy-user-toggle {
+    padding: 5px 10px;
+    gap: 7px;
+    border-radius: 5px;
+  }
+  .buy-user-avatar {
+    width: 25px;
+    height: 25px;
+  }
+}
+
+@media (max-width:575px) {
+  .buy-market-page .header-buttons {
+    gap: 8px;
+  }
+  .buy-market-page .buy-user-dropdown {
+    width: min(294px, calc(100vw - 28px));
+  }
+  .buy-notification-btn {
+    width: 34px;
+    height:34px;
+    flex: 0 0 34px;
+  }
+  .buy-user-toggle {
+    padding: 5px 8px;
+    gap: 7px;
+    border-radius: 5px;
+  }
+  .buy-user-avatar {
+    width: 22px;
+    height: 22px;
+  }
+  .buy-market-switch a ,
+  .buy-market-filter-toggle{
+    padding: 8px 15px;
+    border-radius: 7px;
+  }
+  .buy-market-title-group {
+    flex-direction: row;
+  }
+}

@@ -226,6 +226,7 @@ if (extensionSection && 'IntersectionObserver' in window) {
   const gsapSource = 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/gsap.min.js';
   const scrollTriggerSource = 'https://cdn.jsdelivr.net/npm/gsap@3.13.0/dist/ScrollTrigger.min.js';
   const animated = new WeakSet();
+  const revealed = new WeakSet();
   const animatedFooters = new WeakSet();
 
   const loadScript = (source) => new Promise((resolve, reject) => {
@@ -300,6 +301,8 @@ if (extensionSection && 'IntersectionObserver' in window) {
           : { autoAlpha: 0, y: 14 };
 
       const reveal = () => {
+        if (revealed.has(element)) return;
+        revealed.add(element);
         gsap.killTweensOf(element);
         gsap.set(element, from);
         gsap.to(element, {
@@ -312,23 +315,16 @@ if (extensionSection && 'IntersectionObserver' in window) {
           onComplete: () => gsap.set(element, { clearProps: 'opacity,visibility,transform' })
         });
       };
-      const hide = () => {
-        gsap.killTweensOf(element);
-        gsap.set(element, from);
-      };
-
       const bounds = element.getBoundingClientRect();
       const startsInView = bounds.top < window.innerHeight * 0.94 && bounds.bottom > 0;
       if (startsInView) reveal();
-      else hide();
 
       ScrollTrigger.create({
         trigger: element,
         start: 'top 94%',
         end: 'bottom 6%',
         onEnter: reveal,
-        onEnterBack: reveal,
-        onLeaveBack: hide
+        onEnterBack: reveal
       });
       return true;
     };
@@ -657,6 +653,26 @@ if (searchToggle && searchBox && signinToggle && signinPanel) {
 
     setHeaderPanel(searchBox, searchToggle, false);
     setHeaderPanel(signinPanel, signinToggle, false);
+  });
+}
+
+const buyUserToggle = document.querySelector(".buy-user-toggle");
+const buyUserDropdown = document.querySelector(".buy-user-dropdown");
+if (buyUserToggle && buyUserDropdown) {
+  const setUserMenuOpen = (open) => {
+    buyUserDropdown.classList.toggle("is-open", open);
+    buyUserToggle.setAttribute("aria-expanded", String(open));
+  };
+  buyUserToggle.addEventListener("click", () => {
+    setUserMenuOpen(!buyUserDropdown.classList.contains("is-open"));
+  });
+  document.addEventListener("click", (event) => {
+    if (event.target instanceof Node && !buyUserDropdown.contains(event.target) && !buyUserToggle.contains(event.target)) {
+      setUserMenuOpen(false);
+    }
+  });
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape") setUserMenuOpen(false);
   });
 }
 
