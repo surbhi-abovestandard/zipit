@@ -128,7 +128,7 @@ input {
   right: 10px;
   left: 10px;
   margin: 0;
-  z-index: 100;
+  z-index: 299;
   background: linear-gradient(90deg, #2c153f 0%, #4a1f77 38%, #3c2d5d 100%);
 }
 @keyframes smoothscroll {
@@ -472,7 +472,7 @@ input {
     padding-bottom: 20px;
     padding-left: 20px;
     position: relative;
-    z-index: 999;
+    z-index: 101;
 }
 .drop-row[data-row="combined"] {
   flex: 1 1 auto;
@@ -508,7 +508,7 @@ input {
   height: var(--drop-base-height);
   transform: scale(var(--dock-scale, 1));
   transform-origin: center bottom;
-  transition: transform 260ms cubic-bezier(.2, .75, .25, 1);
+  transition: transform 300ms cubic-bezier(.2, .75, .25, 1);
   will-change: transform;
   overflow: visible;
 }
@@ -565,7 +565,6 @@ article.drop-card:hover .card-info{
   align-items: center;
   gap: 0;
   padding: 0 4px 3px;
-  transition: transform 220ms cubic-bezier(.2, .75, .25, 1);
 }
 .card-info .title {
   overflow: hidden;
@@ -1968,9 +1967,7 @@ article.drop-card:hover .card-info{
     isolation: isolate;
     min-width: 0;
     overflow: visible;
-
     --skin-card-cut: 15px;
-
     background:
         linear-gradient(
             0deg,
@@ -1982,18 +1979,15 @@ article.drop-card:hover .card-info{
             #7000ff59 -30.86%,
             #ab2ffe24 89.99%
         ) border-box;
-
     border: 1px solid transparent;
     border-radius: 15px;
     corner-shape: bevel;
-
     backdrop-filter: blur(14px);
-
     display: flex;
     flex-direction: column;
     height: 100%;
 
-    transition: transform .24s ease;
+    transition: .44s;
 }
 
 
@@ -2006,14 +2000,11 @@ article.drop-card:hover .card-info{
     position: absolute;
     z-index: 0;
     pointer-events: none;
-
     top: 0;
     right: 0;
     bottom: -58px;
     left: 0;
-
     background-color: #171326;
-
     background-image:
         linear-gradient(
             rgb(190 70 255 / 28%),
@@ -2029,12 +2020,9 @@ article.drop-card:hover .card-info{
             rgb(171 47 254 / 12%),
             transparent 70%
         );
-
     opacity: 0;
-
     border-radius: 15px;
     corner-shape: bevel;
-
     transition: .67s;
 
 }
@@ -2043,32 +2031,23 @@ article.drop-card:hover .card-info{
     position: absolute;
     z-index: 2;
     pointer-events: none;
-
     inset: 0;
-
     border: 1px solid rgba(112, 0, 255, 0.35);
-
     border-radius: 15px;
     corner-shape: bevel;
-
     box-sizing: border-box;
-
     opacity: 0;
 }
-.popular-skin-card:hover::before,
-.popular-skin-card:focus-within::before {
+.popular-skin-card:hover::before {
     opacity: 1;
     bottom: -58px;
 }
 
-.popular-skin-card:hover,
-.popular-skin-card:focus-within {
+.popular-skin-card:hover {
   z-index: 5;
-  margin-top: 0;
-  border: 0px;
+  margin-top: -20px;
 }
-.popular-skin-card:hover::after,
-.popular-skin-card:focus-within::after {
+.popular-skin-card:hover::after {
   opacity: 1;
 }
 .popular-skin-art {
@@ -2087,7 +2066,6 @@ article.drop-card:hover .card-info{
 }
 .popular-skin-art>.popular-skin-image-link img {
   object-fit: contain;
-  transition: transform .35s cubic-bezier(.2, .7, .2, 1);
 }
 .popular-skin-charms {
   position: absolute;

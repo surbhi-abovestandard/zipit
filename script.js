@@ -427,8 +427,9 @@ if (dropRow) {
   let activeDockCard = null;
   const resetDock = () => {
     dropGrid.querySelectorAll(".drop-card").forEach((card) => {
-      card.style.transform = "scale(1) translateY(0px)";
-      card.style.zIndex = "0";
+      card.style.removeProperty("transform");
+      card.style.removeProperty("z-index");
+      card.style.removeProperty("margin-inline");
     });
     activeDockCard = null;
   };
@@ -438,6 +439,7 @@ if (dropRow) {
     const cards = [...dropGrid.querySelectorAll(".drop-card")];
     const index = cards.indexOf(card);
     resetDock();
+    activeDockCard = card;
     card.style.transform = "scale(1.14) translateY(-10px)";
     card.style.marginInline = "12px";
     card.style.zIndex = "20";
