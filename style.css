@@ -1,17 +1,3 @@
-:root {
-  --bg: rgba(21, 18, 37, 1);
-  --panel: rgba(25, 19, 35, 0.98);
-  --panel-soft: rgba(55, 34, 72, 0.9);
-  --panel-border: rgba(255, 255, 255, 0.08);
-  --text: rgba(158, 143, 179, 1);
-  --muted: rgba(255, 255, 255, 0.7);
-  --gold: #f6d3a2;
-  --gold-strong: #ffbf5b;
-  --purple: #7a43ff;
-  --purple-soft: rgba(160, 103, 255, 0.44);
-  --shadow: rgba(0, 0, 0, 0.32);
-  --white: #fff;
-}
 @font-face {
   font-family: "Satoshi";
   src: url("fonts/Satoshi-Light.otf") format("opentype");
@@ -91,15 +77,15 @@ html {
 }
 body {
   font-family: "Satoshi";
-  background: var(--bg);
-  color: var(--text);
+  background: #151225;
+  color: #9e8fb3;
   padding-top: 10px;
   position: relative;
 }
 a {
   text-decoration: none;
   outline: 0px !important;
-  color: var(--text);
+  color: #9e8fb3;
 }
 a:focus-visible,
 button:focus-visible {
@@ -248,7 +234,7 @@ input {
   border: none;
   outline: none;
   background: transparent;
-  color: var(--text);
+  color: #9e8fb3;
   font-size: 16px;
   font-weight: 500;
   padding-left: 12px;
@@ -272,7 +258,7 @@ input {
   padding: 9px;
   border: 0;
   background: rgba(255, 255, 255, 0.07);
-  color: var(--white);
+  color: #fff;
   cursor: pointer;
   border-radius:9px;
   corner-shape: bevel;
@@ -311,7 +297,7 @@ input {
   justify-content: center;
   border: 0;
   background: rgba(47, 36, 81, 1);
-  color: var(--white);
+  color: #fff;
   font-weight: 500;
   cursor: pointer;
   font-size: 15px;
@@ -388,7 +374,7 @@ input {
   border-radius: 10px;
   corner-shape: bevel;
   background: linear-gradient(264.24deg, #7000FF 32.05%, #AB2FFE 90.73%);
-  color: var(--white);
+  color: #fff;
   font-weight: 500;
   font-size: clamp(15px, 1.25vw, 18px);
   cursor: pointer;
@@ -739,7 +725,7 @@ article.drop-card:hover .card-info{
     box-sizing: border-box;
     padding: 8px 14px;
     background: #21162e;
-    border: 1px solid var(--panel-border);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     box-shadow: 0 12px 28px rgba(7, 2, 20, 0.35);
     visibility: hidden;
     opacity: 0;
@@ -786,7 +772,7 @@ article.drop-card:hover .card-info{
     pointer-events: none;
     transform: translateY(-6px);
     background: #21162e;
-    border: 1px solid var(--panel-border);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     clip-path: none;
     transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
   }
@@ -810,7 +796,7 @@ article.drop-card:hover .card-info{
     transform: translateY(-6px);
     padding: 10px;
     background: #21162e;
-    border: 1px solid var(--panel-border);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     transition: opacity 0.18s ease, transform 0.18s ease, visibility 0.18s;
   }
   .signin-panel.is-open {
@@ -1107,7 +1093,7 @@ article.drop-card:hover .card-info{
   line-height: 100%;
   font-weight: 500;
   letter-spacing: -0.01em;
-  color: var(--white);
+  color: #fff;
 }
 .slide-text {
   margin-top: 16px;
@@ -1134,7 +1120,7 @@ article.drop-card:hover .card-info{
   gap: 12px;
   font-weight: 500;
   line-height: 100%;
-  color: var(--white);
+  color: #fff;
   text-decoration: none;
   font-size: clamp(15px, 1.4vw, 19px);
 }
@@ -1423,7 +1409,7 @@ article.drop-card:hover .card-info{
   position: relative;
   z-index: 1;
   margin: 0;
-  color: var(--white);
+  color: #fff;
   font-size: clamp(25px, 2.8vw, 40px);
   font-weight: 700;
   letter-spacing: 0px;
