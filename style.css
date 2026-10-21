@@ -423,10 +423,6 @@ input {
 .common-btn:hover::before {
     left: 100%;
 }
-.common-btn:hover,
-.common-btn:focus-visible {
-  filter: brightness(1.2);
-}
 .common-btn > * {
   position: relative;
   z-index: 1;
@@ -519,6 +515,7 @@ input {
   min-width: 0;
   --drop-base-width: 134px;
   --drop-base-height: 115px;
+  --drop-image-center: 67px;
   z-index: 0;
   flex-basis: var(--drop-base-width);
   width: var(--drop-base-width);
@@ -537,7 +534,8 @@ input {
 .drop-item-image {
   position: absolute;
   top: 0;
-  left: 50%;
+  left: var(--drop-image-center, 67px);
+  width: min(96px, var(--drop-base-width, 134px));
   height: 82px;
   transform: translateX(-50%);
   transform-style: preserve-3d;
@@ -637,17 +635,19 @@ article.drop-card:hover .card-info{
   .drop-row[data-row="combined"] .drop-card {
     --drop-base-width: 120px;
     --drop-base-height: 115px;
+    --drop-image-center: 60px;
+    
   }
   @keyframes dropIn {
     from {
-      /* flex-basis: 0;
-      width: 0; */
+      flex-basis: 0;
+      width: 0;
       opacity: 0;
       transform: translateY(-150px);
     }
     to {
-      /* flex-basis: 120px;
-      width: 120px; */
+      flex-basis: 120px;
+      width: 120px;
       opacity: 1;
       transform: translateY(0);
     }
@@ -901,7 +901,22 @@ article.drop-card:hover .card-info{
   .drop-row[data-row="combined"] .drop-card {
     --drop-base-width: 100px;
     --drop-base-height: 100px;
+    --drop-image-center: 50px;
     border-radius: 5px;
+  }
+   @keyframes dropIn {
+    from {
+      flex-basis: 0;
+      width: 0;
+      opacity: 0;
+      transform: translateY(-150px);
+    }
+    to {
+      flex-basis: 100px;
+      width: 100px;
+      opacity: 1;
+      transform: translateY(0);
+    }
   }
   .drop-item-image {
     max-width: 85px;
@@ -2029,10 +2044,11 @@ article.drop-card:hover .card-info{
 .popular-skin-card:hover {
   --skin-card-fill: linear-gradient(0deg, rgba(112, 0, 255, 0.12) 37.9%, rgb(166 61 236 / 33%) 100%);
 }
-.popular-skin-card:hover {
+.popular-skin-card:hover,
+.popular-skin-card:focus-within {
   z-index: 5;
-  transform: none;
-  margin-top: -20px;
+  transform: translateY(-20px);
+  margin-top: 0;
 }
 .popular-skin-art {
   position: relative;
@@ -2149,11 +2165,12 @@ article.drop-card:hover .card-info{
   transform: scale(1.2) !important;
 }
 .popular-skin-card h3 {
-  overflow: hidden;
+  overflow: visible;
   margin: 0px;
   color: rgba(233, 231, 236, 1);
   font-size: 15px;
   font-weight: 700;
+  line-height: 1.2;
 }
 .popular-skin-condition {
   overflow: hidden;
@@ -3508,7 +3525,7 @@ Buy page: reuse the shared popular-skin cards and global spacing system.
   flex-wrap: wrap;
   justify-content: space-between;
   min-height: 48px;
-  margin-bottom: 11px;
+  margin-bottom: 25px;
 }
 .buy-market-heading h1 {
   color: #f1edf7;

@@ -291,6 +291,8 @@ if (extensionSection && 'IntersectionObserver' in window) {
     const animate = (element) => {
       if (animated.has(element) || element.closest('[hidden]')) return false;
       if (element.closest('.site-footer')) return false;
+      // Drop item art is positioned by its card; GSAP transform reveals override its centering transform.
+      if (element.matches('.drop-item-image')) return false;
       if (element.matches('img') && element.closest('.common-btn, .btn, .button, button, [role="button"]')) return false;
       animated.add(element);
 
